@@ -1246,12 +1246,12 @@ a {
   border-bottom: 1px solid var(--color-border);
 }
 
-.ranking-col-rank { width: 60px; }
-.ranking-col-name { min-width: 200px; }
-.ranking-col-home,
-.ranking-col-nationality { width: 100px; }
+.ranking-col-rank { width: 50px; }
+.ranking-col-avatar { width: 48px; }
+.ranking-col-name { min-width: 180px; }
+.ranking-col-nationality { width: 140px; }
 .ranking-col-points { width: 130px; }
-.ranking-col-tournaments { width: 140px; }
+.ranking-col-played { width: 90px; }
 
 .ranking-row td {
   padding: 12px 16px;
@@ -1281,19 +1281,30 @@ a {
 }
 
 .ranking-row td:nth-child(2) {
+  padding: 8px 0 8px 0;
+}
+
+.ranking-row td:nth-child(3) {
   color: var(--color-text-primary);
   font-weight: 500;
 }
 
-.ranking-flag {
+.ranking-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: block;
+}
+
+.ranking-flag-round {
   width: 24px;
-  height: 18px;
-  border-radius: 2px;
+  height: 24px;
+  border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
 }
 
-.ranking-flag + .ranking-flag {
+.ranking-flag-round + .ranking-flag-round {
   margin-left: 4px;
 }
 
