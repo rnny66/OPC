@@ -892,6 +892,10 @@ a {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .ranking-sidebar {
+    flex: 0 0 280px;
+  }
 }
 
 @media (max-width: 992px) {
@@ -1014,6 +1018,19 @@ a {
     flex-direction: column;
     gap: 32px;
   }
+
+  .ranking-page {
+    padding: 32px 40px 64px;
+  }
+
+  .ranking-layout {
+    flex-direction: column;
+  }
+
+  .ranking-sidebar {
+    flex: none;
+    width: 100%;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1075,6 +1092,33 @@ a {
   .footer-links {
     flex-direction: column;
     gap: 32px;
+  }
+
+  .ranking-page {
+    padding: 24px 16px 48px;
+  }
+
+  .ranking-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ranking-search {
+    width: 100%;
+  }
+
+  .ranking-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .ranking-table {
+    min-width: 700px;
+  }
+
+  .ranking-pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
   }
 }
 
