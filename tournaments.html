@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournaments — OPC Europe</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="assets/img/opc_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-left">
+        <a href="index.html" class="logo">
+          <img src="assets/img/opc_logo.png" alt="OPC Europe" width="76" height="56">
+        </a>
+        <nav class="nav">
+          <a href="ranking.html" class="nav-link">Rankings</a>
+          <a href="tournaments.html" class="nav-link">Tournaments</a>
+          <div class="nav-dropdown">
+            <a href="index.html#about" class="nav-link">About OPC
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <a href="index.html#join" class="btn btn-primary">How to join</a>
+    </div>
+  </header>
+
+  <!-- Tournaments Page -->
+  <section class="tournaments-page">
+    <div class="tournaments-container">
+      <div class="tournaments-header">
+        <h1 class="tournaments-title">Find your next tournament</h1>
+        <p class="tournaments-subtitle">Discover OPC certified tournaments across Europe</p>
+        <p class="tournaments-meta">20+ Upcoming Tournaments · 30+ Cities · 5 Countries · Next event in 3 days</p>
+      </div>
+
+      <div class="tournaments-controls">
+        <div class="tournaments-filters">
+          <button class="tournaments-filter-btn" type="button">
+            All Countries
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tournaments-filter-btn" type="button">
+            All Series
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="tournaments-sort">
+          <button class="tournaments-filter-btn" type="button">
+            Soonest first
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="tournaments-view-toggle">
+            <button class="tournaments-view-btn tournaments-view-btn--active" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="5.5" height="5.5" rx="1"/><rect x="9.5" y="1" width="5.5" height="5.5" rx="1"/><rect x="1" y="9.5" width="5.5" height="5.5" rx="1"/><rect x="9.5" y="9.5" width="5.5" height="5.5" rx="1"/></svg>
+            </button>
+            <button class="tournaments-view-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="3" x2="15" y2="3"/><line x1="1" y1="8" x2="15" y2="8"/><line x1="1" y1="13" x2="15" y2="13"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tournaments-grid">
+
+        <!-- Card 1: Amsterdam Open -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Amsterdam Open">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Amsterdam Open</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-nl-1"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-nl-1)"><rect width="16" height="5.33" fill="#AE1C28"/><rect y="5.33" width="16" height="5.33" fill="#FFF"/><rect y="10.66" width="16" height="5.34" fill="#21468B"/></g></svg>
+                <span>Holland Casino, Amsterdam</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Mar 11 – Mar 14, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Berlin Masters -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Berlin Masters">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Berlin Masters</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-de-2"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-de-2)"><rect width="16" height="5.33" fill="#000"/><rect y="5.33" width="16" height="5.33" fill="#DD0000"/><rect y="10.66" width="16" height="5.34" fill="#FFCC00"/></g></svg>
+                <span>Casino Berlin, Berlin</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Mar 18 – Mar 21, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€50 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Brussels Classic -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Brussels Classic">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Brussels Classic</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-be-3"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-be-3)"><rect width="5.33" height="16" fill="#000"/><rect x="5.33" width="5.33" height="16" fill="#FDDA24"/><rect x="10.66" width="5.34" height="16" fill="#EF3340"/></g></svg>
+                <span>Grand Casino Brussels, Brussels</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Mar 25 – Mar 28, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: London Series -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="London Series">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">London Series</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-gb-4"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-gb-4)"><rect width="16" height="16" fill="#012169"/><rect x="6.5" width="3" height="16" fill="#C8102E"/><rect y="6.5" width="16" height="3" fill="#C8102E"/></g></svg>
+                <span>The Hippodrome, London</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Apr 1 – Apr 4, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€100 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Rotterdam Cup -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Rotterdam Cup">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Rotterdam Cup</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-nl-5"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-nl-5)"><rect width="16" height="5.33" fill="#AE1C28"/><rect y="5.33" width="16" height="5.33" fill="#FFF"/><rect y="10.66" width="16" height="5.34" fill="#21468B"/></g></svg>
+                <span>Holland Casino, Rotterdam</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Apr 8 – Apr 11, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€50 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Munich Invitational -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Munich Invitational">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Munich Invitational</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-de-6"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-de-6)"><rect width="16" height="5.33" fill="#000"/><rect y="5.33" width="16" height="5.33" fill="#DD0000"/><rect y="10.66" width="16" height="5.34" fill="#FFCC00"/></g></svg>
+                <span>Bayerischer Poker Club, Munich</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Apr 15 – Apr 18, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 7: Antwerp Open -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Antwerp Open">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Antwerp Open</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-be-7"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-be-7)"><rect width="5.33" height="16" fill="#000"/><rect x="5.33" width="5.33" height="16" fill="#FDDA24"/><rect x="10.66" width="5.34" height="16" fill="#EF3340"/></g></svg>
+                <span>Stardust Casino, Antwerp</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Apr 22 – Apr 25, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€100 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 8: Edinburgh Grand -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Edinburgh Grand">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Edinburgh Grand</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-gb-8"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-gb-8)"><rect width="16" height="16" fill="#012169"/><rect x="6.5" width="3" height="16" fill="#C8102E"/><rect y="6.5" width="16" height="3" fill="#C8102E"/></g></svg>
+                <span>Grosvenor Casino, Edinburgh</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Apr 29 – May 2, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 9: The Hague Championship -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="The Hague Championship">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">The Hague Championship</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-nl-9"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-nl-9)"><rect width="16" height="5.33" fill="#AE1C28"/><rect y="5.33" width="16" height="5.33" fill="#FFF"/><rect y="10.66" width="16" height="5.34" fill="#21468B"/></g></svg>
+                <span>Holland Casino, The Hague</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>May 6 – May 9, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€50 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 10: Hamburg Open -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Hamburg Open">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Hamburg Open</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-de-10"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-de-10)"><rect width="16" height="5.33" fill="#000"/><rect y="5.33" width="16" height="5.33" fill="#DD0000"/><rect y="10.66" width="16" height="5.34" fill="#FFCC00"/></g></svg>
+                <span>Casino Esplanade, Hamburg</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>May 13 – May 16, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 11: Ghent Classic -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Ghent Classic">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Ghent Classic</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-be-11"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-be-11)"><rect width="5.33" height="16" fill="#000"/><rect x="5.33" width="5.33" height="16" fill="#FDDA24"/><rect x="10.66" width="5.34" height="16" fill="#EF3340"/></g></svg>
+                <span>Casino de Gand, Ghent</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>May 20 – May 23, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€100 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 12: Manchester Series -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Manchester Series">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Manchester Series</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-gb-12"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-gb-12)"><rect width="16" height="16" fill="#012169"/><rect x="6.5" width="3" height="16" fill="#C8102E"/><rect y="6.5" width="16" height="3" fill="#C8102E"/></g></svg>
+                <span>Manchester235, Manchester</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>May 27 – May 30, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€50 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 13: Utrecht Open -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Utrecht Open">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Utrecht Open</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-nl-13"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-nl-13)"><rect width="16" height="5.33" fill="#AE1C28"/><rect y="5.33" width="16" height="5.33" fill="#FFF"/><rect y="10.66" width="16" height="5.34" fill="#21468B"/></g></svg>
+                <span>Holland Casino, Utrecht</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Jun 3 – Jun 6, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 14: Cologne Cup -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Cologne Cup">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Cologne Cup</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-de-14"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-de-14)"><rect width="16" height="5.33" fill="#000"/><rect y="5.33" width="16" height="5.33" fill="#DD0000"/><rect y="10.66" width="16" height="5.34" fill="#FFCC00"/></g></svg>
+                <span>Poker Club Cologne, Cologne</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Jun 10 – Jun 13, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€50 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 15: Bruges Invitational -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Bruges Invitational">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Bruges Invitational</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-be-15"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-be-15)"><rect width="5.33" height="16" fill="#000"/><rect x="5.33" width="5.33" height="16" fill="#FDDA24"/><rect x="10.66" width="5.34" height="16" fill="#EF3340"/></g></svg>
+                <span>Casino Brugge, Bruges</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Jun 17 – Jun 20, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>Free entry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 16: Bristol Championship -->
+        <div class="tournament-card">
+          <div class="tournament-card-img">
+            <img src="assets/img/tournament_placeholder.png" alt="Bristol Championship">
+          </div>
+          <div class="tournament-card-body">
+            <h3 class="tournament-card-title">Bristol Championship</h3>
+            <div class="tournament-card-info">
+              <div class="tournament-card-row">
+                <svg class="tournaments-card-flag" viewBox="0 0 16 16"><clipPath id="fc-gb-16"><circle cx="8" cy="8" r="8"/></clipPath><g clip-path="url(#fc-gb-16)"><rect width="16" height="16" fill="#012169"/><rect x="6.5" width="3" height="16" fill="#C8102E"/><rect y="6.5" width="16" height="3" fill="#C8102E"/></g></svg>
+                <span>Grosvenor Casino, Bristol</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+                <span>Jun 24 – Jun 27, 2026</span>
+              </div>
+              <div class="tournament-card-row">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l6 4 6-4"/><rect x="2" y="3" width="12" height="10" rx="1.5"/></svg>
+                <span>€100 buy-in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/img/opc_logo.png" alt="OPC Europe" width="76" height="56">
+          <p>Open Poker Championship</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>About</h4>
+            <a href="index.html#about">What is OPC</a>
+            <a href="index.html#join">How it works</a>
+            <a href="#">Our mission</a>
+          </div>
+          <div class="footer-col">
+            <h4>For Players</h4>
+            <a href="ranking.html">Rankings</a>
+            <a href="tournaments.html">Tournaments</a>
+            <a href="#">Get verified</a>
+          </div>
+          <div class="footer-col">
+            <h4>For organizers</h4>
+            <a href="#">Partner with us</a>
+            <a href="#">Partnership benefits</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#">Responsible Gaming</a>
+            <a href="#">Terms &amp; Conditions</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 OPC Europe. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
