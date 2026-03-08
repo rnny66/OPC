@@ -1,5 +1,14 @@
 {
   "name": "opc",
   "private": true,
-  "workspaces": ["platform"]
+  "workspaces": ["platform"],
+  "scripts": {
+    "test": "npm run test:unit",
+    "test:unit": "npm -w platform test",
+    "test:watch": "npm -w platform run test:watch",
+    "test:coverage": "npm -w platform run test:coverage",
+    "test:e2e": "npm -w platform run test:e2e",
+    "test:db": "supabase test db",
+    "test:all": "npm run test:unit && npm run test:db && npm run test:e2e"
+  }
 }
