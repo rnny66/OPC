@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": ["platform"],
   "scripts": {
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:db",
     "test:unit": "npm -w platform test",
     "test:watch": "npm -w platform run test:watch",
     "test:coverage": "npm -w platform run test:coverage",
