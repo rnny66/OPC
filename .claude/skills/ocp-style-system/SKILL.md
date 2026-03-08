@@ -6,7 +6,7 @@ description: Use when writing or modifying CSS for the OPC project, adding new c
 # OPC Style System Reference
 
 ## Overview
-Quick reference for the OPC design token system and CSS conventions. Consult `docs/STYLE_GUIDE.md` for the full specification.
+Quick reference for the OPC design token system, CSS conventions, and animation patterns. Consult `docs/STYLE_GUIDE.md` for the full specification.
 
 ## Token Quick Reference
 
@@ -44,6 +44,66 @@ Tiny:    12px / 500 / 16px line-height
 6. **Responsive styles** — grouped at the end of `styles.css` by breakpoint
 7. **Breakpoints** — 1200px (large tablet), 992px (tablet), 640px (mobile)
 
+## Animation System
+
+All animations live in the `/* --- Animations --- */` section at the end of `styles.css`.
+
+### Hero Entrance (page load)
+```css
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-title    { animation: fadeInUp 0.6s ease both; }
+.hero-subtitle { animation: fadeInUp 0.6s ease 0.15s both; }
+.hero-actions  { animation: fadeInUp 0.6s ease 0.3s both; }
+```
+
+### Scroll Reveal
+```css
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+```
+- Add `.reveal` to any element that should animate on scroll
+- JS IntersectionObserver adds `.reveal--visible` when element enters viewport
+
+### Staggered Children
+```css
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.12s; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.16s; }
+```
+- Wrap grid/card containers with `.reveal-stagger` for cascading entrance
+
+### Animated SVG Lines
+```css
+@keyframes marchDown {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -24; }
+}
+.how-steps-line path { animation: marchDown 1.2s linear infinite; }
+```
+
+### Reduced Motion
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+```
+**Always** ensure the reduced-motion media query covers any new animations.
+
 ## Existing Components
 
 | Class | Use For |
@@ -58,6 +118,11 @@ Tiny:    12px / 500 / 16px line-height
 | `.event-card` | Tournament card |
 | `.how-card` | Step-by-step process card |
 | `.check-list` | List with check circle icons |
+| `.ranking-table` | Data table for leaderboard |
+| `.ranking-sidebar-card` | Info card in sidebar |
+| `.pagination-*` | Pagination controls |
+| `.reveal` | Scroll-reveal animation target |
+| `.reveal-stagger` | Container for staggered reveal children |
 
 ## Icon Conventions
 - Format: Inline SVG

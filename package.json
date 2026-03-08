@@ -1,0 +1,5 @@
+{
+  "name": "opc",
+  "private": true,
+  "workspaces": ["platform"]
+}

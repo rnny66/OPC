@@ -46,6 +46,9 @@ Before building new markup, check if these existing components match:
 - `.benefit-card` — feature cards with check lists
 - `.event-card` — tournament/event card
 - `.check-list` — bulleted list with check icons
+- `.ranking-table` — data table for leaderboard
+- `.ranking-sidebar-card` — sidebar info card
+- `.pagination-*` — pagination controls
 
 ### 4. Build HTML
 - Use semantic elements (`<section>`, `<aside>`, `<nav>`)
@@ -59,13 +62,34 @@ Before building new markup, check if these existing components match:
 - BEM naming: `.component`, `.component-element`, `.component--modifier`
 - Match Figma spacing exactly using the 4px grid system
 
-### 6. Responsive adaptation
+### 6. Add animations
+- Add `.reveal` class to content sections for scroll-reveal entrance
+- Use `.reveal-stagger` on grids/card containers for cascading effect
+- Include IntersectionObserver JS if the page has `.reveal` elements
+- Any new keyframe animations must be covered by the `@media (prefers-reduced-motion: reduce)` block
+
+### 7. Responsive adaptation
 Design is desktop-first. Add responsive overrides for:
 - **992px**: Stack columns, reduce padding
 - **640px**: Single column, smaller type, hide nav
+
+### 8. Test and verify (MANDATORY)
+Use `superpowers:test-driven-development` skill:
+- [ ] Compare implementation side-by-side with Figma design
+- [ ] Check all token mappings are correct (no hardcoded colors)
+- [ ] Test at 1200px, 992px, and 640px
+- [ ] Verify scroll animations work and respect reduced-motion
+- [ ] Check accessibility (alt text, keyboard nav, contrast)
+
+### 9. Document
+- If new components or patterns were added, update `docs/STYLE_GUIDE.md`
+- Update relevant plan docs to mark tasks complete
+- Update CLAUDE.md and skills if conventions changed
 
 ## Common Mistakes
 - Creating new color values instead of mapping to tokens
 - Using `px` colors that are 1-2 values off from tokens (e.g., `#93959b` instead of `--color-text-secondary`)
 - Forgetting responsive styles
 - Building a new component when an existing one matches
+- Forgetting to add `.reveal` classes for scroll animations
+- Adding new animations without updating the reduced-motion media query
