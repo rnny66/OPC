@@ -82,6 +82,11 @@ a {
 
 .btn-primary:hover {
   background-color: #1a5dd4;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-outline {
@@ -101,8 +106,15 @@ a {
   top: 0;
   z-index: 100;
   background-color: var(--color-bg-primary);
-  box-shadow: 0 1px 2px rgba(10,13,18,0.05);
   height: 80px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.header--scrolled {
+  border-bottom-color: var(--color-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .header-container {
@@ -152,6 +164,56 @@ a {
 .nav-link svg {
   width: 16px;
   height: 16px;
+}
+
+/* --- Nav Dropdown --- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown .nav-link svg {
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown:hover .nav-link svg {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  min-width: 200px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-dropdown-menu a:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-card);
 }
 
 /* --- Hero --- */
@@ -238,6 +300,12 @@ a {
   gap: 16px;
   box-shadow: var(--shadow-xs);
   flex: 1;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(10,13,18,0.2);
 }
 
 .stat-card-avatars {
@@ -367,8 +435,16 @@ a {
   transition: color 0.2s;
 }
 
+.link-arrow svg {
+  transition: transform 0.2s ease;
+}
+
 .link-arrow:hover {
   color: var(--color-brand);
+}
+
+.link-arrow:hover svg {
+  transform: translate(3px, -3px);
 }
 
 /* --- Section Headers --- */
@@ -610,6 +686,12 @@ a {
   border-radius: var(--radius-lg);
   padding: 20px;
   box-shadow: var(--shadow-xs);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(10,13,18,0.2);
 }
 
 .event-title {
@@ -705,6 +787,10 @@ a {
   align-items: flex-start;
 }
 
+
+.founder-block--reversed {
+  flex-direction: row-reverse;
+}
 
 .founder-image {
   flex: 0 0 328px;
@@ -880,13 +966,53 @@ a {
    ========================================== */
 
 @media (max-width: 1200px) {
+  .hero {
+    min-height: auto;
+  }
+
   .hero-container {
     padding: 38px 40px 0;
+    min-height: auto;
+  }
+
+  .hero-content {
+    width: 45%;
+    flex: 0 0 45%;
   }
 
   .hero-image {
-    right: 40px;
+    position: relative;
+    right: auto;
+    top: auto;
     width: 50%;
+    height: 500px;
+    border-radius: 200px 24px 24px 24px;
+    flex-shrink: 0;
+  }
+
+  .about {
+    min-height: auto;
+  }
+
+  .about-container {
+    min-height: auto;
+    padding: 0 40px;
+  }
+
+  .about-image {
+    position: relative;
+    left: auto;
+    width: 50%;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 24px 200px 24px 24px;
+  }
+
+  .about-text {
+    width: auto;
+    flex: 1;
+    margin-left: 0;
+    padding: 80px 0 80px 40px;
   }
 
   .events-grid {
@@ -904,6 +1030,7 @@ a {
 
   .hero-content {
     width: 100%;
+    flex: 0 0 auto;
     padding-right: 0;
     margin-bottom: 40px;
   }
@@ -914,12 +1041,9 @@ a {
   }
 
   .hero-image {
-    position: relative;
-    right: auto;
-    top: auto;
     width: 100%;
     height: 400px;
-    border-top-left-radius: 120px;
+    border-radius: 120px 24px 24px 24px;
   }
 
   .stats {
@@ -938,16 +1062,28 @@ a {
     flex: 1 1 45%;
   }
 
+  .about {
+    min-height: auto;
+  }
+
   .about-container {
     flex-direction: column;
+    min-height: auto;
+    padding: 0;
   }
 
   .about-image {
+    position: relative;
+    left: auto;
     flex: none;
+    width: 100%;
     height: 400px;
+    border-radius: 0;
   }
 
   .about-text {
+    width: 100%;
+    margin-left: 0;
     padding: 64px 40px;
   }
 
@@ -1027,6 +1163,10 @@ a {
     display: none;
   }
 
+  .hero-container {
+    padding: 24px 16px 0;
+  }
+
   .hero-title {
     font-size: 32px;
     line-height: 40px;
@@ -1046,6 +1186,10 @@ a {
     border-top-left-radius: 80px;
   }
 
+  .stats {
+    padding: 48px 16px;
+  }
+
   .stats-container {
     flex-direction: column;
   }
@@ -1053,6 +1197,14 @@ a {
   .stat-card, .stat-card-avatars {
     flex: none;
     width: 100%;
+  }
+
+  .about-image {
+    height: 280px;
+  }
+
+  .about-text {
+    padding: 40px 16px;
   }
 
   .about-paragraphs p {
@@ -1070,8 +1222,37 @@ a {
     line-height: 36px;
   }
 
+  .why-join {
+    padding: 48px 16px;
+  }
+
+  .how-it-works {
+    padding: 48px 16px;
+  }
+
+  .events {
+    padding: 48px 16px;
+  }
+
   .events-grid {
     grid-template-columns: 1fr;
+  }
+
+  .founders {
+    padding: 48px 16px;
+  }
+
+  .founder-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .partners {
+    padding: 48px 16px;
+  }
+
+  .footer {
+    padding: 32px 16px;
   }
 
   .footer-links {
@@ -1262,8 +1443,20 @@ a {
   vertical-align: middle;
 }
 
+.ranking-row {
+  transition: background 0.2s ease;
+}
+
+.ranking-row:hover {
+  background: rgba(46, 144, 250, 0.04);
+}
+
 .ranking-row:nth-child(even) {
   background: rgba(255, 255, 255, 0.02);
+}
+
+.ranking-row:nth-child(even):hover {
+  background: rgba(46, 144, 250, 0.04);
 }
 
 .ranking-row--top {
@@ -1534,6 +1727,12 @@ a {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-xs);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tournament-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(10,13,18,0.2);
 }
 
 .tournament-card-img {
@@ -1545,6 +1744,11 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tournament-card:hover .tournament-card-img img {
+  transform: scale(1.05);
 }
 
 .tournament-card-body {
@@ -1584,4 +1788,105 @@ a {
   height: 16px;
   flex-shrink: 0;
   stroke: var(--color-text-tertiary);
+}
+
+/* --- Tournaments Page Responsive --- */
+@media (max-width: 1200px) {
+  .tournaments-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .tournaments-page {
+    padding: 32px 40px 64px;
+  }
+
+  .tournaments-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .tournaments-page {
+    padding: 24px 16px 48px;
+  }
+
+  .tournaments-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tournaments-filters {
+    flex-wrap: wrap;
+  }
+
+  .tournaments-sort {
+    flex-wrap: wrap;
+  }
+
+  .tournaments-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Animations --- */
+
+/* Hero entrance (page load) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title {
+  animation: fadeInUp 0.6s ease both;
+}
+
+.hero-subtitle {
+  animation: fadeInUp 0.6s ease 0.15s both;
+}
+
+.hero-actions {
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children in grids */
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.12s; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.16s; }
+
+/* Animated SVG connector lines (How It Works) — marching dashes */
+@keyframes marchDown {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -24; }
+}
+
+.how-steps-line path {
+  animation: marchDown 1.2s linear infinite;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
