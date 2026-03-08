@@ -1225,3 +1225,71 @@ a {
   left: 0;
   color: var(--color-text-tertiary);
 }
+
+/* Ranking Table */
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ranking-col-rank { width: 60px; }
+.ranking-col-name { min-width: 200px; }
+.ranking-col-home,
+.ranking-col-nationality { width: 100px; }
+.ranking-col-points { width: 130px; }
+.ranking-col-tournaments { width: 140px; }
+
+.ranking-row td {
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.ranking-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ranking-row--top {
+  background: rgba(46, 144, 250, 0.06);
+}
+
+.ranking-row--top td {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.ranking-row td:first-child {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ranking-row td:nth-child(2) {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.ranking-flag {
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ranking-flag + .ranking-flag {
+  margin-left: 4px;
+}
