@@ -1,0 +1,174 @@
+# OPC Platform — Testing Guide
+
+## Overview
+
+The project uses three testing layers: unit tests (Vitest), database tests (pgTAP), and E2E tests (Playwright). TDD is mandatory for all feature work.
+
+## Test Scripts
+
+```bash
+# From project root (c:/Users/ronal/GitHub/OCP)
+npm run test:unit      # Vitest — unit + component tests
+npm run test:watch     # Vitest in watch mode
+npm run test:coverage  # Vitest with v8 coverage report
+npm run test:db        # pgTAP — database schema + RLS tests
+npm run test:e2e       # Playwright — end-to-end browser tests
+npm run test:all       # All three layers sequentially
+```
+
+## Unit Tests (Vitest + React Testing Library)
+
+### Configuration
+- **Config:** `platform/vitest.config.ts`
+- **Setup:** `platform/vitest.setup.ts` (jest-dom matchers + MSW lifecycle)
+- **Environment:** jsdom
+- **Coverage:** v8 provider, includes `app/`, `components/`, `lib/`
+
+### Test Utilities (`platform/test-utils/`)
+
+**`renderWithProviders()`** — Wraps RTL render with app providers:
+```tsx
+import { renderWithProviders } from '@/test-utils'
+renderWithProviders(<MyComponent />)
+```
+
+**Data factories** — Create test data with defaults:
+```ts
+import { buildProfile, buildTournament, buildRegistration } from '@/test-utils'
+const profile = buildProfile({ display_name: 'Test Player' })
+const tournament = buildTournament({ country: 'NL' })
+```
+
+**MSW handlers** — Default Supabase auth mock (returns 401 for unauthenticated):
+```ts
+// platform/test-utils/msw/handlers.ts
+import { http, HttpResponse } from 'msw'
+```
+
+### Testing Next.js Client Components
+
+Components using `useRouter()` or `useSearchParams()` need mocks:
+
+```tsx
+import { vi } from 'vitest'
+import { render, screen, cleanup } from '@testing-library/react'
+import { Suspense } from 'react'
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(),
+}))
+
+// Wrap in Suspense for useSearchParams
+function renderMyComponent() {
+  return render(
+    <Suspense fallback={null}>
+      <MyComponent />
+    </Suspense>
+  )
+}
+
+// Use cleanup between tests
+afterEach(() => cleanup())
+```
+
+### Current Test Count: 21
+
+| File | Tests | What it covers |
+|------|-------|----------------|
+| `lib/__tests__/smoke.test.ts` | 1 | Vitest works |
+| `test-utils/__tests__/factories.test.ts` | 4 | Data factories |
+| `test-utils/__tests__/msw.test.ts` | 1 | MSW server |
+| `test-utils/__tests__/render.test.tsx` | 1 | Render helper |
+| `lib/supabase/__tests__/client.test.ts` | 1 | Browser client creation |
+| `lib/__tests__/middleware-routes.test.ts` | 5 | Route classification |
+| `components/auth/__tests__/login-form.test.tsx` | 4 | Login form rendering |
+| `components/auth/__tests__/signup-form.test.tsx` | 4 | Signup form rendering |
+
+## Database Tests (pgTAP)
+
+### Location
+`supabase/tests/*.test.sql`
+
+### Running
+```bash
+npm run test:db
+# or: supabase test db
+```
+
+### Test Files
+
+| File | Tests | What it covers |
+|------|-------|----------------|
+| `00_smoke.test.sql` | 1 | pgTAP works |
+| `01_profiles.test.sql` | 5 | Table exists, columns, RLS enabled |
+| `02_tournaments.test.sql` | 5 | Table exists, columns, RLS enabled |
+| `03_registrations.test.sql` | 4 | Table exists, columns, RLS enabled |
+
+### Pattern
+```sql
+BEGIN;
+SELECT plan(N);
+
+SELECT has_table('public', 'table_name', 'description');
+SELECT has_column('public', 'table_name', 'column', 'description');
+SELECT is(
+  (SELECT relrowsecurity FROM pg_class WHERE relname = 'table_name'),
+  true,
+  'should have RLS enabled'
+);
+
+SELECT * FROM finish();
+ROLLBACK;
+```
+
+## E2E Tests (Playwright)
+
+### Configuration
+- **Config:** `platform/playwright.config.ts`
+- **Browsers:** Chromium only
+- **Base URL:** `http://localhost:3000`
+- **Reports:** HTML reporter
+
+### Running
+```bash
+npm run test:e2e           # Headless
+npm -w platform run test:e2e:headed   # With browser window
+npm -w platform run test:e2e:ui       # Playwright UI
+```
+
+### Current Tests
+- `e2e/smoke.spec.ts` — Verifies the app loads
+
+## TDD Workflow
+
+1. **Write the failing test** (RED)
+2. **Run test** to confirm it fails for the right reason
+3. **Write minimum implementation** (GREEN)
+4. **Run test** to confirm it passes
+5. **Refactor** if needed
+6. **Run all tests** to check for regressions
+7. **Commit**
+
+## Adding New Tests
+
+### For a new component:
+```
+platform/components/my-feature/__tests__/my-component.test.tsx
+```
+
+### For a new lib module:
+```
+platform/lib/my-module/__tests__/my-module.test.ts
+```
+
+### For a new database table:
+```
+supabase/tests/0N_table_name.test.sql
+```
+
+### For a new E2E flow:
+```
+platform/e2e/feature-name.spec.ts
+```
