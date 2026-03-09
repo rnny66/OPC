@@ -11,10 +11,14 @@ export interface NavItem {
   icon: string
 }
 
-interface SidebarLayoutProps {
+export interface NavSection {
+  label?: string
   items: NavItem[]
+}
+
+interface SidebarLayoutProps {
+  sections: NavSection[]
   bottomItems?: NavItem[]
-  title?: string
   children: React.ReactNode
 }
 
@@ -40,9 +44,8 @@ const linkStyle = (
 })
 
 export function SidebarLayout({
-  items,
+  sections,
   bottomItems = [],
-  title = 'OPC Europe',
   children,
 }: SidebarLayoutProps) {
   const [collapsed, setCollapsed] = useState(false)
@@ -105,7 +108,7 @@ export function SidebarLayout({
                 whiteSpace: 'nowrap',
               }}
             >
-              {title}
+              OPC Europe
             </span>
           )}
           <button
@@ -129,7 +132,7 @@ export function SidebarLayout({
           </button>
         </div>
 
-        {/* Main nav items */}
+        {/* Main nav sections */}
         <nav
           style={{
             display: 'flex',
@@ -139,18 +142,47 @@ export function SidebarLayout({
             flex: 1,
           }}
         >
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={collapsed ? item.label : undefined}
-              style={linkStyle(isActive(item.href), collapsed)}
-            >
-              <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
-                {item.icon}
-              </span>
-              {!collapsed && item.label}
-            </Link>
+          {sections.map((section, sectionIndex) => (
+            <div key={section.label ?? sectionIndex}>
+              {section.label && (
+                collapsed ? (
+                  <div
+                    style={{
+                      borderTop: '1px solid var(--color-border, #23272f)',
+                      margin: '0.5rem 0.75rem',
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      padding: '0.5rem 0.75rem 0.25rem',
+                      fontSize: '0.6875rem',
+                      fontWeight: 600,
+                      color: 'var(--color-text-secondary, #8b8b8b)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      whiteSpace: 'nowrap',
+                      marginTop: sectionIndex > 0 ? '0.25rem' : 0,
+                    }}
+                  >
+                    {section.label}
+                  </div>
+                )
+              )}
+              {section.items.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  title={collapsed ? item.label : undefined}
+                  style={linkStyle(isActive(item.href), collapsed)}
+                >
+                  <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
+                    {item.icon}
+                  </span>
+                  {!collapsed && item.label}
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
 

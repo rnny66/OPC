@@ -224,11 +224,91 @@ Links players to earned achievements.
 
 ---
 
+### `country_config`
+
+Configuration for country-specific points and ranking weights. Seeded with 15 European countries.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `country_code` | text (PK) | — | ISO country code |
+| `country_name` | text | — | Display name |
+| `global_multiplier` | numeric | `1.0` | Weight for global ranking |
+| `custom_brackets` | jsonb | null | Per-country bracket overrides |
+| `created_at` | timestamptz | `now()` | Creation time |
+| `updated_at` | timestamptz | `now()` | Auto-updated via trigger |
+
+**Seed data:** 15 European countries (NL, DE, BE, GB, FR, ES, IT, PT, AT, CH, SE, DK, NO, FI, PL).
+
+**RLS Policies:**
+- **Select:** Public — anyone can read country config
+- **Insert/Update/Delete:** Admins only
+
+**Triggers:**
+- Auto-insert trigger for new tournament countries (adds new country_config row when a tournament uses an unknown country code)
+
+---
+
+### `default_points_brackets`
+
+Defines base points awarded per placement range. Editable by admins.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Bracket ID |
+| `placement_min` | integer | — | Start of placement range |
+| `placement_max` | integer | null | End of range (null = unbounded) |
+| `base_points` | integer | — | Points awarded for this range |
+
+**Seed data:** 9 bracket ranges (1st: 1000, 2nd: 750, 3rd: 500, etc.)
+
+**RLS Policies:**
+- **Select:** Public — anyone can read brackets
+- **Insert/Update/Delete:** Admins only
+
+---
+
+### `player_country_stats`
+
+Per-player per-country ranking statistics. Updated by Postgres functions.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `player_id` | uuid (FK) | — | References `profiles(id)` |
+| `country_code` | text (FK) | — | References `country_config(country_code)` |
+| `total_points` | integer | `0` | Sum of points in this country |
+| `tournament_count` | integer | `0` | Tournaments played in this country |
+| `win_count` | integer | `0` | 1st place finishes in this country |
+| `top3_count` | integer | `0` | Top 3 finishes in this country |
+| `avg_finish` | numeric | null | Average placement in this country |
+| `best_finish` | integer | null | Best placement in this country |
+| `current_rank` | integer | null | Current rank in this country |
+| `previous_rank` | integer | null | Previous rank in this country |
+| `last_computed` | timestamptz | null | Last recompute time |
+
+**Primary Key:** `(player_id, country_code)`
+
+**RLS Policies:**
+- **Select:** Public — anyone can read country stats
+
+---
+
 ## Future Tables (Phase 5)
 
 | Table | Phase | Purpose |
 |-------|-------|---------|
 | `admin_invitations` | 5 | Organizer invitation tracking |
+
+## Postgres Functions
+
+| Function | Description |
+|----------|-------------|
+| `calculate_points(placement, multiplier, country)` | Calculate points for a placement using brackets + multiplier |
+| `compute_player_stats(player_uuid)` | Recompute aggregated stats for a single player |
+| `compute_all_player_stats()` | Recompute stats for all players |
+| `check_achievements(player_uuid)` | Check and award achievements for a player |
+
+**Triggers:**
+- On `tournament_results` insert/update: auto-calls `compute_player_stats` and `check_achievements` for the affected player
 
 ## Entity Relationship
 
@@ -245,7 +325,13 @@ auth.users ──(trigger)──> profiles
                             │
                             ├── player_stats (player_id)
                             │
+                            ├── player_country_stats (player_id)
+                            │     │
+                            │     └── country_config (country_code)
+                            │
                             └── player_achievements (player_id)
                                   │
                                   └── achievements (achievement_id)
+
+country_config ←── default_points_brackets (standalone config)
 ```

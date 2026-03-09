@@ -37,21 +37,26 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── signup/page.tsx
 │   │   │   └── verify-email/page.tsx
 │   │   ├── (player)/
-│   │   │   ├── layout.tsx      # Player layout with nav links
+│   │   │   ├── layout.tsx      # Player layout (delegates to AppSidebar)
 │   │   │   ├── dashboard/page.tsx  # Registrations list + stats
 │   │   │   ├── profile/page.tsx    # Profile edit + avatar upload
 │   │   │   └── tournaments/
 │   │   │       ├── page.tsx        # Browse with filters/pagination
 │   │   │       └── [id]/page.tsx   # Detail + registration button
 │   │   ├── (organizer)/
-│   │   │   ├── layout.tsx      # Organizer layout
+│   │   │   ├── layout.tsx      # Organizer layout (delegates to AppSidebar)
 │   │   │   └── organizer/      # URL prefix to avoid route conflicts
 │   │   │       ├── dashboard/page.tsx         # Organizer stats + tournament table
 │   │   │       └── tournaments/
 │   │   │           ├── new/page.tsx            # Create tournament
 │   │   │           └── [id]/
 │   │   │               ├── page.tsx            # Edit tournament
-│   │   │               └── registrations/page.tsx  # Registration management
+│   │   │               ├── registrations/page.tsx  # Registration management
+│   │   │               └── results/page.tsx        # Results entry (Phase 3B)
+│   │   ├── (admin)/
+│   │   │   ├── layout.tsx      # Admin layout (delegates to AppSidebar)
+│   │   │   └── admin/
+│   │   │       └── points-config/page.tsx     # Bracket + country config (Phase 3C)
 │   │   └── auth/
 │   │       └── callback/route.ts   # OAuth code exchange
 │   ├── components/
@@ -72,15 +77,25 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── profile/
 │   │   │   ├── profile-form.tsx         # Client Component
 │   │   │   └── __tests__/
-│   │   └── organizer/
-│   │       ├── tournament-form.tsx             # Client Component (create/edit)
-│   │       ├── registration-status-select.tsx  # Client Component
-│   │       ├── export-csv-button.tsx           # Client Component
-│   │       └── __tests__/
+│   │   ├── organizer/
+│   │   │   ├── tournament-form.tsx             # Client Component (create/edit)
+│   │   │   ├── results-entry-form.tsx          # Client Component (Phase 3B)
+│   │   │   ├── registration-status-select.tsx  # Client Component
+│   │   │   ├── export-csv-button.tsx           # Client Component
+│   │   │   └── __tests__/
+│   │   ├── admin/
+│   │   │   ├── points-config-editor.tsx        # Client Component (Phase 3C)
+│   │   │   └── __tests__/
+│   │   └── layout/
+│   │       ├── sidebar-layout.tsx              # Reusable sidebar layout shell
+│   │       └── app-sidebar.tsx                 # Unified role-based sidebar
 │   ├── lib/
+│   │   ├── points.ts              # Client-side points calculation utility
 │   │   ├── actions/
 │   │   │   ├── tournament.ts      # createTournament, updateTournament (Server Actions)
-│   │   │   └── registration.ts    # updateRegistrationStatus (Server Action)
+│   │   │   ├── registration.ts    # updateRegistrationStatus (Server Action)
+│   │   │   ├── results.ts         # saveResults (Server Action, Phase 3B)
+│   │   │   └── admin.ts           # updateDefaultBrackets, updateCountryConfig, recomputeAllStats (Phase 3C)
 │   │   ├── auth/
 │   │   │   └── routes.ts          # classifyRoute() — pure function
 │   │   ├── supabase/
@@ -111,7 +126,10 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── 004_avatar_storage.sql
 │   │   ├── 005_tournament_results.sql
 │   │   ├── 006_player_stats.sql
-│   │   └── 007_achievements.sql
+│   │   ├── 007_achievements.sql
+│   │   ├── 008_points_functions.sql
+│   │   ├── 009_country_points.sql
+│   │   └── 010_country_stats_functions.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
@@ -119,7 +137,9 @@ OCP/                            # Root (npm workspaces)
 │       ├── 03_registrations.test.sql
 │       ├── 04_tournament_results.test.sql
 │       ├── 05_player_stats.test.sql
-│       └── 06_achievements.test.sql
+│       ├── 06_achievements.test.sql
+│       ├── 008_points_functions.test.sql
+│       └── 009_country_points.test.sql
 └── docs/
     ├── STYLE_GUIDE.md
     ├── functional/                # Functional documentation
@@ -182,7 +202,7 @@ Next.js App Router
 
 ### Server Actions (`'use server'`)
 - Located in `lib/actions/` directory
-- Used for form mutations: `createTournament`, `updateTournament`, `updateRegistrationStatus`
+- Used for form mutations: `createTournament`, `updateTournament`, `updateRegistrationStatus`, `saveResults`, `updateDefaultBrackets`, `updateCountryConfig`, `recomputeAllStats`
 - Called from client components via form actions or direct invocation
 - Validate input, check auth/role, perform Supabase operations, revalidate paths
 
@@ -192,7 +212,7 @@ Next.js App Router
 - **Location:** `__tests__/` directories alongside source files
 - **Setup:** `vitest.setup.ts` configures jest-dom matchers + MSW server lifecycle
 - **Mocking:** MSW for Supabase API, `vi.mock('next/navigation')` for router
-- **Run:** `npm run test:unit` (74 tests, 18 files)
+- **Run:** `npm run test:unit` (102 tests, 21 files)
 
 ### Database Tests (pgTAP)
 - **Location:** `supabase/tests/*.test.sql`

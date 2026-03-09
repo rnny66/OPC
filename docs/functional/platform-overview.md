@@ -27,6 +27,8 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 - Invite users to become organizers
 - Oversee all tournaments and registrations
 - Manage user accounts and roles
+- Configure points brackets and country multipliers
+- Recompute all player stats
 - Access admin dashboard with platform-wide statistics
 
 ## Core Features
@@ -61,10 +63,17 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 - Organizers can require verification per tournament via `requires_verification` flag
 - Verification status stored on player profile (`identity_verified`, `identity_verified_at`)
 
-### Points & Rankings (Phase 4)
-- Points awarded based on tournament placement:
-  - 1st: 1000 points, 2nd: 750, 3rd: 500, etc.
+### Points & Rankings
+- Points awarded based on configurable placement brackets (default 9 ranges)
+  - Brackets stored in `default_points_brackets` table, editable by admins
   - Multiplied by tournament's `points_multiplier`
+- Country-aware weighted global ranking via `country_config` table
+  - 15 European countries seeded with global multipliers
+  - Per-country custom bracket overrides supported
+- Per-country player stats tracked in `player_country_stats`
+- Automatic stats recomputation via Postgres triggers on result entry
+- Achievement checking triggered automatically after stats update
+- Admin UI at `/admin/points-config` for managing brackets and country multipliers
 - Public leaderboard with country-based filtering
 - Player stats: total points, tournaments played, wins, current rank
 
@@ -97,6 +106,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 ### Admin (admin role required)
 | Page | URL | Description |
 |------|-----|-------------|
+| Points Config | `/admin/points-config` | Configure default brackets, country multipliers |
 | Admin Dashboard | `/admin/dashboard` | Platform statistics (Phase 5) |
 | User Management | `/admin/users` | Manage accounts (Phase 5) |
 | Organizer Invites | `/admin/organizers` | Invite organizers (Phase 5) |
@@ -109,6 +119,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 1 | Foundation — auth, database, middleware | ✅ Complete |
 | 2 | Tournament browse, register, dashboard, profile | ✅ Complete |
 | 3A | Organizer tools — dashboard, tournament CRUD, registration management | ✅ Complete |
-| 3B | Results entry, points calculation, achievement logic | Planned |
+| 3B | Results entry, points calculation, achievement logic | ✅ Complete |
+| 3C | Country points, admin points config UI | ✅ Complete |
 | 4 | Rankings, player stats, achievements, leaderboard | Planned |
 | 5 | Didit verification, admin panel, email notifications | Planned |

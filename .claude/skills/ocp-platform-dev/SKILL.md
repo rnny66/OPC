@@ -29,6 +29,10 @@ OCP/
 │   │   ├── (player)/       # dashboard, profile, tournaments
 │   │   ├── (organizer)/    # organizer dashboard, tournament CRUD, registrations
 │   │   │   └── organizer/  # URL prefix (avoids route group conflicts)
+│   │   │       └── tournaments/[id]/results/ # Results entry page
+│   │   ├── (admin)/        # Admin pages
+│   │   │   └── admin/
+│   │   │       └── points-config/ # Points bracket & country config
 │   │   ├── auth/callback/  # OAuth code exchange route
 │   │   ├── layout.tsx      # Root layout (Inter font)
 │   │   ├── globals.css     # Base styles (imports tokens.css)
@@ -38,16 +42,19 @@ OCP/
 │   │   ├── tournaments/    # TournamentCard, FilterBar, Pagination, RegistrationButton
 │   │   ├── dashboard/      # CancelRegistrationButton
 │   │   ├── profile/        # ProfileForm
+│   │   ├── layout/         # sidebar-layout.tsx, app-sidebar.tsx
+│   │   ├── admin/          # points-config-editor.tsx
 │   │   └── organizer/      # TournamentForm, RegistrationStatusSelect, ExportCsvButton
 │   ├── lib/
-│   │   ├── actions/        # Server Actions (tournament.ts, registration.ts)
+│   │   ├── actions/        # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts)
+│   │   ├── points.ts      # Client-side points calculation
 │   │   ├── auth/routes.ts  # Route classification logic
 │   │   └── supabase/       # client.ts, server.ts, admin.ts, middleware.ts
 │   ├── middleware.ts        # Route protection + session refresh
 │   ├── test-utils/         # MSW handlers, render helpers, data factories
 │   └── e2e/                # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/         # 001_profiles through 007_achievements
+│   ├── migrations/         # 001_profiles through 010_country_stats_functions
 │   └── tests/              # pgTAP tests
 └── docs/plans/
 ```
@@ -75,6 +82,9 @@ OCP/
   - RLS: public read, function-only writes
 - `achievements` — badge definitions (6 seeded), `player_achievements` — earned badges
   - RLS: public read
+- `country_config` — country codes, multipliers, custom brackets (15 seeded)
+- `default_points_brackets` — configurable placement→points mapping (9 seeded)
+- `player_country_stats` — per-country per-player rankings
 
 ### Auth & Middleware
 - **Supabase Auth:** email/password + Google + Facebook OAuth
@@ -109,7 +119,14 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
   ```
 - Use `cleanup()` from RTL and `afterEach` in component tests
 - **Server Actions** (`'use server'`) in `lib/actions/` for form mutations
+  - `tournament.ts` — createTournament, updateTournament
+  - `registration.ts` — updateRegistrationStatus
+  - `results.ts` — saveResults
+  - `admin.ts` — updateDefaultBrackets, updateCountryConfig, recomputeAllStats
 - **Route groups with URL prefix:** use `(organizer)/organizer/` pattern to avoid conflicts between route groups that need the same URL prefix
+- **Unified sidebar navigation:** `AppSidebar` server component (`components/layout/app-sidebar.tsx`) fetches user role and builds unified nav
+  - All route group layouts (player, organizer, admin) delegate to `AppSidebar`
+  - `SidebarLayout` uses `NavSection[]` with optional section labels for role-based grouping
 
 ### 4. Supabase conventions
 - Migrations in `supabase/migrations/` with numbered names (001_, 002_, etc.)
@@ -120,7 +137,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (74 tests, 18 files)
+npm run test:unit     # Vitest (102 tests, 21 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -149,7 +166,8 @@ After completing each phase:
 | 1 | Monorepo, auth, Supabase setup | ✅ Complete | `phase-1-foundation.md` |
 | 2 | Tournament browse, register, dashboard | ✅ Complete | `phase-2-tournament-flow.md` |
 | 3A | Organizer dashboard, tournament CRUD, registrations | ✅ Complete | `phase-3-organizer-tools.md` |
-| 3B | Results entry, points calculation, achievements | Planned | `phase-3-organizer-tools.md` |
+| 3B | Results entry, points calculation, achievements | ✅ Complete | `phase-3-organizer-tools.md` |
+| 3C | Country points, admin UI, unified sidebar | ✅ Complete | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | Planned | `phase-4-rankings-stats.md` |
 | 5 | Didit verification, admin panel, emails | Planned | `phase-5-verification-admin.md` |
 

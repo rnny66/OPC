@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { calculateBasePoints, calculatePoints } from '../points'
+import { calculateBasePoints, calculatePoints, type PointsBracket } from '../points'
 
 describe('calculateBasePoints', () => {
   it.each([
@@ -36,5 +36,21 @@ describe('calculatePoints', () => {
   it('floors the result', () => {
     expect(calculatePoints(1, 1.3)).toBe(1300)
     expect(calculatePoints(6, 1.5)).toBe(450)
+  })
+})
+
+describe('calculateBasePoints with custom brackets', () => {
+  const customBrackets: PointsBracket[] = [
+    { min: 1, max: 1, points: 500 },
+    { min: 2, max: 3, points: 250 },
+    { min: 4, max: null, points: 100 },
+  ]
+
+  it('uses custom brackets when provided', () => {
+    expect(calculateBasePoints(1, customBrackets)).toBe(500)
+    expect(calculateBasePoints(2, customBrackets)).toBe(250)
+    expect(calculateBasePoints(3, customBrackets)).toBe(250)
+    expect(calculateBasePoints(4, customBrackets)).toBe(100)
+    expect(calculateBasePoints(99, customBrackets)).toBe(100)
   })
 })

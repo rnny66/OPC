@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 74 (18 files)
+### Current Test Count: 102 (21 files)
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -95,6 +95,11 @@ afterEach(() => cleanup())
 | `components/organizer/__tests__/registration-status-select.test.tsx` | — | Status dropdown |
 | `components/organizer/__tests__/export-csv-button.test.tsx` | — | CSV export |
 | `lib/actions/__tests__/tournament.test.ts` | — | Server Action mocking |
+| `lib/__tests__/points.test.ts` | 17 | Points calculation brackets + multiplier + custom brackets |
+| `lib/actions/__tests__/results.test.ts` | — | Results server action |
+| `components/organizer/__tests__/results-entry-form.test.tsx` | 7 | Results entry form |
+| `components/admin/__tests__/points-config-editor.test.tsx` | 4 | Admin points config editor |
+| `app/(organizer)/organizer/tournaments/[id]/results/__tests__/page.test.tsx` | — | Results page |
 
 ### Testing Server Actions
 
@@ -131,6 +136,8 @@ npm run test:db
 | `04_tournament_results.test.sql` | — | Table exists, columns, RLS enabled |
 | `05_player_stats.test.sql` | — | Table exists, columns, RLS enabled |
 | `06_achievements.test.sql` | — | Tables exist, columns, seed data, RLS enabled |
+| `008_points_functions.test.sql` | — | Points functions, triggers, stats computation |
+| `009_country_points.test.sql` | — | Country config, brackets, country stats tables + RLS |
 
 ### Pattern
 ```sql
