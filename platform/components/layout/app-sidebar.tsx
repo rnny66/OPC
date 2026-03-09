@@ -22,6 +22,7 @@ export async function AppSidebar({ children }: { children: React.ReactNode }) {
     {
       items: [
         { href: '/dashboard', label: 'Dashboard', icon: '📊' },
+        { href: '/rankings', label: 'Rankings', icon: '🏅' },
         { href: '/tournaments', label: 'Tournaments', icon: '🏆' },
       ],
     },

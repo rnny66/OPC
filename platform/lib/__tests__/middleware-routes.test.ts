@@ -35,4 +35,9 @@ describe('route classification', () => {
     expect(classifyRoute('/about')).toBe('public')
     expect(classifyRoute('/tournaments')).toBe('public')
   })
+
+  it('classifies rankings and player profile routes as public', () => {
+    expect(classifyRoute('/rankings')).toBe('public')
+    expect(classifyRoute('/players/john-doe')).toBe('public')
+  })
 })
