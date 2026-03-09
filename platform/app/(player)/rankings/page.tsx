@@ -175,7 +175,7 @@ export default async function RankingsPage({
         <LeaderboardSearch countries={countries} />
       </Suspense>
 
-      <div style={pageStyles.layout}>
+      <div className="rankings-layout" style={pageStyles.layout}>
         <div>
           <table style={pageStyles.table}>
             <thead>

@@ -45,7 +45,7 @@ export function AchievementGrid({
   return (
     <div style={styles.section}>
       <h2 style={styles.title}>Achievements</h2>
-      <div style={styles.grid}>
+      <div className="achievement-grid" style={styles.grid}>
         {sorted.map(achievement => (
           <AchievementBadge
             key={achievement.id}

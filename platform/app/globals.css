@@ -26,3 +26,25 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* --- Rankings & Player Profile responsive --- */
+@media (max-width: 992px) {
+  .rankings-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .achievement-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .achievement-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

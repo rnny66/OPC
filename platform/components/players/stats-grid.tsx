@@ -46,7 +46,7 @@ export function StatsGrid({ stats }: { stats: PlayerStats }) {
   ]
 
   return (
-    <div style={styles.grid}>
+    <div className="stats-grid" style={styles.grid}>
       {items.map(item => (
         <div key={item.label} style={styles.card}>
           <span style={styles.value}>{item.value}</span>
