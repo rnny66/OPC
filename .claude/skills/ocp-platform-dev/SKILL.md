@@ -44,6 +44,8 @@ OCP/
 │   │   ├── profile/        # ProfileForm
 │   │   ├── layout/         # sidebar-layout.tsx, app-sidebar.tsx
 │   │   ├── admin/          # points-config-editor.tsx
+│   │   ├── rankings/       # RankBadge, LeaderboardSearch (Phase 4)
+│   │   ├── players/        # AchievementBadge, AchievementGrid, StatsGrid, PlayerProfileHeader, TournamentHistoryTable (Phase 4)
 │   │   └── organizer/      # TournamentForm, RegistrationStatusSelect, ExportCsvButton
 │   ├── lib/
 │   │   ├── actions/        # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts)
@@ -54,7 +56,7 @@ OCP/
 │   ├── test-utils/         # MSW handlers, render helpers, data factories
 │   └── e2e/                # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/         # 001_profiles through 010_country_stats_functions
+│   ├── migrations/         # 001_profiles through 012_additional_achievements
 │   └── tests/              # pgTAP tests
 └── docs/plans/
 ```
@@ -80,7 +82,7 @@ OCP/
   - RLS: public read, organizer insert/update own tournaments, admin all
 - `player_stats` — computed rankings (total points, wins, rank)
   - RLS: public read, function-only writes
-- `achievements` — badge definitions (6 seeded), `player_achievements` — earned badges
+- `achievements` — badge definitions (8 seeded), `player_achievements` — earned badges
   - RLS: public read
 - `country_config` — country codes, multipliers, custom brackets (15 seeded)
 - `default_points_brackets` — configurable placement→points mapping (9 seeded)
@@ -90,7 +92,7 @@ OCP/
 - **Supabase Auth:** email/password + Google + Facebook OAuth
 - **@supabase/ssr** with cookie-based sessions, refreshed in middleware
 - **Route classification** (`lib/auth/routes.ts`):
-  - `public`: `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`
+  - `public`: `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`, `/rankings`, `/players/*`
   - `protected`: `/dashboard`, `/profile`, `/profile/*`, `/tournaments/*/register`
   - `organizer`: `/organizer/*`
   - `admin`: `/admin/*`
@@ -137,7 +139,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (102 tests, 21 files)
+npm run test:unit     # Vitest (128 tests, 28 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -168,7 +170,7 @@ After completing each phase:
 | 3A | Organizer dashboard, tournament CRUD, registrations | ✅ Complete | `phase-3-organizer-tools.md` |
 | 3B | Results entry, points calculation, achievements | ✅ Complete | `phase-3-organizer-tools.md` |
 | 3C | Country points, admin UI, unified sidebar | ✅ Complete | `phase-3-organizer-tools.md` |
-| 4 | Public leaderboard, profiles, achievements | Planned | `phase-4-rankings-stats.md` |
+| 4 | Public leaderboard, profiles, achievements | ✅ Complete | `phase-4-rankings-stats.md` |
 | 5 | Didit verification, admin panel, emails | Planned | `phase-5-verification-admin.md` |
 
 ## Common Mistakes

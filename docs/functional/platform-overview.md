@@ -87,6 +87,8 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | Verify Email | `/verify-email` | Email confirmation pending |
 | Tournaments | `/tournaments` | Browse all tournaments with filters |
 | Tournament Detail | `/tournaments/[id]` | Single tournament info + registration |
+| Rankings | `/rankings` | Public leaderboard with search/filter/pagination |
+| Player Profile | `/players/[slug]` | Public player profile with stats, achievements, history |
 
 ### Player (login required)
 | Page | URL | Description |
@@ -121,5 +123,5 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 3A | Organizer tools — dashboard, tournament CRUD, registration management | ✅ Complete |
 | 3B | Results entry, points calculation, achievement logic | ✅ Complete |
 | 3C | Country points, admin points config UI | ✅ Complete |
-| 4 | Rankings, player stats, achievements, leaderboard | Planned |
+| 4 | Rankings, player profiles, achievements, leaderboard | ✅ Complete |
 | 5 | Didit verification, admin panel, email notifications | Planned |

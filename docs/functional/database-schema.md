@@ -29,10 +29,11 @@ Extends `auth.users` — auto-created via a trigger when a user signs up.
 | `didit_session_id` | text | null | Didit verification session reference |
 | `date_of_birth` | date | null | From verification |
 | `onboarding_complete` | boolean | `false` | Profile setup finished |
+| `slug` | text | — | URL-safe slug (auto-generated from display_name) |
 | `created_at` | timestamptz | `now()` | Account creation time |
 | `updated_at` | timestamptz | `now()` | Auto-updated via trigger |
 
-**Indexes:** `role`, `home_country`
+**Indexes:** `role`, `home_country`, `slug` (unique)
 
 **RLS Policies:**
 - **Select:** Public — anyone can read profiles
@@ -41,6 +42,10 @@ Extends `auth.users` — auto-created via a trigger when a user signs up.
 **Triggers:**
 - `profiles_updated_at` — auto-updates `updated_at` on change
 - `on_auth_user_created` — auto-creates profile row when user signs up
+- `profiles_slug` — auto-generates/updates slug from display_name on insert/update
+
+**Functions:**
+- `generate_profile_slug(display_name, id)` — creates URL-safe slug with collision handling (-2, -3, etc.)
 
 ---
 
@@ -199,7 +204,7 @@ Definitions for badges/achievements players can earn.
 
 **Constraints:** Unique on `slug`.
 
-**Seed data:** 6 achievements (first_tournament, first_win, five_tournaments, ten_tournaments, three_wins, points_1000)
+**Seed data:** 8 achievements (First Blood, Regular, Veteran, Champion, Triple Crown, Podium Master, Point Machine, Globetrotter)
 
 **RLS Policies:**
 - **Select:** Public — anyone can read achievement definitions
@@ -305,7 +310,8 @@ Per-player per-country ranking statistics. Updated by Postgres functions.
 | `calculate_points(placement, multiplier, country)` | Calculate points for a placement using brackets + multiplier |
 | `compute_player_stats(player_uuid)` | Recompute aggregated stats for a single player |
 | `compute_all_player_stats()` | Recompute stats for all players |
-| `check_achievements(player_uuid)` | Check and award achievements for a player |
+| `check_achievements(player_uuid)` | Check and award achievements for a player (handles all 8 criteria types) |
+| `generate_profile_slug(display_name, id)` | Generate URL-safe slug with collision handling |
 
 **Triggers:**
 - On `tournament_results` insert/update: auto-calls `compute_player_stats` and `check_achievements` for the affected player

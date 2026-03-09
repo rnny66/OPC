@@ -12,7 +12,7 @@ Static marketing website for a European poker championship platform, evolving in
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
-### Platform (`platform/`) — Phase 3C complete
+### Platform (`platform/`) — Phase 4 complete
 - **Next.js 15** (App Router, TypeScript)
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
@@ -39,12 +39,14 @@ OCP/
 ├── platform/                   # Next.js 15 app
 │   ├── app/
 │   │   ├── (auth)/             # Auth pages (login, signup, verify-email)
-│   │   ├── (player)/           # Player pages (dashboard, profile, tournaments)
+│   │   ├── (player)/           # Player pages (dashboard, profile, tournaments, rankings, players)
 │   │   ├── (organizer)/        # Organizer pages
 │   │   │   └── organizer/      # URL prefix (avoids route group conflicts)
 │   │   │       ├── dashboard/  # Organizer dashboard with stats
 │   │   │       └── tournaments/# Create, edit, registrations
 │   │   │           └── [id]/results/ # Results entry page
+│   │   │       ├── rankings/   # Public leaderboard
+│   │   │       └── players/[slug]/ # Public player profiles
 │   │   ├── (admin)/            # Admin pages
 │   │   │   └── admin/
 │   │   │       └── points-config/ # Points bracket & country config
@@ -59,6 +61,8 @@ OCP/
 │   │   ├── profile/            # ProfileForm
 │   │   ├── layout/             # sidebar-layout.tsx, app-sidebar.tsx
 │   │   ├── admin/              # points-config-editor.tsx
+│   │   ├── rankings/           # RankBadge, LeaderboardSearch
+│   │   ├── players/            # AchievementBadge, AchievementGrid, StatsGrid, PlayerProfileHeader, TournamentHistoryTable
 │   │   └── organizer/          # TournamentForm, RegistrationStatusSelect, ExportCsvButton
 │   ├── lib/
 │   │   ├── actions/            # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts)
@@ -69,7 +73,7 @@ OCP/
 │   ├── test-utils/             # MSW handlers, render helpers, data factories
 │   └── e2e/                    # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/             # 001_profiles through 010_country_stats_functions
+│   ├── migrations/             # 001_profiles through 012_additional_achievements
 │   └── tests/                  # pgTAP tests
 ├── designs/                    # Figma design screenshots
 └── docs/
@@ -140,14 +144,14 @@ OCP/
   - RLS: public read, organizer insert/update own tournaments, admin all
 - **`player_stats`** — computed rankings (total points, wins, rank)
   - RLS: public read, function-only writes
-- **`achievements`** — badge/achievement definitions (6 seeded)
+- **`achievements`** — badge/achievement definitions (8 seeded)
   - RLS: public read
 - **`player_achievements`** — player ↔ achievement mapping
   - RLS: public read
 - **`country_config`** — country codes, multipliers, custom brackets (15 seeded)
 - **`default_points_brackets`** — configurable placement→points mapping (9 seeded)
 - **`player_country_stats`** — per-country per-player rankings
-- **Postgres functions:** `calculate_points`, `compute_player_stats`, `compute_all_player_stats`, `check_achievements`
+- **Postgres functions:** `calculate_points`, `compute_player_stats`, `compute_all_player_stats`, `check_achievements`, `generate_profile_slug`
 - **Trigger:** on `tournament_results` insert/update to auto-compute points and stats
 
 ## Auth & Middleware
@@ -172,7 +176,7 @@ OCP/
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
 - **Test before done:** No feature is considered complete until it has been properly tested and verified
-- **Unit tests:** `npm run test:unit` (Vitest + RTL, 102 tests passing, 21 files)
+- **Unit tests:** `npm run test:unit` (Vitest + RTL, 128 tests passing, 28 files)
 - **DB tests:** `npm run test:db` (pgTAP, 7 test files)
 - **E2E tests:** `npm run test:e2e` (Playwright)
 - **All tests:** `npm run test:all`

@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 102 (21 files)
+### Current Test Count: 128 (28 files)
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -100,6 +100,13 @@ afterEach(() => cleanup())
 | `components/organizer/__tests__/results-entry-form.test.tsx` | 7 | Results entry form |
 | `components/admin/__tests__/points-config-editor.test.tsx` | 4 | Admin points config editor |
 | `app/(organizer)/organizer/tournaments/[id]/results/__tests__/page.test.tsx` | — | Results page |
+| `components/rankings/__tests__/rank-badge.test.tsx` | 5 | Rank change indicators (up/down/same) |
+| `components/rankings/__tests__/leaderboard-search.test.tsx` | 3 | Search input + country filter |
+| `components/players/__tests__/achievement-badge.test.tsx` | 4 | Badge rendering, earned/unearned states |
+| `components/players/__tests__/achievement-grid.test.tsx` | 2 | Grid layout, section title |
+| `components/players/__tests__/stats-grid.test.tsx` | 2 | 6 stat cards, null handling |
+| `components/players/__tests__/player-profile-header.test.tsx` | 5 | Name, rank, initials, country, date |
+| `components/players/__tests__/tournament-history-table.test.tsx` | 4 | Links, placement, empty state |
 
 ### Testing Server Actions
 
@@ -138,6 +145,7 @@ npm run test:db
 | `06_achievements.test.sql` | — | Tables exist, columns, seed data, RLS enabled |
 | `008_points_functions.test.sql` | — | Points functions, triggers, stats computation |
 | `009_country_points.test.sql` | — | Country config, brackets, country stats tables + RLS |
+| `011_profile_slugs.test.sql` | 4 | Slug column, index, trigger + generation functions |
 
 ### Pattern
 ```sql

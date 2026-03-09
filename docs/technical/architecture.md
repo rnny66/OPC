@@ -40,6 +40,8 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── layout.tsx      # Player layout (delegates to AppSidebar)
 │   │   │   ├── dashboard/page.tsx  # Registrations list + stats
 │   │   │   ├── profile/page.tsx    # Profile edit + avatar upload
+│   │   │   ├── rankings/page.tsx   # Public leaderboard (Phase 4)
+│   │   │   ├── players/[slug]/page.tsx  # Public player profile (Phase 4)
 │   │   │   └── tournaments/
 │   │   │       ├── page.tsx        # Browse with filters/pagination
 │   │   │       └── [id]/page.tsx   # Detail + registration button
@@ -86,6 +88,17 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── admin/
 │   │   │   ├── points-config-editor.tsx        # Client Component (Phase 3C)
 │   │   │   └── __tests__/
+│   │   ├── rankings/
+│   │   │   ├── rank-badge.tsx                  # Server Component (Phase 4)
+│   │   │   ├── leaderboard-search.tsx          # Client Component (Phase 4)
+│   │   │   └── __tests__/
+│   │   ├── players/
+│   │   │   ├── achievement-badge.tsx           # Server Component (Phase 4)
+│   │   │   ├── achievement-grid.tsx            # Server Component (Phase 4)
+│   │   │   ├── stats-grid.tsx                  # Server Component (Phase 4)
+│   │   │   ├── player-profile-header.tsx       # Server Component (Phase 4)
+│   │   │   ├── tournament-history-table.tsx    # Server Component (Phase 4)
+│   │   │   └── __tests__/
 │   │   └── layout/
 │   │       ├── sidebar-layout.tsx              # Reusable sidebar layout shell
 │   │       └── app-sidebar.tsx                 # Unified role-based sidebar
@@ -129,7 +142,9 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── 007_achievements.sql
 │   │   ├── 008_points_functions.sql
 │   │   ├── 009_country_points.sql
-│   │   └── 010_country_stats_functions.sql
+│   │   ├── 010_country_stats_functions.sql
+│   │   ├── 011_profile_slugs.sql
+│   │   └── 012_additional_achievements.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
@@ -139,7 +154,8 @@ OCP/                            # Root (npm workspaces)
 │       ├── 05_player_stats.test.sql
 │       ├── 06_achievements.test.sql
 │       ├── 008_points_functions.test.sql
-│       └── 009_country_points.test.sql
+│       ├── 009_country_points.test.sql
+│       └── 011_profile_slugs.test.sql
 └── docs/
     ├── STYLE_GUIDE.md
     ├── functional/                # Functional documentation
