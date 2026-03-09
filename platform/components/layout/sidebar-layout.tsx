@@ -22,8 +22,9 @@ interface SidebarLayoutProps {
   children: React.ReactNode
 }
 
-const linkStyle = (
+const getLinkStyle = (
   isActive: boolean,
+  isHovered: boolean,
   collapsed: boolean
 ): React.CSSProperties => ({
   display: 'flex',
@@ -35,13 +36,68 @@ const linkStyle = (
   textDecoration: 'none',
   fontSize: '0.875rem',
   fontWeight: isActive ? 600 : 500,
-  color: isActive
+  color: isActive || isHovered
     ? 'var(--color-brand, #1570ef)'
     : 'var(--color-text-secondary, #8b8b8b)',
-  backgroundColor: isActive ? 'rgba(21, 112, 239, 0.1)' : 'transparent',
+  backgroundColor: isActive
+    ? 'rgba(21, 112, 239, 0.1)'
+    : isHovered
+      ? 'rgba(21, 112, 239, 0.08)'
+      : 'transparent',
   whiteSpace: 'nowrap',
-  transition: 'background-color 0.15s ease, color 0.15s ease',
+  transition: 'background-color 0.2s ease, color 0.2s ease',
+  outline: 'none',
 })
+
+function NavLink({ href, title, isActive, collapsed, children }: {
+  href: string
+  title?: string
+  isActive: boolean
+  collapsed: boolean
+  children: React.ReactNode
+}) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <Link
+      href={href}
+      title={title}
+      style={getLinkStyle(isActive, hovered, collapsed)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {children}
+    </Link>
+  )
+}
+
+function NavButton({ onClick, title, collapsed, children }: {
+  onClick: () => void
+  title?: string
+  collapsed: boolean
+  children: React.ReactNode
+}) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        ...getLinkStyle(false, hovered, collapsed),
+        background: hovered ? 'rgba(21, 112, 239, 0.08)' : 'none',
+        border: 'none',
+        cursor: 'pointer',
+        width: '100%',
+        textAlign: 'left',
+      }}
+    >
+      {children}
+    </button>
+  )
+}
 
 export function SidebarLayout({
   sections,
@@ -49,6 +105,7 @@ export function SidebarLayout({
   children,
 }: SidebarLayoutProps) {
   const [collapsed, setCollapsed] = useState(false)
+  const [collapseHovered, setCollapseHovered] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -113,19 +170,23 @@ export function SidebarLayout({
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
+            onMouseEnter={() => setCollapseHovered(true)}
+            onMouseLeave={() => setCollapseHovered(false)}
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             style={{
-              background: 'none',
+              background: collapseHovered ? 'rgba(21, 112, 239, 0.08)' : 'none',
               border: 'none',
-              color: 'var(--color-text-secondary, #8b8b8b)',
+              color: collapseHovered ? 'var(--color-brand, #1570ef)' : 'var(--color-text-secondary, #8b8b8b)',
               cursor: 'pointer',
-              padding: '0.25rem',
+              padding: '0.375rem',
               fontSize: '1.125rem',
               lineHeight: 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
+              borderRadius: '0.375rem',
+              transition: 'background-color 0.2s ease, color 0.2s ease',
             }}
           >
             {collapsed ? '☰' : '✕'}
@@ -170,17 +231,18 @@ export function SidebarLayout({
                 )
               )}
               {section.items.map((item) => (
-                <Link
+                <NavLink
                   key={item.href}
                   href={item.href}
                   title={collapsed ? item.label : undefined}
-                  style={linkStyle(isActive(item.href), collapsed)}
+                  isActive={isActive(item.href)}
+                  collapsed={collapsed}
                 >
                   <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
                     {item.icon}
                   </span>
                   {!collapsed && item.label}
-                </Link>
+                </NavLink>
               ))}
             </div>
           ))}
@@ -197,33 +259,27 @@ export function SidebarLayout({
           }}
         >
           {bottomItems.map((item) => (
-            <Link
+            <NavLink
               key={item.href}
               href={item.href}
               title={collapsed ? item.label : undefined}
-              style={linkStyle(isActive(item.href), collapsed)}
+              isActive={isActive(item.href)}
+              collapsed={collapsed}
             >
               <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
                 {item.icon}
               </span>
               {!collapsed && item.label}
-            </Link>
+            </NavLink>
           ))}
-          <button
+          <NavButton
             onClick={handleSignOut}
             title={collapsed ? 'Sign Out' : undefined}
-            style={{
-              ...linkStyle(false, collapsed),
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              width: '100%',
-              textAlign: 'left',
-            }}
+            collapsed={collapsed}
           >
             <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>🚪</span>
             {!collapsed && 'Sign Out'}
-          </button>
+          </NavButton>
         </div>
       </aside>
 
