@@ -121,7 +121,23 @@ export default async function RegistrationsPage({
             {regs.length} / {tournament.capacity ?? '—'} registered
           </span>
         </div>
-        <ExportCSVButton registrations={regs} tournamentName={tournament.name} />
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <Link
+            href={`/organizer/tournaments/${id}/results`}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'var(--color-brand)',
+              color: '#fff',
+              borderRadius: 'var(--radius-md, 0.5rem)',
+              textDecoration: 'none',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+            }}
+          >
+            Enter Results
+          </Link>
+          <ExportCSVButton registrations={regs} tournamentName={tournament.name} />
+        </div>
       </div>
 
       {regs.length === 0 ? (

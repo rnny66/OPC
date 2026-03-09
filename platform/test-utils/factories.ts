@@ -120,3 +120,26 @@ export function buildRegistration(overrides: Partial<Registration> = {}): Regist
     ...overrides,
   }
 }
+
+export type TournamentResult = {
+  id: string
+  tournament_id: string
+  player_id: string
+  placement: number
+  points_awarded: number
+  entered_by: string | null
+  created_at: string
+}
+
+export function buildResult(overrides: Partial<TournamentResult> = {}): TournamentResult {
+  return {
+    id: randomUUID(),
+    tournament_id: randomUUID(),
+    player_id: randomUUID(),
+    placement: 1,
+    points_awarded: 1000,
+    entered_by: null,
+    created_at: new Date().toISOString(),
+    ...overrides,
+  }
+}

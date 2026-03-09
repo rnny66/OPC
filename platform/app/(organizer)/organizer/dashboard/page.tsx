@@ -171,6 +171,9 @@ export default async function OrganizerDashboardPage() {
                       <Link href={`/organizer/tournaments/${tournament.id}/registrations`} style={styles.link}>
                         Registrations
                       </Link>
+                      <Link href={`/organizer/tournaments/${tournament.id}/results`} style={styles.link}>
+                        Results
+                      </Link>
                     </div>
                   </td>
                 </tr>
