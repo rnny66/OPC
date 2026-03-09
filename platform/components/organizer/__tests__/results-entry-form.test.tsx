@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { ToastProvider } from '@/components/ui/toast'
 import { ResultsEntryForm } from '../results-entry-form'
 
 vi.mock('@/lib/actions/results', () => ({
@@ -17,12 +18,12 @@ const mockPlayers = [
 describe('ResultsEntryForm', () => {
   it('renders all players in the table', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     expect(screen.getByText('Alice')).toBeInTheDocument()
     expect(screen.getByText('Bob')).toBeInTheDocument()
@@ -31,12 +32,12 @@ describe('ResultsEntryForm', () => {
 
   it('renders placement inputs with aria labels', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     expect(
       screen.getByLabelText('Placement for Alice')
@@ -48,7 +49,7 @@ describe('ResultsEntryForm', () => {
 
   it('pre-fills existing results', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
@@ -56,7 +57,7 @@ describe('ResultsEntryForm', () => {
           { playerId: 'p1', placement: 1, pointsAwarded: 1000 },
           { playerId: 'p2', placement: 3, pointsAwarded: 500 },
         ]}
-      />
+      /></ToastProvider>
     )
     const aliceInput = screen.getByLabelText('Placement for Alice') as HTMLInputElement
     const bobInput = screen.getByLabelText('Placement for Bob') as HTMLInputElement
@@ -66,12 +67,12 @@ describe('ResultsEntryForm', () => {
 
   it('shows auto-calculated points when placement is entered', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     const input = screen.getByLabelText('Placement for Alice')
     fireEvent.change(input, { target: { value: '1' } })
@@ -82,12 +83,12 @@ describe('ResultsEntryForm', () => {
 
   it('applies points multiplier correctly', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.5}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     const input = screen.getByLabelText('Placement for Alice')
     fireEvent.change(input, { target: { value: '1' } })
@@ -98,12 +99,12 @@ describe('ResultsEntryForm', () => {
 
   it('renders Save Results button', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     expect(
       screen.getByRole('button', { name: /save results/i })
@@ -112,12 +113,12 @@ describe('ResultsEntryForm', () => {
 
   it('shows error when saving with no placements', () => {
     render(
-      <ResultsEntryForm
+      <ToastProvider><ResultsEntryForm
         tournamentId="t1"
         pointsMultiplier={1.0}
         players={mockPlayers}
         existingResults={[]}
-      />
+      /></ToastProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: /save results/i }))
     expect(screen.getByText('Enter at least one placement.')).toBeInTheDocument()

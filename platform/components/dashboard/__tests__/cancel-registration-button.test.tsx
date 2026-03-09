@@ -1,6 +1,7 @@
 // platform/components/dashboard/__tests__/cancel-registration-button.test.tsx
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { ToastProvider } from '@/components/ui/toast'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ refresh: vi.fn() }),
@@ -12,12 +13,12 @@ afterEach(() => cleanup())
 
 describe('CancelRegistrationButton', () => {
   it('renders cancel button', () => {
-    render(<CancelRegistrationButton registrationId="test-id" />)
+    render(<ToastProvider><CancelRegistrationButton registrationId="test-id" /></ToastProvider>)
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
   })
 
   it('shows confirmation text after clicking', () => {
-    render(<CancelRegistrationButton registrationId="test-id" />)
+    render(<ToastProvider><CancelRegistrationButton registrationId="test-id" /></ToastProvider>)
     fireEvent.click(screen.getByRole('button', { name: /cancel/i }))
     expect(screen.getByText(/are you sure/i)).toBeInTheDocument()
   })

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
+import { ToastProvider } from '@/components/ui/toast'
 import { ProfileForm } from '../profile-form'
 import { buildProfile } from '@/test-utils/factories'
 
@@ -19,33 +20,33 @@ describe('ProfileForm', () => {
   })
 
   it('renders display name field with value', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     const input = screen.getByLabelText(/display name/i) as HTMLInputElement
     expect(input.value).toBe('TestPlayer')
   })
 
   it('renders city field', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     expect(screen.getByLabelText(/city/i)).toBeInTheDocument()
   })
 
   it('renders country field', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     expect(screen.getByLabelText(/country/i)).toBeInTheDocument()
   })
 
   it('renders bio field', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     expect(screen.getByLabelText(/bio/i)).toBeInTheDocument()
   })
 
   it('renders save button', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument()
   })
 
   it('renders avatar upload', () => {
-    render(<ProfileForm profile={profile} />)
+    render(<ToastProvider><ProfileForm profile={profile} /></ToastProvider>)
     expect(screen.getByLabelText(/avatar/i)).toBeInTheDocument()
   })
 })

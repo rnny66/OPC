@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
+import { ToastProvider } from '@/components/ui/toast'
 import { PointsConfigEditor } from '../points-config-editor'
 
 vi.mock('@/lib/actions/admin', () => ({
@@ -23,7 +24,7 @@ const mockCountries = [
 
 describe('PointsConfigEditor', () => {
   it('renders bracket table with data', () => {
-    render(<PointsConfigEditor brackets={mockBrackets} countries={mockCountries} />)
+    render(<ToastProvider><PointsConfigEditor brackets={mockBrackets} countries={mockCountries} /></ToastProvider>)
     expect(screen.getByText('Default Brackets')).toBeInTheDocument()
     // Check that bracket values are in inputs
     const inputs = screen.getAllByDisplayValue('1000')
@@ -31,19 +32,19 @@ describe('PointsConfigEditor', () => {
   })
 
   it('renders country table with data', () => {
-    render(<PointsConfigEditor brackets={mockBrackets} countries={mockCountries} />)
+    render(<ToastProvider><PointsConfigEditor brackets={mockBrackets} countries={mockCountries} /></ToastProvider>)
     expect(screen.getByText('Country Configuration')).toBeInTheDocument()
     expect(screen.getByText('Netherlands')).toBeInTheDocument()
     expect(screen.getByText('Germany')).toBeInTheDocument()
   })
 
   it('renders save brackets button', () => {
-    render(<PointsConfigEditor brackets={mockBrackets} countries={mockCountries} />)
+    render(<ToastProvider><PointsConfigEditor brackets={mockBrackets} countries={mockCountries} /></ToastProvider>)
     expect(screen.getByRole('button', { name: /save brackets/i })).toBeInTheDocument()
   })
 
   it('renders recompute button', () => {
-    render(<PointsConfigEditor brackets={mockBrackets} countries={mockCountries} />)
+    render(<ToastProvider><PointsConfigEditor brackets={mockBrackets} countries={mockCountries} /></ToastProvider>)
     expect(screen.getByRole('button', { name: /recompute/i })).toBeInTheDocument()
   })
 })
