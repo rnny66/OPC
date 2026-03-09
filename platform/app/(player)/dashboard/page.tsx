@@ -2,6 +2,7 @@ import { createSupabaseServer } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { CancelRegistrationButton } from '@/components/dashboard/cancel-registration-button'
+import { VerificationStatus } from '@/components/auth/verification-status'
 
 export const metadata = { title: 'Dashboard — OPC Europe' }
 
@@ -76,6 +77,12 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('identity_verified, identity_verified_at')
+    .eq('id', user.id)
+    .single()
+
   // Fetch registrations with tournament data
   const { data: registrations } = await supabase
     .from('tournament_registrations')
@@ -91,6 +98,13 @@ export default async function DashboardPage() {
   return (
     <div>
       <h2 style={styles.title}>Dashboard</h2>
+
+      {!profile?.identity_verified && (
+        <VerificationStatus
+          isVerified={false}
+          verifiedAt={null}
+        />
+      )}
 
       <div style={styles.stats}>
         <div style={styles.stat}>

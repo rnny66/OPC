@@ -1,6 +1,7 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { ProfileForm } from '@/components/profile/profile-form'
+import { VerificationStatus } from '@/components/auth/verification-status'
 
 export const metadata = { title: 'Profile — OPC Europe' }
 
@@ -22,6 +23,10 @@ export default async function ProfilePage() {
       <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1.5rem' }}>
         Your Profile
       </h2>
+      <VerificationStatus
+        isVerified={profile.identity_verified}
+        verifiedAt={profile.identity_verified_at}
+      />
       <ProfileForm profile={profile} />
     </div>
   )
