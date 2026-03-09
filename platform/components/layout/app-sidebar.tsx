@@ -42,6 +42,10 @@ export async function AppSidebar({ children }: { children: React.ReactNode }) {
     sections.push({
       label: 'Admin',
       items: [
+        { href: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
+        { href: '/admin/users', label: 'Users', icon: '👥' },
+        { href: '/admin/organizers', label: 'Organizers', icon: '📋' },
+        { href: '/admin/tournaments', label: 'Tournaments', icon: '🏆' },
         { href: '/admin/points-config', label: 'Points Config', icon: '🎯' },
       ],
     })
