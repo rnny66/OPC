@@ -95,7 +95,12 @@ export function RegistrationButton({
   }
 
   if (requiresVerification && !isVerified) {
-    return <div style={styles.status}>Identity verification required to register for this tournament.</div>
+    return (
+      <div style={styles.status}>
+        Identity verification required.{' '}
+        <Link href="/verify-identity" style={styles.link}>Verify your identity</Link> to register.
+      </div>
+    )
   }
 
   if (!registrationOpen) {
