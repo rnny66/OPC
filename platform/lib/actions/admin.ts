@@ -1,6 +1,7 @@
 'use server'
 
 import { createSupabaseServer } from '@/lib/supabase/server'
+import { createSupabaseAdmin } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
 async function requireAdmin() {
@@ -15,13 +16,13 @@ async function requireAdmin() {
     .single()
 
   if (profile?.role !== 'admin') throw new Error('Not authorized')
-  return supabase
+  return { supabase, userId: user.id }
 }
 
 export async function updateDefaultBrackets(
   brackets: { placementMin: number; placementMax: number | null; basePoints: number }[]
 ) {
-  const supabase = await requireAdmin()
+  const { supabase } = await requireAdmin()
 
   // Delete all existing brackets
   const { error: deleteError } = await supabase
@@ -53,7 +54,7 @@ export async function updateCountryConfig(
   globalMultiplier: number,
   customBrackets: { min: number; max: number | null; points: number }[] | null
 ) {
-  const supabase = await requireAdmin()
+  const { supabase } = await requireAdmin()
 
   const { error } = await supabase
     .from('country_config')
@@ -71,12 +72,57 @@ export async function updateCountryConfig(
 }
 
 export async function recomputeAllStats() {
-  const supabase = await requireAdmin()
+  const { supabase } = await requireAdmin()
 
   const { error } = await supabase.rpc('compute_all_player_stats')
 
   if (error) return { error: error.message }
 
   revalidatePath('/admin/points-config')
+  return { success: true }
+}
+
+export async function promoteToOrganizer(userId: string) {
+  await requireAdmin()
+
+  const adminClient = createSupabaseAdmin()
+  const { error } = await adminClient
+    .from('profiles')
+    .update({ role: 'organizer' })
+    .eq('id', userId)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin')
+  return { success: true }
+}
+
+export async function inviteOrganizer(email: string) {
+  const { userId } = await requireAdmin()
+
+  const adminClient = createSupabaseAdmin()
+  const { error } = await adminClient
+    .from('organizer_invitations')
+    .insert({ email, invited_by: userId })
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin')
+  return { success: true }
+}
+
+export async function cancelTournamentAdmin(tournamentId: string) {
+  await requireAdmin()
+
+  const adminClient = createSupabaseAdmin()
+  const { error } = await adminClient
+    .from('tournaments')
+    .update({ status: 'cancelled' })
+    .eq('id', tournamentId)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin')
+  revalidatePath('/tournaments')
   return { success: true }
 }
