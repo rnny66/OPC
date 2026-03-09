@@ -43,6 +43,15 @@ OCP/                            # Root (npm workspaces)
 │   │   │   └── tournaments/
 │   │   │       ├── page.tsx        # Browse with filters/pagination
 │   │   │       └── [id]/page.tsx   # Detail + registration button
+│   │   ├── (organizer)/
+│   │   │   ├── layout.tsx      # Organizer layout
+│   │   │   └── organizer/      # URL prefix to avoid route conflicts
+│   │   │       ├── dashboard/page.tsx         # Organizer stats + tournament table
+│   │   │       └── tournaments/
+│   │   │           ├── new/page.tsx            # Create tournament
+│   │   │           └── [id]/
+│   │   │               ├── page.tsx            # Edit tournament
+│   │   │               └── registrations/page.tsx  # Registration management
 │   │   └── auth/
 │   │       └── callback/route.ts   # OAuth code exchange
 │   ├── components/
@@ -60,10 +69,18 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── dashboard/
 │   │   │   ├── cancel-registration-button.tsx  # Client Component
 │   │   │   └── __tests__/
-│   │   └── profile/
-│   │       ├── profile-form.tsx         # Client Component
+│   │   ├── profile/
+│   │   │   ├── profile-form.tsx         # Client Component
+│   │   │   └── __tests__/
+│   │   └── organizer/
+│   │       ├── tournament-form.tsx             # Client Component (create/edit)
+│   │       ├── registration-status-select.tsx  # Client Component
+│   │       ├── export-csv-button.tsx           # Client Component
 │   │       └── __tests__/
 │   ├── lib/
+│   │   ├── actions/
+│   │   │   ├── tournament.ts      # createTournament, updateTournament (Server Actions)
+│   │   │   └── registration.ts    # updateRegistrationStatus (Server Action)
 │   │   ├── auth/
 │   │   │   └── routes.ts          # classifyRoute() — pure function
 │   │   ├── supabase/
@@ -91,12 +108,18 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── 001_profiles.sql
 │   │   ├── 002_tournaments.sql
 │   │   ├── 003_tournament_registrations.sql
-│   │   └── 004_avatar_storage.sql
+│   │   ├── 004_avatar_storage.sql
+│   │   ├── 005_tournament_results.sql
+│   │   ├── 006_player_stats.sql
+│   │   └── 007_achievements.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
 │       ├── 02_tournaments.test.sql
-│       └── 03_registrations.test.sql
+│       ├── 03_registrations.test.sql
+│       ├── 04_tournament_results.test.sql
+│       ├── 05_player_stats.test.sql
+│       └── 06_achievements.test.sql
 └── docs/
     ├── STYLE_GUIDE.md
     ├── functional/                # Functional documentation
@@ -152,10 +175,16 @@ Next.js App Router
 - No client-side JavaScript bundle
 
 ### Client Components (`'use client'`)
-- Forms with state (LoginForm, SignupForm, ProfileForm)
-- Interactive elements (FilterBar, Pagination, RegistrationButton, CancelRegistrationButton)
-- Use `createBrowserClient()` for mutations
+- Forms with state (LoginForm, SignupForm, ProfileForm, TournamentForm)
+- Interactive elements (FilterBar, Pagination, RegistrationButton, CancelRegistrationButton, RegistrationStatusSelect, ExportCsvButton)
+- Use `createBrowserClient()` for mutations or invoke Server Actions
 - Must wrap `useSearchParams()` in `<Suspense>` at the page level
+
+### Server Actions (`'use server'`)
+- Located in `lib/actions/` directory
+- Used for form mutations: `createTournament`, `updateTournament`, `updateRegistrationStatus`
+- Called from client components via form actions or direct invocation
+- Validate input, check auth/role, perform Supabase operations, revalidate paths
 
 ## Testing Architecture
 
@@ -163,7 +192,7 @@ Next.js App Router
 - **Location:** `__tests__/` directories alongside source files
 - **Setup:** `vitest.setup.ts` configures jest-dom matchers + MSW server lifecycle
 - **Mocking:** MSW for Supabase API, `vi.mock('next/navigation')` for router
-- **Run:** `npm run test:unit` (21 tests)
+- **Run:** `npm run test:unit` (74 tests, 18 files)
 
 ### Database Tests (pgTAP)
 - **Location:** `supabase/tests/*.test.sql`

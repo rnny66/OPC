@@ -12,7 +12,7 @@ Static marketing website for a European poker championship platform, evolving in
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
-### Platform (`platform/`) — Phase 2 complete
+### Platform (`platform/`) — Phase 3A complete
 - **Next.js 15** (App Router, TypeScript)
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
@@ -40,6 +40,10 @@ OCP/
 │   ├── app/
 │   │   ├── (auth)/             # Auth pages (login, signup, verify-email)
 │   │   ├── (player)/           # Player pages (dashboard, profile, tournaments)
+│   │   ├── (organizer)/        # Organizer pages
+│   │   │   └── organizer/      # URL prefix (avoids route group conflicts)
+│   │   │       ├── dashboard/  # Organizer dashboard with stats
+│   │   │       └── tournaments/# Create, edit, registrations
 │   │   ├── auth/callback/      # OAuth callback route
 │   │   ├── layout.tsx          # Root layout (Inter font, globals.css)
 │   │   ├── globals.css         # OPC base styles (imports tokens.css)
@@ -48,15 +52,17 @@ OCP/
 │   │   ├── auth/               # LoginForm, SignupForm
 │   │   ├── tournaments/        # TournamentCard, FilterBar, Pagination, RegistrationButton
 │   │   ├── dashboard/          # CancelRegistrationButton
-│   │   └── profile/            # ProfileForm
+│   │   ├── profile/            # ProfileForm
+│   │   └── organizer/          # TournamentForm, RegistrationStatusSelect, ExportCsvButton
 │   ├── lib/
+│   │   ├── actions/            # Server Actions (tournament.ts, registration.ts)
 │   │   ├── auth/routes.ts      # Route classification (public/protected/organizer/admin)
 │   │   └── supabase/           # client.ts, server.ts, admin.ts, middleware.ts
 │   ├── middleware.ts            # Route protection + session refresh
 │   ├── test-utils/             # MSW handlers, render helpers, data factories
 │   └── e2e/                    # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/             # 001_profiles, 002_tournaments, 003_registrations, 004_avatar_storage
+│   ├── migrations/             # 001_profiles through 007_achievements
 │   └── tests/                  # pgTAP tests
 ├── designs/                    # Figma design screenshots
 └── docs/
@@ -87,6 +93,8 @@ OCP/
 - **Server Components** by default, `'use client'` only for forms with state
 - **`useSearchParams()`** must be wrapped in `<Suspense>` boundary
 - **Mock `next/navigation`** in tests: `vi.mock('next/navigation', () => ({ useRouter: ... }))`
+- **Server Actions** (`'use server'`) in `lib/actions/` for form mutations (create/update tournament, update registration status)
+- **Route groups with URL prefix:** `(organizer)/organizer/` pattern avoids conflicts between route groups
 - Page title format: `Page Name — OPC Europe`
 
 ### Animations
@@ -118,6 +126,14 @@ OCP/
 - **`tournament_registrations`** — player ↔ tournament with status tracking
   - RLS: player sees own, organizer sees their tournaments, admin sees all
   - Requires `onboarding_complete = true` to register
+- **`tournament_results`** — placement and points per player per tournament
+  - RLS: public read, organizer insert/update own tournaments, admin all
+- **`player_stats`** — computed rankings (total points, wins, rank)
+  - RLS: public read, function-only writes
+- **`achievements`** — badge/achievement definitions (6 seeded)
+  - RLS: public read
+- **`player_achievements`** — player ↔ achievement mapping
+  - RLS: public read
 
 ## Auth & Middleware
 - **Supabase Auth:** email/password + Google + Facebook OAuth
@@ -141,8 +157,8 @@ OCP/
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
 - **Test before done:** No feature is considered complete until it has been properly tested and verified
-- **Unit tests:** `npm run test:unit` (Vitest + RTL, 52 tests passing)
-- **DB tests:** `npm run test:db` (pgTAP, 4 test files)
+- **Unit tests:** `npm run test:unit` (Vitest + RTL, 74 tests passing, 18 files)
+- **DB tests:** `npm run test:db` (pgTAP, 7 test files)
 - **E2E tests:** `npm run test:e2e` (Playwright)
 - **All tests:** `npm run test:all`
 - **Visual QA:** Compare implementation against Figma designs side-by-side

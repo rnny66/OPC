@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 52
+### Current Test Count: 74 (18 files)
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -91,6 +91,23 @@ afterEach(() => cleanup())
 | `components/tournaments/__tests__/registration-button.test.tsx` | 8 | All 8 registration states |
 | `components/dashboard/__tests__/cancel-registration-button.test.tsx` | 2 | Cancel + confirmation flow |
 | `components/profile/__tests__/profile-form.test.tsx` | 6 | Form fields, save button, avatar |
+| `components/organizer/__tests__/tournament-form.test.tsx` | — | Tournament create/edit form |
+| `components/organizer/__tests__/registration-status-select.test.tsx` | — | Status dropdown |
+| `components/organizer/__tests__/export-csv-button.test.tsx` | — | CSV export |
+| `lib/actions/__tests__/tournament.test.ts` | — | Server Action mocking |
+
+### Testing Server Actions
+
+Server Actions (`'use server'`) can be tested by mocking the Supabase client and calling the action function directly:
+
+```ts
+vi.mock('@/lib/supabase/server', () => ({
+  createSupabaseServer: vi.fn(() => mockSupabaseClient),
+}))
+
+// Then call the action and assert on the result
+const result = await createTournament(formData)
+```
 
 ## Database Tests (pgTAP)
 
@@ -111,6 +128,9 @@ npm run test:db
 | `01_profiles.test.sql` | 5 | Table exists, columns, RLS enabled |
 | `02_tournaments.test.sql` | 5 | Table exists, columns, RLS enabled |
 | `03_registrations.test.sql` | 4 | Table exists, columns, RLS enabled |
+| `04_tournament_results.test.sql` | — | Table exists, columns, RLS enabled |
+| `05_player_stats.test.sql` | — | Table exists, columns, RLS enabled |
+| `06_achievements.test.sql` | — | Tables exist, columns, seed data, RLS enabled |
 
 ### Pattern
 ```sql
