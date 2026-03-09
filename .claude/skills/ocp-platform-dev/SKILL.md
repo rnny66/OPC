@@ -32,7 +32,11 @@ OCP/
 │   │   │       └── tournaments/[id]/results/ # Results entry page
 │   │   ├── (admin)/        # Admin pages
 │   │   │   └── admin/
-│   │   │       └── points-config/ # Points bracket & country config
+│   │   │       ├── points-config/ # Points bracket & country config
+│   │   │       ├── dashboard/     # Admin stats overview (Phase 5)
+│   │   │       ├── users/         # User management (Phase 5)
+│   │   │       ├── organizers/    # Organizer invitations (Phase 5)
+│   │   │       └── tournaments/   # Tournament oversight (Phase 5)
 │   │   ├── auth/callback/  # OAuth code exchange route
 │   │   ├── layout.tsx      # Root layout (Inter font)
 │   │   ├── globals.css     # Base styles (imports tokens.css)
@@ -43,7 +47,7 @@ OCP/
 │   │   ├── dashboard/      # CancelRegistrationButton
 │   │   ├── profile/        # ProfileForm
 │   │   ├── layout/         # sidebar-layout.tsx, app-sidebar.tsx
-│   │   ├── admin/          # points-config-editor.tsx
+│   │   ├── admin/          # points-config-editor.tsx, user-table.tsx, invite-organizer-form.tsx, admin-tournament-table.tsx
 │   │   ├── rankings/       # RankBadge, LeaderboardSearch (Phase 4)
 │   │   ├── players/        # AchievementBadge, AchievementGrid, StatsGrid, PlayerProfileHeader, TournamentHistoryTable (Phase 4)
 │   │   └── organizer/      # TournamentForm, RegistrationStatusSelect, ExportCsvButton
@@ -56,7 +60,7 @@ OCP/
 │   ├── test-utils/         # MSW handlers, render helpers, data factories
 │   └── e2e/                # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/         # 001_profiles through 012_additional_achievements
+│   ├── migrations/         # 001_profiles through 013_organizer_invitations
 │   └── tests/              # pgTAP tests
 └── docs/plans/
 ```
@@ -87,6 +91,7 @@ OCP/
 - `country_config` — country codes, multipliers, custom brackets (15 seeded)
 - `default_points_brackets` — configurable placement→points mapping (9 seeded)
 - `player_country_stats` — per-country per-player rankings
+- `organizer_invitations` — email-based organizer invitations with auto-promote trigger (admin only)
 
 ### Auth & Middleware
 - **Supabase Auth:** email/password + Google + Facebook OAuth
@@ -124,7 +129,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
   - `tournament.ts` — createTournament, updateTournament
   - `registration.ts` — updateRegistrationStatus
   - `results.ts` — saveResults
-  - `admin.ts` — updateDefaultBrackets, updateCountryConfig, recomputeAllStats
+  - `admin.ts` — updateDefaultBrackets, updateCountryConfig, recomputeAllStats, promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin
 - **Route groups with URL prefix:** use `(organizer)/organizer/` pattern to avoid conflicts between route groups that need the same URL prefix
 - **Unified sidebar navigation:** `AppSidebar` server component (`components/layout/app-sidebar.tsx`) fetches user role and builds unified nav
   - All route group layouts (player, organizer, admin) delegate to `AppSidebar`
@@ -139,7 +144,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (128 tests, 28 files)
+npm run test:unit     # Vitest (147 tests, 32 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -171,7 +176,7 @@ After completing each phase:
 | 3B | Results entry, points calculation, achievements | ✅ Complete | `phase-3-organizer-tools.md` |
 | 3C | Country points, admin UI, unified sidebar | ✅ Complete | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | ✅ Complete | `phase-4-rankings-stats.md` |
-| 5 | Didit verification, admin panel, emails | Planned | `phase-5-verification-admin.md` |
+| 5 | Didit verification, admin panel, emails | ✅ Partial (admin panel complete, verification/emails deferred) | `phase-5-verification-admin.md` |
 
 ## Common Mistakes
 - Skipping RLS policy testing — always verify access control

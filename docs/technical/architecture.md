@@ -58,7 +58,11 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── (admin)/
 │   │   │   ├── layout.tsx      # Admin layout (delegates to AppSidebar)
 │   │   │   └── admin/
-│   │   │       └── points-config/page.tsx     # Bracket + country config (Phase 3C)
+│   │   │       ├── points-config/page.tsx     # Bracket + country config (Phase 3C)
+│   │   │       ├── dashboard/page.tsx         # Admin stats overview (Phase 5)
+│   │   │       ├── users/page.tsx             # User management (Phase 5)
+│   │   │       ├── organizers/page.tsx        # Organizer invitations (Phase 5)
+│   │   │       └── tournaments/page.tsx       # Tournament oversight (Phase 5)
 │   │   └── auth/
 │   │       └── callback/route.ts   # OAuth code exchange
 │   ├── components/
@@ -87,6 +91,9 @@ OCP/                            # Root (npm workspaces)
 │   │   │   └── __tests__/
 │   │   ├── admin/
 │   │   │   ├── points-config-editor.tsx        # Client Component (Phase 3C)
+│   │   │   ├── user-table.tsx                  # Client Component (Phase 5)
+│   │   │   ├── invite-organizer-form.tsx       # Client Component (Phase 5)
+│   │   │   ├── admin-tournament-table.tsx      # Client Component (Phase 5)
 │   │   │   └── __tests__/
 │   │   ├── rankings/
 │   │   │   ├── rank-badge.tsx                  # Server Component (Phase 4)
@@ -108,7 +115,7 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── tournament.ts      # createTournament, updateTournament (Server Actions)
 │   │   │   ├── registration.ts    # updateRegistrationStatus (Server Action)
 │   │   │   ├── results.ts         # saveResults (Server Action, Phase 3B)
-│   │   │   └── admin.ts           # updateDefaultBrackets, updateCountryConfig, recomputeAllStats (Phase 3C)
+│   │   │   └── admin.ts           # updateDefaultBrackets, updateCountryConfig, recomputeAllStats, promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin (Phase 3C + 5)
 │   │   ├── auth/
 │   │   │   └── routes.ts          # classifyRoute() — pure function
 │   │   ├── supabase/
@@ -144,7 +151,8 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── 009_country_points.sql
 │   │   ├── 010_country_stats_functions.sql
 │   │   ├── 011_profile_slugs.sql
-│   │   └── 012_additional_achievements.sql
+│   │   ├── 012_additional_achievements.sql
+│   │   └── 013_organizer_invitations.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
@@ -218,7 +226,7 @@ Next.js App Router
 
 ### Server Actions (`'use server'`)
 - Located in `lib/actions/` directory
-- Used for form mutations: `createTournament`, `updateTournament`, `updateRegistrationStatus`, `saveResults`, `updateDefaultBrackets`, `updateCountryConfig`, `recomputeAllStats`
+- Used for form mutations: `createTournament`, `updateTournament`, `updateRegistrationStatus`, `saveResults`, `updateDefaultBrackets`, `updateCountryConfig`, `recomputeAllStats`, `promoteToOrganizer`, `inviteOrganizer`, `cancelTournamentAdmin`
 - Called from client components via form actions or direct invocation
 - Validate input, check auth/role, perform Supabase operations, revalidate paths
 
@@ -228,7 +236,7 @@ Next.js App Router
 - **Location:** `__tests__/` directories alongside source files
 - **Setup:** `vitest.setup.ts` configures jest-dom matchers + MSW server lifecycle
 - **Mocking:** MSW for Supabase API, `vi.mock('next/navigation')` for router
-- **Run:** `npm run test:unit` (102 tests, 21 files)
+- **Run:** `npm run test:unit` (147 tests, 32 files)
 
 ### Database Tests (pgTAP)
 - **Location:** `supabase/tests/*.test.sql`

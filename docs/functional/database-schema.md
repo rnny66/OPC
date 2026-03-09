@@ -38,6 +38,7 @@ Extends `auth.users` — auto-created via a trigger when a user signs up.
 **RLS Policies:**
 - **Select:** Public — anyone can read profiles
 - **Update:** Users can update their own profile, but cannot change `role` or `identity_verified`
+- **Update (admin):** Admins can update any profile's `role` field (for promoting users to organizer)
 
 **Triggers:**
 - `profiles_updated_at` — auto-updates `updated_at` on change
@@ -297,11 +298,29 @@ Per-player per-country ranking statistics. Updated by Postgres functions.
 
 ---
 
-## Future Tables (Phase 5)
+### `organizer_invitations`
 
-| Table | Phase | Purpose |
-|-------|-------|---------|
-| `admin_invitations` | 5 | Organizer invitation tracking |
+Tracks organizer invitations sent by admins. New users with matching email are auto-promoted to organizer on signup.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Invitation ID |
+| `email` | text | — | Invited email address (unique) |
+| `invited_by` | uuid (FK) | — | References `profiles(id)` — admin who sent the invite |
+| `created_at` | timestamptz | `now()` | When the invitation was created |
+| `accepted_at` | timestamptz | null | When the invitee signed up and was promoted |
+
+**Constraints:** Unique on `email`.
+
+**RLS Policies:**
+- **Select:** Admins only
+- **Insert:** Admins only
+- **Delete:** Admins only
+
+**Triggers:**
+- `handle_organizer_invitation` — on `profiles` INSERT, checks if the new user's email exists in `organizer_invitations`. If found, sets `role = 'organizer'` and records `accepted_at`.
+
+---
 
 ## Postgres Functions
 
@@ -312,9 +331,11 @@ Per-player per-country ranking statistics. Updated by Postgres functions.
 | `compute_all_player_stats()` | Recompute stats for all players |
 | `check_achievements(player_uuid)` | Check and award achievements for a player (handles all 8 criteria types) |
 | `generate_profile_slug(display_name, id)` | Generate URL-safe slug with collision handling |
+| `handle_organizer_invitation()` | Trigger function: auto-promotes new users to organizer if their email is in `organizer_invitations` |
 
 **Triggers:**
 - On `tournament_results` insert/update: auto-calls `compute_player_stats` and `check_achievements` for the affected player
+- On `profiles` insert: auto-calls `handle_organizer_invitation()` to check for pending organizer invitations
 
 ## Entity Relationship
 
@@ -340,4 +361,7 @@ auth.users ──(trigger)──> profiles
                                   └── achievements (achievement_id)
 
 country_config ←── default_points_brackets (standalone config)
+
+organizer_invitations (invited_by → profiles)
+  └── trigger on profiles INSERT → auto-promote matching email
 ```

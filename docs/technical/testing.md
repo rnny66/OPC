@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 128 (28 files)
+### Current Test Count: 147 (32 files)
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -107,6 +107,10 @@ afterEach(() => cleanup())
 | `components/players/__tests__/stats-grid.test.tsx` | 2 | 6 stat cards, null handling |
 | `components/players/__tests__/player-profile-header.test.tsx` | 5 | Name, rank, initials, country, date |
 | `components/players/__tests__/tournament-history-table.test.tsx` | 4 | Links, placement, empty state |
+| `components/admin/__tests__/user-table.test.tsx` | 5 | User table rendering, search, role display |
+| `components/admin/__tests__/invite-organizer-form.test.tsx` | 2 | Invite form rendering, submission |
+| `components/admin/__tests__/admin-tournament-table.test.tsx` | 4 | Tournament table, status, cancel action |
+| `lib/actions/__tests__/admin.test.ts` | 8 | Admin server actions (promote, invite, cancel) |
 
 ### Testing Server Actions
 

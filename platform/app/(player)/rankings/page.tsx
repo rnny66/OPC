@@ -119,6 +119,17 @@ export default async function RankingsPage({
 
   const supabase = await createSupabaseServer()
 
+  // Fetch countries for filter dropdown (needed before rankings query for name lookup)
+  const { data: countryList } = await supabase
+    .from('country_config')
+    .select('country_code, country_name')
+    .order('country_name')
+
+  const countries = (countryList || []).map(c => ({
+    code: c.country_code,
+    name: c.country_name,
+  }))
+
   // Build query
   let query = supabase
     .from('player_stats')
@@ -144,21 +155,14 @@ export default async function RankingsPage({
     query = query.ilike('profiles.display_name', `%${q}%`)
   }
   if (country) {
-    query = query.eq('profiles.home_country', country)
+    // country param is a code (e.g. "NL"), but profiles.home_country stores full name
+    const matchedCountry = countries.find(c => c.code === country)
+    if (matchedCountry) {
+      query = query.eq('profiles.home_country', matchedCountry.name)
+    }
   }
 
   const { data: rankings, count } = await query
-
-  // Fetch countries for filter dropdown
-  const { data: countryList } = await supabase
-    .from('country_config')
-    .select('country_code, country_name')
-    .order('country_name')
-
-  const countries = (countryList || []).map(c => ({
-    code: c.country_code,
-    name: c.country_name,
-  }))
 
   const totalPages = Math.ceil((count || 0) / PAGE_SIZE)
 

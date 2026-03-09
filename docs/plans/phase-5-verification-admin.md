@@ -9,7 +9,7 @@ Integrate Didit identity verification, build the admin panel, implement the orga
 
 ## Tasks
 
-### 1. Didit identity verification
+### 1. Didit identity verification — ⏳ Deferred to future phase
 - Research Didit Web SDK and API documentation
 - Create Supabase Edge Function: `create-didit-session`
   - Called when user navigates to `/verify-identity`
@@ -28,34 +28,34 @@ Integrate Didit identity verification, build the admin panel, implement the orga
   - If check fails: leave `identity_verified = false`
 - Add verification status to player dashboard and profile
 
-### 2. Per-tournament verification enforcement
+### 2. Per-tournament verification enforcement — ⏳ Deferred to future phase
 - On tournament detail page: show "ID verification required" notice if `requires_verification = true`
 - Registration flow: check `identity_verified` before allowing registration
 - Show "Verify your identity" CTA linking to `/verify-identity` if not verified
 - Organizer tournament editor: toggle `requires_verification`
 
-### 3. Admin dashboard (`/admin/dashboard`)
+### 3. Admin dashboard (`/admin/dashboard`) ✅
 - Overview stats: total users, verified users, total tournaments, active tournaments
 - Recent activity feed (new signups, new registrations, results entered)
 
-### 4. User management (`/admin/users`)
+### 4. User management (`/admin/users`) ✅
 - Table of all users with search and filters
 - Columns: name, email, role, verified status, signup date
 - Actions: view profile, change role, disable account
 
-### 5. Organizer invitation system
+### 5. Organizer invitation system ✅
 - Create migration: `organizer_invitations` table (email, invited_by, created_at, accepted_at)
 - Admin page (`/admin/organizers`): list current organizers + invite form
 - Enter email → insert into `organizer_invitations`
 - DB trigger: on `profiles` INSERT, check if email exists in `organizer_invitations` → set role to 'organizer'
 - For existing users: admin can directly update role from user management
 
-### 6. Tournament oversight (`/admin/tournaments`)
+### 6. Tournament oversight (`/admin/tournaments`) ✅
 - Table of all tournaments across all organizers
 - Filter by status, organizer, date range
 - Ability to edit or cancel any tournament
 
-### 7. Email notifications
+### 7. Email notifications — ⏳ Deferred to future phase
 - Registration confirmation — sent to player after successful tournament registration
 - Registration cancellation — sent to player after cancelling
 - Results published — sent to all participants when organizer enters results
@@ -72,13 +72,13 @@ Integrate Didit identity verification, build the admin panel, implement the orga
 
 ## Verification
 
-- [ ] Didit verification flow works end-to-end (create session → upload ID → webhook → profile updated)
-- [ ] Verified status persists and is visible on profile/dashboard
-- [ ] Cannot register for `requires_verification` tournament without verification
-- [ ] Can register for non-verified tournaments without verification
-- [ ] Admin can view all users, change roles, disable accounts
-- [ ] Organizer invitation flow: invite email → user signs up → gets organizer role
-- [ ] Admin can directly promote existing user to organizer
-- [ ] Admin can view and manage all tournaments
-- [ ] Email notifications are sent for registrations, cancellations, and results
-- [ ] All admin routes are restricted to admin role only
+- [ ] Didit verification flow works end-to-end (create session → upload ID → webhook → profile updated) — ⏳ Deferred
+- [ ] Verified status persists and is visible on profile/dashboard — ⏳ Deferred
+- [ ] Cannot register for `requires_verification` tournament without verification — ⏳ Deferred
+- [ ] Can register for non-verified tournaments without verification — ⏳ Deferred
+- [x] Admin can view all users, change roles, disable accounts
+- [x] Organizer invitation flow: invite email → user signs up → gets organizer role
+- [x] Admin can directly promote existing user to organizer
+- [x] Admin can view and manage all tournaments
+- [ ] Email notifications are sent for registrations, cancellations, and results — ⏳ Deferred
+- [x] All admin routes are restricted to admin role only

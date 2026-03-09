@@ -24,8 +24,10 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 - Points are automatically calculated based on placement and tournament multiplier
 
 ### Administrator
-- Invite users to become organizers
+- Invite users to become organizers (via `organizer_invitations` — auto-promotes on signup)
+- Directly promote existing users to organizer role
 - Oversee all tournaments and registrations
+- Cancel any tournament from admin panel
 - Manage user accounts and roles
 - Configure points brackets and country multipliers
 - Recompute all player stats
@@ -109,9 +111,10 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | Page | URL | Description |
 |------|-----|-------------|
 | Points Config | `/admin/points-config` | Configure default brackets, country multipliers |
-| Admin Dashboard | `/admin/dashboard` | Platform statistics (Phase 5) |
-| User Management | `/admin/users` | Manage accounts (Phase 5) |
-| Organizer Invites | `/admin/organizers` | Invite organizers (Phase 5) |
+| Admin Dashboard | `/admin/dashboard` | Platform statistics — user counts, tournament counts, recent activity |
+| User Management | `/admin/users` | Search/filter users, promote to organizer, view roles |
+| Organizer Invites | `/admin/organizers` | List organizers, invite new organizers by email |
+| Tournament Oversight | `/admin/tournaments` | View/cancel all tournaments across organizers |
 
 ## Implementation Phases
 
@@ -124,4 +127,4 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 3B | Results entry, points calculation, achievement logic | ✅ Complete |
 | 3C | Country points, admin points config UI | ✅ Complete |
 | 4 | Rankings, player profiles, achievements, leaderboard | ✅ Complete |
-| 5 | Didit verification, admin panel, email notifications | Planned |
+| 5 | Didit verification, admin panel, email notifications | ✅ Partial (admin panel complete, verification/emails deferred) |
