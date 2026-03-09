@@ -4,9 +4,14 @@ const DIDIT_API_BASE = 'https://verification.didit.me'
 
 export interface DiditSessionResponse {
   session_id: string
+  session_number: number
   session_token: string
-  verification_url: string
+  url: string
+  vendor_data: string
+  metadata: string | null
   status: string
+  callback: string
+  workflow_id: string
 }
 
 export async function createVerificationSession(
@@ -16,7 +21,7 @@ export async function createVerificationSession(
   const response = await fetch(`${DIDIT_API_BASE}/v3/session/`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${process.env.DIDIT_API_KEY}`,
+      'x-api-key': process.env.DIDIT_API_KEY!,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

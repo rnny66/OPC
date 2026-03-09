@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 const styles = {
   container: {
@@ -54,11 +53,6 @@ const styles = {
     border: '1px solid rgba(239, 68, 68, 0.3)',
     color: '#ef4444',
   } as React.CSSProperties,
-  pending: {
-    backgroundColor: 'rgba(21, 112, 239, 0.1)',
-    border: '1px solid rgba(21, 112, 239, 0.3)',
-    color: '#1570ef',
-  } as React.CSSProperties,
   info: {
     fontSize: '0.8rem',
     color: 'var(--color-text-secondary)',
@@ -67,12 +61,11 @@ const styles = {
   } as React.CSSProperties,
 }
 
-type VerifyState = 'idle' | 'loading' | 'verifying' | 'completed' | 'cancelled' | 'error'
+type VerifyState = 'idle' | 'loading' | 'completed' | 'error'
 
 export default function VerifyIdentityPage() {
   const [state, setState] = useState<VerifyState>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
-  const router = useRouter()
 
   async function startVerification() {
     setState('loading')
@@ -90,34 +83,8 @@ export default function VerifyIdentityPage() {
         throw new Error(data.error || 'Failed to create session')
       }
 
-      // Load and start Didit SDK
-      const { DiditSdk } = await import('@didit-protocol/sdk-web')
-
-      DiditSdk.shared.onComplete = (result: any) => {
-        switch (result.type) {
-          case 'completed':
-            setState('completed')
-            // Refresh after a delay to allow webhook to process
-            setTimeout(() => router.refresh(), 3000)
-            break
-          case 'cancelled':
-            setState('cancelled')
-            break
-          case 'failed':
-            setState('error')
-            setErrorMsg(result.error?.message || 'Verification failed')
-            break
-        }
-      }
-
-      setState('verifying')
-      DiditSdk.shared.startVerification({
-        url: data.url,
-        configuration: {
-          showCloseButton: true,
-          showExitConfirmation: true,
-        },
-      })
+      // Redirect to Didit's hosted verification page
+      window.location.href = data.url
     } catch (err: any) {
       setState('error')
       setErrorMsg(err.message || 'Something went wrong')
@@ -148,33 +115,10 @@ export default function VerifyIdentityPage() {
           <p style={{ color: 'var(--color-text-secondary)' }}>Preparing verification...</p>
         )}
 
-        {state === 'verifying' && (
-          <div style={{ ...styles.status, ...styles.pending }}>
-            Verification in progress. Please complete the steps in the popup.
-          </div>
-        )}
-
         {state === 'completed' && (
           <div style={{ ...styles.status, ...styles.success }}>
-            Verification submitted successfully! Your identity will be verified shortly.
-            <p style={styles.info}>
-              You will be able to register for verified tournaments once approved.
-            </p>
+            Your identity has already been verified.
           </div>
-        )}
-
-        {state === 'cancelled' && (
-          <>
-            <div style={{ ...styles.status, ...styles.pending }}>
-              Verification was cancelled.
-            </div>
-            <button
-              style={{ ...styles.button, marginTop: '1rem' }}
-              onClick={() => { setState('idle'); startVerification() }}
-            >
-              Try Again
-            </button>
-          </>
         )}
 
         {state === 'error' && (

@@ -39,7 +39,7 @@ export async function POST() {
       .update({ didit_session_id: session.session_id })
       .eq('id', user.id)
 
-    return NextResponse.json({ url: session.verification_url })
+    return NextResponse.json({ url: session.url })
   } catch (err: any) {
     console.error('Failed to create verification session:', err)
     return NextResponse.json({ error: err.message || 'Failed to create session' }, { status: 500 })
