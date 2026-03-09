@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createBrowserClient } from '@/lib/supabase/client'
@@ -49,11 +49,12 @@ const getLinkStyle = (
   outline: 'none',
 })
 
-function NavLink({ href, title, isActive, collapsed, children }: {
+function NavLink({ href, title, isActive, collapsed, onNavigate, children }: {
   href: string
   title?: string
   isActive: boolean
   collapsed: boolean
+  onNavigate?: (href: string) => void
   children: React.ReactNode
 }) {
   const [hovered, setHovered] = useState(false)
@@ -65,6 +66,7 @@ function NavLink({ href, title, isActive, collapsed, children }: {
       style={getLinkStyle(isActive, hovered, collapsed)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => onNavigate?.(href)}
     >
       {children}
     </Link>
@@ -106,17 +108,26 @@ export function SidebarLayout({
 }: SidebarLayoutProps) {
   const [collapsed, setCollapsed] = useState(false)
   const [collapseHovered, setCollapseHovered] = useState(false)
+  const [pendingHref, setPendingHref] = useState<string | null>(null)
   const pathname = usePathname()
   const router = useRouter()
 
+  // Clear pending state when pathname catches up
+  useEffect(() => {
+    setPendingHref(null)
+  }, [pathname])
+
   const sidebarWidth = collapsed ? '4rem' : '15rem'
+
+  // Use pendingHref for optimistic highlight, fall back to actual pathname
+  const activePath = pendingHref ?? pathname
 
   function isActive(href: string) {
     return (
-      pathname === href ||
+      activePath === href ||
       (href !== '/dashboard' &&
         href !== '/organizer/dashboard' &&
-        pathname.startsWith(href))
+        activePath.startsWith(href))
     )
   }
 
@@ -237,6 +248,7 @@ export function SidebarLayout({
                   title={collapsed ? item.label : undefined}
                   isActive={isActive(item.href)}
                   collapsed={collapsed}
+                  onNavigate={setPendingHref}
                 >
                   <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
                     {item.icon}
@@ -265,6 +277,7 @@ export function SidebarLayout({
               title={collapsed ? item.label : undefined}
               isActive={isActive(item.href)}
               collapsed={collapsed}
+              onNavigate={setPendingHref}
             >
               <span style={{ fontSize: '1.125rem', flexShrink: 0 }}>
                 {item.icon}
