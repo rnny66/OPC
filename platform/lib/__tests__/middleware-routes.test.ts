@@ -8,7 +8,6 @@ describe('route classification', () => {
     expect(classifyRoute('/login')).toBe('public')
     expect(classifyRoute('/signup')).toBe('public')
     expect(classifyRoute('/verify-email')).toBe('public')
-    expect(classifyRoute('/verify-identity')).toBe('public')
   })
 
   it('identifies protected routes', () => {
@@ -16,6 +15,7 @@ describe('route classification', () => {
     expect(classifyRoute('/profile')).toBe('protected')
     expect(classifyRoute('/profile/edit')).toBe('protected')
     expect(classifyRoute('/tournaments/123/register')).toBe('protected')
+    expect(classifyRoute('/verify-identity')).toBe('protected')
   })
 
   it('identifies organizer routes', () => {
@@ -34,6 +34,10 @@ describe('route classification', () => {
     expect(classifyRoute('/')).toBe('public')
     expect(classifyRoute('/about')).toBe('public')
     expect(classifyRoute('/tournaments')).toBe('public')
+  })
+
+  it('classifies webhook routes as public', () => {
+    expect(classifyRoute('/api/webhooks/didit')).toBe('public')
   })
 
   it('classifies rankings and player profile routes as public', () => {

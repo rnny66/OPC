@@ -2,7 +2,7 @@ export type RouteType = 'public' | 'protected' | 'organizer' | 'admin'
 
 const AUTH_ROUTES = ['/login', '/signup']
 const VERIFY_ROUTES_PREFIX = '/verify-'
-const PROTECTED_ROUTES = ['/dashboard', '/profile']
+const PROTECTED_ROUTES = ['/dashboard', '/profile', '/verify-identity']
 const PROTECTED_PREFIXES = ['/profile/', '/tournaments/']
 const ORGANIZER_PREFIX = '/organizer'
 const ADMIN_PREFIX = '/admin'
@@ -15,6 +15,7 @@ function isProtectedRoute(pathname: string): boolean {
 }
 
 export function classifyRoute(pathname: string): RouteType {
+  if (pathname.startsWith('/api/webhooks/')) return 'public'
   if (pathname.startsWith(ADMIN_PREFIX)) return 'admin'
   if (pathname.startsWith(ORGANIZER_PREFIX)) return 'organizer'
   if (isProtectedRoute(pathname)) return 'protected'
