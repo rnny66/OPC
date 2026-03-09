@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { updateDefaultBrackets, updateCountryConfig, recomputeAllStats } from '@/lib/actions/admin'
+import { useToast } from '@/components/ui/toast'
 
 interface Bracket {
   id: string
@@ -120,6 +121,7 @@ export function PointsConfigEditor({ brackets, countries }: PointsConfigEditorPr
   const [countryPending, startCountryTransition] = useTransition()
   const [recomputePending, startRecomputeTransition] = useTransition()
 
+  const { toast } = useToast()
   const [bracketsMessage, setBracketsMessage] = useState<{ text: string; error: boolean } | null>(null)
   const [countryMessage, setCountryMessage] = useState<{ text: string; error: boolean } | null>(null)
   const [recomputeMessage, setRecomputeMessage] = useState<{ text: string; error: boolean } | null>(null)
@@ -149,8 +151,10 @@ export function PointsConfigEditor({ brackets, countries }: PointsConfigEditorPr
       const result = await updateDefaultBrackets(editBrackets)
       if ('error' in result && result.error) {
         setBracketsMessage({ text: result.error, error: true })
+        toast({ type: 'error', message: result.error })
       } else {
         setBracketsMessage({ text: 'Brackets saved successfully', error: false })
+        toast({ type: 'success', message: 'Brackets updated' })
       }
     })
   }
@@ -165,8 +169,10 @@ export function PointsConfigEditor({ brackets, countries }: PointsConfigEditorPr
       )
       if ('error' in result && result.error) {
         setCountryMessage({ text: result.error, error: true })
+        toast({ type: 'error', message: result.error })
       } else {
         setCountryMessage({ text: `${country.country_name} updated`, error: false })
+        toast({ type: 'success', message: 'Country config updated' })
       }
     })
   }
@@ -176,8 +182,10 @@ export function PointsConfigEditor({ brackets, countries }: PointsConfigEditorPr
       const result = await recomputeAllStats()
       if ('error' in result && result.error) {
         setRecomputeMessage({ text: result.error, error: true })
+        toast({ type: 'error', message: result.error })
       } else {
         setRecomputeMessage({ text: 'All player stats recomputed successfully', error: false })
+        toast({ type: 'success', message: 'Stats recomputed' })
       }
     })
   }

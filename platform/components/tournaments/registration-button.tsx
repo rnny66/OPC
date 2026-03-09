@@ -5,6 +5,7 @@ import { createBrowserClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Spinner } from '@/components/ui/spinner'
+import { useToast } from '@/components/ui/toast'
 
 const styles = {
   button: {
@@ -72,6 +73,7 @@ export function RegistrationButton({
   const [error, setError] = useState<string | null>(null)
   const [registered, setRegistered] = useState(isRegistered)
   const router = useRouter()
+  const { toast } = useToast()
 
   if (!isLoggedIn) {
     return (
@@ -130,11 +132,13 @@ export function RegistrationButton({
 
     if (regError) {
       setError(regError.message)
+      toast({ type: 'error', message: regError.message })
       setLoading(false)
       return
     }
 
     setRegistered(true)
+    toast({ type: 'success', message: 'Registered successfully!' })
     setLoading(false)
     router.refresh()
   }

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Spinner } from '@/components/ui/spinner'
+import { useToast } from '@/components/ui/toast'
 
 const styles = {
   button: {
@@ -37,6 +38,7 @@ export function CancelRegistrationButton({ registrationId }: { registrationId: s
   const [confirming, setConfirming] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { toast } = useToast()
 
   async function handleCancel() {
     setLoading(true)
@@ -46,6 +48,7 @@ export function CancelRegistrationButton({ registrationId }: { registrationId: s
       .update({ status: 'cancelled', cancelled_at: new Date().toISOString() })
       .eq('id', registrationId)
 
+    toast({ type: 'success', message: 'Registration cancelled' })
     router.refresh()
   }
 

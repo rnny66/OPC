@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Profile } from '@/test-utils/factories'
+import { useToast } from '@/components/ui/toast'
 
 const formStyles = {
   card: {
@@ -93,6 +94,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
   const [uploadingAvatar, setUploadingAvatar] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const router = useRouter()
+  const { toast } = useToast()
 
   async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -142,8 +144,10 @@ export function ProfileForm({ profile }: { profile: Profile }) {
 
     if (error) {
       setMessage({ type: 'error', text: error.message })
+      toast({ type: 'error', message: error.message })
     } else {
       setMessage({ type: 'success', text: 'Profile saved!' })
+      toast({ type: 'success', message: 'Profile updated' })
       router.refresh()
     }
     setLoading(false)

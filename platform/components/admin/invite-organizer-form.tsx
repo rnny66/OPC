@@ -2,11 +2,13 @@
 
 import { useState, useTransition } from 'react'
 import { inviteOrganizer } from '@/lib/actions/admin'
+import { useToast } from '@/components/ui/toast'
 
 export function InviteOrganizerForm() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -17,8 +19,10 @@ export function InviteOrganizerForm() {
 
       if (result?.error) {
         setMessage({ type: 'error', text: result.error })
+        toast({ type: 'error', message: result.error })
       } else {
         setMessage({ type: 'success', text: `Invitation sent to ${email}` })
+        toast({ type: 'success', message: 'Invitation sent' })
         setEmail('')
       }
     })

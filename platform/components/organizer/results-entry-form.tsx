@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { saveResults } from '@/lib/actions/results'
 import { calculatePoints } from '@/lib/points'
+import { useToast } from '@/components/ui/toast'
 
 interface Player {
   id: string
@@ -101,6 +102,7 @@ export function ResultsEntryForm({
   })
 
   const [isPending, startTransition] = useTransition()
+  const { toast } = useToast()
   const [message, setMessage] = useState<{
     type: 'success' | 'error'
     text: string
@@ -134,8 +136,11 @@ export function ResultsEntryForm({
           type: 'success',
           text: `Saved results for ${results.length} player${results.length === 1 ? '' : 's'}.`,
         })
+        toast({ type: 'success', message: 'Results saved' })
       } catch (err: any) {
-        setMessage({ type: 'error', text: err.message || 'Failed to save.' })
+        const msg = err.message || 'Failed to save.'
+        setMessage({ type: 'error', text: msg })
+        toast({ type: 'error', message: msg })
       }
     })
   }

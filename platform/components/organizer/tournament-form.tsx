@@ -1,6 +1,8 @@
 'use client'
 
+import { useState, useTransition } from 'react'
 import { createTournament, updateTournament } from '@/lib/actions/tournament'
+import { useToast } from '@/components/ui/toast'
 
 interface Tournament {
   id: string
@@ -97,10 +99,27 @@ const styles = {
 
 export function TournamentForm({ tournament }: TournamentFormProps) {
   const isEdit = !!tournament
-  const action = isEdit ? updateTournament : createTournament
+  const serverAction = isEdit ? updateTournament : createTournament
+  const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | null>(null)
+
+  function handleSubmit(formData: FormData) {
+    setError(null)
+    startTransition(async () => {
+      try {
+        await serverAction(formData)
+        toast({ type: 'success', message: 'Tournament saved' })
+      } catch (err: any) {
+        const msg = err.message || 'Failed to save tournament'
+        setError(msg)
+        toast({ type: 'error', message: msg })
+      }
+    })
+  }
 
   return (
-    <form action={action} style={styles.form}>
+    <form action={handleSubmit} style={styles.form}>
       {isEdit && <input type="hidden" name="id" value={tournament.id} />}
 
       <div style={styles.fieldGroup}>
@@ -306,9 +325,10 @@ export function TournamentForm({ tournament }: TournamentFormProps) {
         </div>
       )}
 
-      <button type="submit" style={styles.button}>
-        {isEdit ? 'Save Changes' : 'Create Tournament'}
+      <button type="submit" disabled={isPending} style={{ ...styles.button, opacity: isPending ? 0.7 : 1 }}>
+        {isPending ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Tournament'}
       </button>
+      {error && <p style={{ color: '#f04438', fontSize: '0.875rem', marginTop: '0.5rem' }}>{error}</p>}
     </form>
   )
 }
