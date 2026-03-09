@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Spinner } from '@/components/ui/spinner'
 
 const formStyles = {
   card: {
@@ -165,7 +166,12 @@ export function SignupForm() {
             style={formStyles.input}
           />
         </div>
-        <button type="submit" disabled={loading} style={formStyles.button}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{ ...formStyles.button, cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+        >
+          {loading && <Spinner size="0.875rem" color="#fff" />}
           {loading ? 'Creating account...' : 'Sign up'}
         </button>
       </form>

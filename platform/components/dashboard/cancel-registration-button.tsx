@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { Spinner } from '@/components/ui/spinner'
 
 const styles = {
   button: {
@@ -52,8 +53,13 @@ export function CancelRegistrationButton({ registrationId }: { registrationId: s
     return (
       <div style={styles.confirm}>
         <span>Are you sure?</span>
-        <button style={styles.confirmButton} onClick={handleCancel} disabled={loading}>
-          {loading ? '...' : 'Yes, cancel'}
+        <button
+          style={{ ...styles.confirmButton, cursor: loading ? 'not-allowed' : 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+          onClick={handleCancel}
+          disabled={loading}
+        >
+          {loading && <Spinner size="0.75rem" color="#fff" />}
+          {loading ? 'Cancelling...' : 'Yes, cancel'}
         </button>
         <button style={styles.button} onClick={() => setConfirming(false)}>
           No

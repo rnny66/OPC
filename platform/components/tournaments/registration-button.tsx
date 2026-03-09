@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Spinner } from '@/components/ui/spinner'
 
 const styles = {
   button: {
@@ -141,10 +142,19 @@ export function RegistrationButton({
   return (
     <div>
       <button
-        style={{ ...styles.button, opacity: loading ? 0.7 : 1 }}
+        style={{
+          ...styles.button,
+          opacity: loading ? 0.7 : 1,
+          cursor: loading ? 'not-allowed' : 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.5rem',
+        }}
         onClick={handleRegister}
         disabled={loading}
       >
+        {loading && <Spinner size="0.875rem" color="#fff" />}
         {loading ? 'Registering...' : 'Register for this tournament'}
       </button>
       {error && <p style={styles.error}>{error}</p>}
