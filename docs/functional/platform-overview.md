@@ -88,10 +88,11 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 ### Organizer (organizer role required)
 | Page | URL | Description |
 |------|-----|-------------|
-| Organizer Dashboard | `/organizer/dashboard` | Tournament overview (Phase 3) |
-| Manage Tournament | `/organizer/tournaments/[id]` | Edit tournament (Phase 3) |
-| View Registrations | `/organizer/tournaments/[id]/registrations` | Player list (Phase 3) |
-| Enter Results | `/organizer/tournaments/[id]/results` | Placement entry (Phase 3) |
+| Organizer Dashboard | `/organizer/dashboard` | Tournament overview with stats |
+| Create Tournament | `/organizer/tournaments/new` | Create new tournament |
+| Manage Tournament | `/organizer/tournaments/[id]` | Edit tournament details |
+| View Registrations | `/organizer/tournaments/[id]/registrations` | Player list + status management + CSV export |
+| Enter Results | `/organizer/tournaments/[id]/results` | Placement entry (Phase 3B) |
 
 ### Admin (admin role required)
 | Page | URL | Description |
@@ -107,6 +108,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 0 | Testing framework setup | ✅ Complete |
 | 1 | Foundation — auth, database, middleware | ✅ Complete |
 | 2 | Tournament browse, register, dashboard, profile | ✅ Complete |
-| 3 | Organizer tools — manage tournaments, enter results | Planned |
+| 3A | Organizer tools — dashboard, tournament CRUD, registration management | ✅ Complete |
+| 3B | Results entry, points calculation, achievement logic | Planned |
 | 4 | Rankings, player stats, achievements, leaderboard | Planned |
 | 5 | Didit verification, admin panel, email notifications | Planned |

@@ -132,14 +132,103 @@ Public storage bucket for user profile pictures.
 
 ---
 
-## Future Tables (Phase 3–5)
+### `tournament_results`
+
+Stores player placements and points for completed tournaments.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Result ID |
+| `tournament_id` | uuid (FK) | — | References `tournaments(id)`, cascade delete |
+| `player_id` | uuid (FK) | — | References `profiles(id)`, cascade delete |
+| `placement` | integer | — | Final placement (1st, 2nd, etc.) |
+| `points_earned` | numeric | `0` | Points earned (base x multiplier) |
+| `prize_amount` | integer | `0` | Prize money in cents |
+| `notes` | text | null | Optional notes |
+| `created_at` | timestamptz | `now()` | When result was recorded |
+| `updated_at` | timestamptz | `now()` | Auto-updated via trigger |
+
+**Constraints:** Unique on `(tournament_id, player_id)` — one result per player per tournament. Unique on `(tournament_id, placement)` — one player per placement.
+
+**Indexes:** `tournament_id`, `player_id`, `points_earned DESC`
+
+**RLS Policies:**
+- **Select:** Public — anyone can read results
+- **Insert:** Organizers can insert results for their own tournaments; admins can insert any
+- **Update:** Organizers can update results for their own tournaments; admins can update any
+- **Delete:** Admins only
+
+---
+
+### `player_stats`
+
+Computed/aggregated player statistics. Updated by Postgres functions (Phase 3B).
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Stats ID |
+| `player_id` | uuid (FK) | — | References `profiles(id)`, cascade delete, unique |
+| `total_points` | numeric | `0` | Sum of all points earned |
+| `tournaments_played` | integer | `0` | Number of tournaments with results |
+| `tournaments_won` | integer | `0` | Number of 1st place finishes |
+| `best_placement` | integer | null | Best ever placement |
+| `average_placement` | numeric | null | Average placement across tournaments |
+| `current_rank` | integer | null | Current leaderboard position |
+| `updated_at` | timestamptz | `now()` | Last recompute time |
+
+**RLS Policies:**
+- **Select:** Public — anyone can read stats
+- **Insert/Update/Delete:** Restricted to Postgres functions only (no direct user writes)
+
+---
+
+### `achievements`
+
+Definitions for badges/achievements players can earn.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Achievement ID |
+| `slug` | text | — | Unique identifier (e.g. `first_tournament`) |
+| `name` | text | — | Display name |
+| `description` | text | — | How to earn it |
+| `icon` | text | null | Icon identifier |
+| `category` | text | `'general'` | Category (general, milestone, special) |
+| `criteria` | jsonb | `{}` | Machine-readable unlock criteria |
+| `created_at` | timestamptz | `now()` | Creation time |
+
+**Constraints:** Unique on `slug`.
+
+**Seed data:** 6 achievements (first_tournament, first_win, five_tournaments, ten_tournaments, three_wins, points_1000)
+
+**RLS Policies:**
+- **Select:** Public — anyone can read achievement definitions
+
+---
+
+### `player_achievements`
+
+Links players to earned achievements.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Record ID |
+| `player_id` | uuid (FK) | — | References `profiles(id)`, cascade delete |
+| `achievement_id` | uuid (FK) | — | References `achievements(id)`, cascade delete |
+| `earned_at` | timestamptz | `now()` | When the achievement was earned |
+
+**Constraints:** Unique on `(player_id, achievement_id)` — one award per achievement per player.
+
+**RLS Policies:**
+- **Select:** Public — anyone can see earned achievements
+
+---
+
+## Future Tables (Phase 5)
 
 | Table | Phase | Purpose |
 |-------|-------|---------|
-| `tournament_results` | 3 | Placements and points per player per tournament |
-| `player_stats` | 4 | Computed rankings (total points, win count, rank) |
-| `achievements` | 4 | Badge/achievement definitions |
-| `player_achievements` | 4 | Player ↔ achievement mapping |
+| `admin_invitations` | 5 | Organizer invitation tracking |
 
 ## Entity Relationship
 
@@ -148,7 +237,15 @@ auth.users ──(trigger)──> profiles
                             │
                             ├── tournaments (organizer_id)
                             │     │
-                            │     └── tournament_registrations (tournament_id)
+                            │     ├── tournament_registrations (tournament_id)
+                            │     │     │
+                            │     └── tournament_results (tournament_id)
                             │           │
-                            └───────────┘ (player_id)
+                            ├───────────┘ (player_id)
+                            │
+                            ├── player_stats (player_id)
+                            │
+                            └── player_achievements (player_id)
+                                  │
+                                  └── achievements (achievement_id)
 ```

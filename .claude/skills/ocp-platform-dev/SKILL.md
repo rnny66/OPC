@@ -27,6 +27,8 @@ OCP/
 │   ├── app/
 │   │   ├── (auth)/         # login, signup, verify-email
 │   │   ├── (player)/       # dashboard, profile, tournaments
+│   │   ├── (organizer)/    # organizer dashboard, tournament CRUD, registrations
+│   │   │   └── organizer/  # URL prefix (avoids route group conflicts)
 │   │   ├── auth/callback/  # OAuth code exchange route
 │   │   ├── layout.tsx      # Root layout (Inter font)
 │   │   ├── globals.css     # Base styles (imports tokens.css)
@@ -35,15 +37,17 @@ OCP/
 │   │   ├── auth/           # LoginForm, SignupForm (client components)
 │   │   ├── tournaments/    # TournamentCard, FilterBar, Pagination, RegistrationButton
 │   │   ├── dashboard/      # CancelRegistrationButton
-│   │   └── profile/        # ProfileForm
+│   │   ├── profile/        # ProfileForm
+│   │   └── organizer/      # TournamentForm, RegistrationStatusSelect, ExportCsvButton
 │   ├── lib/
+│   │   ├── actions/        # Server Actions (tournament.ts, registration.ts)
 │   │   ├── auth/routes.ts  # Route classification logic
 │   │   └── supabase/       # client.ts, server.ts, admin.ts, middleware.ts
 │   ├── middleware.ts        # Route protection + session refresh
 │   ├── test-utils/         # MSW handlers, render helpers, data factories
 │   └── e2e/                # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/         # 001_profiles, 002_tournaments, 003_registrations, 004_avatar_storage
+│   ├── migrations/         # 001_profiles through 007_achievements
 │   └── tests/              # pgTAP tests
 └── docs/plans/
 ```
@@ -55,7 +59,7 @@ OCP/
 | Organizer (invite-only) | Tournament management, registrations, results entry |
 | Admin | User management, organizer invitations, tournament oversight |
 
-### Database Tables (Phase 1)
+### Database Tables
 - `profiles` — extends auth.users (display_name, nationality, role, verification status)
   - Auto-created via trigger on auth.users insert
   - RLS: public read, self-update (cannot change role/verification fields)
@@ -65,6 +69,12 @@ OCP/
 - `tournament_registrations` — player ↔ tournament with status tracking
   - RLS: player sees own, organizer sees their tournaments, admin sees all
   - Requires `onboarding_complete = true` to register
+- `tournament_results` — placement and points per player per tournament
+  - RLS: public read, organizer insert/update own tournaments, admin all
+- `player_stats` — computed rankings (total points, wins, rank)
+  - RLS: public read, function-only writes
+- `achievements` — badge definitions (6 seeded), `player_achievements` — earned badges
+  - RLS: public read
 
 ### Auth & Middleware
 - **Supabase Auth:** email/password + Google + Facebook OAuth
@@ -98,6 +108,8 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
   }))
   ```
 - Use `cleanup()` from RTL and `afterEach` in component tests
+- **Server Actions** (`'use server'`) in `lib/actions/` for form mutations
+- **Route groups with URL prefix:** use `(organizer)/organizer/` pattern to avoid conflicts between route groups that need the same URL prefix
 
 ### 4. Supabase conventions
 - Migrations in `supabase/migrations/` with numbered names (001_, 002_, etc.)
@@ -108,7 +120,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (52 tests)
+npm run test:unit     # Vitest (74 tests, 18 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -136,7 +148,8 @@ After completing each phase:
 | 0 | Testing framework | ✅ Complete | `phase-0-testing-framework.md` |
 | 1 | Monorepo, auth, Supabase setup | ✅ Complete | `phase-1-foundation.md` |
 | 2 | Tournament browse, register, dashboard | ✅ Complete | `phase-2-tournament-flow.md` |
-| 3 | Organizer tools, results entry, points | Planned | `phase-3-organizer-tools.md` |
+| 3A | Organizer dashboard, tournament CRUD, registrations | ✅ Complete | `phase-3-organizer-tools.md` |
+| 3B | Results entry, points calculation, achievements | Planned | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | Planned | `phase-4-rankings-stats.md` |
 | 5 | Didit verification, admin panel, emails | Planned | `phase-5-verification-admin.md` |
 
