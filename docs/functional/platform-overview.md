@@ -76,15 +76,14 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | Login | `/login` | Email/password + social login |
 | Signup | `/signup` | Account creation |
 | Verify Email | `/verify-email` | Email confirmation pending |
-| Tournaments | `/tournaments` | Browse all tournaments (Phase 2) |
-| Tournament Detail | `/tournaments/[id]` | Single tournament info (Phase 2) |
+| Tournaments | `/tournaments` | Browse all tournaments with filters |
+| Tournament Detail | `/tournaments/[id]` | Single tournament info + registration |
 
 ### Player (login required)
 | Page | URL | Description |
 |------|-----|-------------|
 | Dashboard | `/dashboard` | Personal registrations and stats |
-| Profile | `/profile` | View/edit profile (Phase 2) |
-| Register | `/tournaments/[id]/register` | Tournament registration (Phase 2) |
+| Profile | `/profile` | View/edit profile with avatar upload |
 
 ### Organizer (organizer role required)
 | Page | URL | Description |
@@ -107,7 +106,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 |-------|-------|--------|
 | 0 | Testing framework setup | ✅ Complete |
 | 1 | Foundation — auth, database, middleware | ✅ Complete |
-| 2 | Tournament browse, register, dashboard, profile | Next |
+| 2 | Tournament browse, register, dashboard, profile | ✅ Complete |
 | 3 | Organizer tools — manage tournaments, enter results | Planned |
 | 4 | Rankings, player stats, achievements, leaderboard | Planned |
 | 5 | Didit verification, admin panel, email notifications | Planned |

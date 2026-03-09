@@ -26,13 +26,16 @@ OCP/
 ├── platform/               # Next.js 15 app (App Router, TypeScript)
 │   ├── app/
 │   │   ├── (auth)/         # login, signup, verify-email
-│   │   ├── (player)/       # dashboard (+ future: profile, tournaments)
+│   │   ├── (player)/       # dashboard, profile, tournaments
 │   │   ├── auth/callback/  # OAuth code exchange route
 │   │   ├── layout.tsx      # Root layout (Inter font)
 │   │   ├── globals.css     # Base styles (imports tokens.css)
 │   │   └── tokens.css      # Design tokens shared with site/
 │   ├── components/
-│   │   └── auth/           # LoginForm, SignupForm (client components)
+│   │   ├── auth/           # LoginForm, SignupForm (client components)
+│   │   ├── tournaments/    # TournamentCard, FilterBar, Pagination, RegistrationButton
+│   │   ├── dashboard/      # CancelRegistrationButton
+│   │   └── profile/        # ProfileForm
 │   ├── lib/
 │   │   ├── auth/routes.ts  # Route classification logic
 │   │   └── supabase/       # client.ts, server.ts, admin.ts, middleware.ts
@@ -40,7 +43,7 @@ OCP/
 │   ├── test-utils/         # MSW handlers, render helpers, data factories
 │   └── e2e/                # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/         # 001_profiles, 002_tournaments, 003_registrations
+│   ├── migrations/         # 001_profiles, 002_tournaments, 003_registrations, 004_avatar_storage
 │   └── tests/              # pgTAP tests
 └── docs/plans/
 ```
@@ -105,7 +108,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (21 tests)
+npm run test:unit     # Vitest (52 tests)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -132,7 +135,7 @@ After completing each phase:
 |-------|-------|--------|------|
 | 0 | Testing framework | ✅ Complete | `phase-0-testing-framework.md` |
 | 1 | Monorepo, auth, Supabase setup | ✅ Complete | `phase-1-foundation.md` |
-| 2 | Tournament browse, register, dashboard | Next | `phase-2-tournament-flow.md` |
+| 2 | Tournament browse, register, dashboard | ✅ Complete | `phase-2-tournament-flow.md` |
 | 3 | Organizer tools, results entry, points | Planned | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | Planned | `phase-4-rankings-stats.md` |
 | 5 | Didit verification, admin panel, emails | Planned | `phase-5-verification-admin.md` |

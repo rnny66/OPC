@@ -37,17 +37,32 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── signup/page.tsx
 │   │   │   └── verify-email/page.tsx
 │   │   ├── (player)/
-│   │   │   ├── layout.tsx      # Player layout with header
-│   │   │   └── dashboard/page.tsx  # Server Component, auth check
+│   │   │   ├── layout.tsx      # Player layout with nav links
+│   │   │   ├── dashboard/page.tsx  # Registrations list + stats
+│   │   │   ├── profile/page.tsx    # Profile edit + avatar upload
+│   │   │   └── tournaments/
+│   │   │       ├── page.tsx        # Browse with filters/pagination
+│   │   │       └── [id]/page.tsx   # Detail + registration button
 │   │   └── auth/
 │   │       └── callback/route.ts   # OAuth code exchange
 │   ├── components/
-│   │   └── auth/
-│   │       ├── login-form.tsx      # Client Component
-│   │       ├── signup-form.tsx     # Client Component
+│   │   ├── auth/
+│   │   │   ├── login-form.tsx      # Client Component
+│   │   │   ├── signup-form.tsx     # Client Component
+│   │   │   └── __tests__/
+│   │   ├── tournaments/
+│   │   │   ├── tournament-card.tsx      # Server Component
+│   │   │   ├── tournament-grid.tsx      # Server Component
+│   │   │   ├── filter-bar.tsx           # Client Component
+│   │   │   ├── pagination.tsx           # Client Component
+│   │   │   ├── registration-button.tsx  # Client Component
+│   │   │   └── __tests__/
+│   │   ├── dashboard/
+│   │   │   ├── cancel-registration-button.tsx  # Client Component
+│   │   │   └── __tests__/
+│   │   └── profile/
+│   │       ├── profile-form.tsx         # Client Component
 │   │       └── __tests__/
-│   │           ├── login-form.test.tsx
-│   │           └── signup-form.test.tsx
 │   ├── lib/
 │   │   ├── auth/
 │   │   │   └── routes.ts          # classifyRoute() — pure function
@@ -75,7 +90,8 @@ OCP/                            # Root (npm workspaces)
 │   ├── migrations/
 │   │   ├── 001_profiles.sql
 │   │   ├── 002_tournaments.sql
-│   │   └── 003_tournament_registrations.sql
+│   │   ├── 003_tournament_registrations.sql
+│   │   └── 004_avatar_storage.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
@@ -136,8 +152,8 @@ Next.js App Router
 - No client-side JavaScript bundle
 
 ### Client Components (`'use client'`)
-- Forms with state (LoginForm, SignupForm)
-- Interactive elements (filters, registration buttons)
+- Forms with state (LoginForm, SignupForm, ProfileForm)
+- Interactive elements (FilterBar, Pagination, RegistrationButton, CancelRegistrationButton)
 - Use `createBrowserClient()` for mutations
 - Must wrap `useSearchParams()` in `<Suspense>` at the page level
 

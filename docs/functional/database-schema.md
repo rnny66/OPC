@@ -110,6 +110,28 @@ Links players to tournaments they've registered for.
 - **Update (players):** Can update their own registration (e.g. cancel)
 - **Update (organizers):** Can update status for registrations in their tournaments
 
+## Storage Buckets
+
+### `avatars`
+
+Public storage bucket for user profile pictures.
+
+| Property | Value |
+|----------|-------|
+| Bucket ID | `avatars` |
+| Public | Yes (public read) |
+| Path pattern | `{user_id}/avatar.{ext}` |
+
+**RLS Policies:**
+- **Insert:** Authenticated users can upload to their own `{user_id}/` folder
+- **Update:** Users can update files in their own folder
+- **Delete:** Users can delete files in their own folder
+- **Select:** Public — anyone can read avatars
+
+**Migration:** `004_avatar_storage.sql`
+
+---
+
 ## Future Tables (Phase 3–5)
 
 | Table | Phase | Purpose |

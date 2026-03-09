@@ -12,7 +12,7 @@ Static marketing website for a European poker championship platform, evolving in
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
-### Platform (`platform/`) — Phase 1 complete
+### Platform (`platform/`) — Phase 2 complete
 - **Next.js 15** (App Router, TypeScript)
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
@@ -39,13 +39,16 @@ OCP/
 ├── platform/                   # Next.js 15 app
 │   ├── app/
 │   │   ├── (auth)/             # Auth pages (login, signup, verify-email)
-│   │   ├── (player)/           # Player pages (dashboard)
+│   │   ├── (player)/           # Player pages (dashboard, profile, tournaments)
 │   │   ├── auth/callback/      # OAuth callback route
 │   │   ├── layout.tsx          # Root layout (Inter font, globals.css)
 │   │   ├── globals.css         # OPC base styles (imports tokens.css)
 │   │   └── tokens.css          # Design tokens (shared with site/)
 │   ├── components/
-│   │   └── auth/               # LoginForm, SignupForm
+│   │   ├── auth/               # LoginForm, SignupForm
+│   │   ├── tournaments/        # TournamentCard, FilterBar, Pagination, RegistrationButton
+│   │   ├── dashboard/          # CancelRegistrationButton
+│   │   └── profile/            # ProfileForm
 │   ├── lib/
 │   │   ├── auth/routes.ts      # Route classification (public/protected/organizer/admin)
 │   │   └── supabase/           # client.ts, server.ts, admin.ts, middleware.ts
@@ -53,7 +56,7 @@ OCP/
 │   ├── test-utils/             # MSW handlers, render helpers, data factories
 │   └── e2e/                    # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/             # 001_profiles, 002_tournaments, 003_registrations
+│   ├── migrations/             # 001_profiles, 002_tournaments, 003_registrations, 004_avatar_storage
 │   └── tests/                  # pgTAP tests
 ├── designs/                    # Figma design screenshots
 └── docs/
@@ -138,7 +141,7 @@ OCP/
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
 - **Test before done:** No feature is considered complete until it has been properly tested and verified
-- **Unit tests:** `npm run test:unit` (Vitest + RTL, 21 tests passing)
+- **Unit tests:** `npm run test:unit` (Vitest + RTL, 52 tests passing)
 - **DB tests:** `npm run test:db` (pgTAP, 4 test files)
 - **E2E tests:** `npm run test:e2e` (Playwright)
 - **All tests:** `npm run test:all`

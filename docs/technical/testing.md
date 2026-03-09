@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 21
+### Current Test Count: 52
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -85,6 +85,12 @@ afterEach(() => cleanup())
 | `lib/__tests__/middleware-routes.test.ts` | 5 | Route classification |
 | `components/auth/__tests__/login-form.test.tsx` | 4 | Login form rendering |
 | `components/auth/__tests__/signup-form.test.tsx` | 4 | Signup form rendering |
+| `components/tournaments/__tests__/tournament-card.test.tsx` | 7 | Card rendering, date format, entry fee |
+| `components/tournaments/__tests__/filter-bar.test.tsx` | 4 | Filter selects, URL param updates |
+| `components/tournaments/__tests__/pagination.test.tsx` | 4 | Page buttons, disabled states |
+| `components/tournaments/__tests__/registration-button.test.tsx` | 8 | All 8 registration states |
+| `components/dashboard/__tests__/cancel-registration-button.test.tsx` | 2 | Cancel + confirmation flow |
+| `components/profile/__tests__/profile-form.test.tsx` | 6 | Form fields, save button, avatar |
 
 ## Database Tests (pgTAP)
 
