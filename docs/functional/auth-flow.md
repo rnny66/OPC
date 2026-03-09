@@ -85,8 +85,10 @@ Every request passes through middleware which:
 ### Route Classification (`lib/auth/routes.ts`)
 
 ```
+/api/webhooks/*                   → public (webhook handlers, no auth)
 /login, /signup, /verify-*        → public
 /dashboard, /profile, /profile/*  → protected
+/verify-identity                  → protected
 /tournaments/*/register           → protected
 /organizer/*                      → organizer
 /admin/*                          → admin

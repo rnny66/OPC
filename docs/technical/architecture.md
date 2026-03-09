@@ -40,6 +40,7 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── layout.tsx      # Player layout (delegates to AppSidebar)
 │   │   │   ├── dashboard/page.tsx  # Registrations list + stats
 │   │   │   ├── profile/page.tsx    # Profile edit + avatar upload
+│   │   │   ├── verify-identity/page.tsx  # Didit SDK verification
 │   │   │   ├── rankings/page.tsx   # Public leaderboard (Phase 4)
 │   │   │   ├── players/[slug]/page.tsx  # Public player profile (Phase 4)
 │   │   │   └── tournaments/
@@ -63,12 +64,18 @@ OCP/                            # Root (npm workspaces)
 │   │   │       ├── users/page.tsx             # User management (Phase 5)
 │   │   │       ├── organizers/page.tsx        # Organizer invitations (Phase 5)
 │   │   │       └── tournaments/page.tsx       # Tournament oversight (Phase 5)
+│   │   ├── api/
+│   │   │   ├── verification/
+│   │   │   │   └── create-session/route.ts  # Didit session creation
+│   │   │   └── webhooks/
+│   │   │       └── didit/route.ts           # Didit webhook handler
 │   │   └── auth/
 │   │       └── callback/route.ts   # OAuth code exchange
 │   ├── components/
 │   │   ├── auth/
 │   │   │   ├── login-form.tsx      # Client Component
 │   │   │   ├── signup-form.tsx     # Client Component
+│   │   │   ├── verification-status.tsx  # Verification badge/link
 │   │   │   └── __tests__/
 │   │   ├── tournaments/
 │   │   │   ├── tournament-card.tsx      # Server Component
@@ -111,6 +118,7 @@ OCP/                            # Root (npm workspaces)
 │   │       └── app-sidebar.tsx                 # Unified role-based sidebar
 │   ├── lib/
 │   │   ├── points.ts              # Client-side points calculation utility
+│   │   ├── didit.ts               # Didit API + webhook signature validation
 │   │   ├── actions/
 │   │   │   ├── tournament.ts      # createTournament, updateTournament (Server Actions)
 │   │   │   ├── registration.ts    # updateRegistrationStatus (Server Action)
@@ -127,6 +135,7 @@ OCP/                            # Root (npm workspaces)
 │   │   │       └── client.test.ts
 │   │   └── __tests__/
 │   │       ├── smoke.test.ts
+│   │       ├── didit.test.ts          # Webhook signature validation
 │   │       └── middleware-routes.test.ts
 │   ├── test-utils/
 │   │   ├── index.ts               # Barrel export
@@ -180,7 +189,7 @@ OCP/                            # Root (npm workspaces)
 | Runtime | Node.js | 18+ |
 | Auth | Supabase Auth | via @supabase/ssr |
 | Database | PostgreSQL (Supabase hosted) | 15.x |
-| Identity verification | Didit Web SDK | Phase 5 |
+| Identity verification | Didit Web SDK (`@didit-protocol/sdk-web`) | Implemented |
 | Unit testing | Vitest + React Testing Library | 4.x |
 | API mocking | MSW | 2.x |
 | E2E testing | Playwright | latest |
@@ -193,6 +202,9 @@ OCP/                            # Root (npm workspaces)
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Browser + server |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key | Browser + server |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (bypasses RLS) | Server only |
+| `DIDIT_API_KEY` | Didit verification API key | Server only |
+| `DIDIT_WEBHOOK_SECRET` | Didit webhook HMAC secret | Server only |
+| `NEXT_PUBLIC_DIDIT_WORKFLOW_ID` | Didit workflow identifier | Browser + server |
 
 ## Request Flow
 
@@ -236,7 +248,7 @@ Next.js App Router
 - **Location:** `__tests__/` directories alongside source files
 - **Setup:** `vitest.setup.ts` configures jest-dom matchers + MSW server lifecycle
 - **Mocking:** MSW for Supabase API, `vi.mock('next/navigation')` for router
-- **Run:** `npm run test:unit` (147 tests, 32 files)
+- **Run:** `npm run test:unit` (155 tests, 34 files)
 
 ### Database Tests (pgTAP)
 - **Location:** `supabase/tests/*.test.sql`

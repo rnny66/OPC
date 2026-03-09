@@ -26,7 +26,7 @@ OCP/
 ├── platform/               # Next.js 15 app (App Router, TypeScript)
 │   ├── app/
 │   │   ├── (auth)/         # login, signup, verify-email
-│   │   ├── (player)/       # dashboard, profile, tournaments
+│   │   ├── (player)/       # dashboard, profile, verify-identity, tournaments
 │   │   ├── (organizer)/    # organizer dashboard, tournament CRUD, registrations
 │   │   │   └── organizer/  # URL prefix (avoids route group conflicts)
 │   │   │       └── tournaments/[id]/results/ # Results entry page
@@ -37,12 +37,14 @@ OCP/
 │   │   │       ├── users/         # User management (Phase 5)
 │   │   │       ├── organizers/    # Organizer invitations (Phase 5)
 │   │   │       └── tournaments/   # Tournament oversight (Phase 5)
+│   │   ├── api/verification/   # Didit session creation
+│   │   ├── api/webhooks/didit/ # Didit webhook handler
 │   │   ├── auth/callback/  # OAuth code exchange route
 │   │   ├── layout.tsx      # Root layout (Inter font)
 │   │   ├── globals.css     # Base styles (imports tokens.css)
 │   │   └── tokens.css      # Design tokens shared with site/
 │   ├── components/
-│   │   ├── auth/           # LoginForm, SignupForm (client components)
+│   │   ├── auth/           # LoginForm, SignupForm, VerificationStatus (client components)
 │   │   ├── tournaments/    # TournamentCard, FilterBar, Pagination, RegistrationButton
 │   │   ├── dashboard/      # CancelRegistrationButton
 │   │   ├── profile/        # ProfileForm
@@ -54,6 +56,7 @@ OCP/
 │   ├── lib/
 │   │   ├── actions/        # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts)
 │   │   ├── points.ts      # Client-side points calculation
+│   │   ├── didit.ts       # Didit API + webhook signature validation
 │   │   ├── auth/routes.ts  # Route classification logic
 │   │   └── supabase/       # client.ts, server.ts, admin.ts, middleware.ts
 │   ├── middleware.ts        # Route protection + session refresh
@@ -97,8 +100,8 @@ OCP/
 - **Supabase Auth:** email/password + Google + Facebook OAuth
 - **@supabase/ssr** with cookie-based sessions, refreshed in middleware
 - **Route classification** (`lib/auth/routes.ts`):
-  - `public`: `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`, `/rankings`, `/players/*`
-  - `protected`: `/dashboard`, `/profile`, `/profile/*`, `/tournaments/*/register`
+  - `public`: `/api/webhooks/*`, `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`, `/rankings`, `/players/*`
+  - `protected`: `/dashboard`, `/profile`, `/verify-identity`, `/profile/*`, `/tournaments/*/register`
   - `organizer`: `/organizer/*`
   - `admin`: `/admin/*`
 
@@ -144,7 +147,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (147 tests, 32 files)
+npm run test:unit     # Vitest (155 tests, 34 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -176,7 +179,7 @@ After completing each phase:
 | 3B | Results entry, points calculation, achievements | ✅ Complete | `phase-3-organizer-tools.md` |
 | 3C | Country points, admin UI, unified sidebar | ✅ Complete | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | ✅ Complete | `phase-4-rankings-stats.md` |
-| 5 | Didit verification, admin panel, emails | ✅ Partial (admin panel complete, verification/emails deferred) | `phase-5-verification-admin.md` |
+| 5 | Admin panel, Didit verification | ✅ Partial (admin panel + Didit complete, emails deferred) | `phase-5-verification-admin.md` |
 
 ## Common Mistakes
 - Skipping RLS policy testing — always verify access control

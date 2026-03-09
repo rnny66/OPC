@@ -12,11 +12,11 @@ Static marketing website for a European poker championship platform, evolving in
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
-### Platform (`platform/`) — Phase 5 partial
+### Platform (`platform/`) — Phase 5 + Didit verification
 - **Next.js 15** (App Router, TypeScript)
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
-- **Didit** — identity verification (age 18+, Phase 5)
+- **Didit** (`@didit-protocol/sdk-web`) — identity verification (age 18+)
 - **Vitest 4** + React Testing Library + MSW 2 — unit testing
 - **Playwright** — E2E testing
 - **pgTAP** — database/RLS testing
@@ -39,7 +39,7 @@ OCP/
 ├── platform/                   # Next.js 15 app
 │   ├── app/
 │   │   ├── (auth)/             # Auth pages (login, signup, verify-email)
-│   │   ├── (player)/           # Player pages (dashboard, profile, tournaments, rankings, players)
+│   │   ├── (player)/           # Player pages (dashboard, profile, verify-identity, tournaments, rankings, players)
 │   │   ├── (organizer)/        # Organizer pages
 │   │   │   └── organizer/      # URL prefix (avoids route group conflicts)
 │   │   │       ├── dashboard/  # Organizer dashboard with stats
@@ -54,12 +54,15 @@ OCP/
 │   │   │       ├── users/      # User management
 │   │   │       ├── organizers/ # Organizer invitations
 │   │   │       └── tournaments/# Tournament oversight
+│   │   ├── api/
+│   │   │   ├── verification/  # Didit session creation
+│   │   │   └── webhooks/didit/# Didit webhook handler
 │   │   ├── auth/callback/      # OAuth callback route
 │   │   ├── layout.tsx          # Root layout (Inter font, globals.css)
 │   │   ├── globals.css         # OPC base styles (imports tokens.css)
 │   │   └── tokens.css          # Design tokens (shared with site/)
 │   ├── components/
-│   │   ├── auth/               # LoginForm, SignupForm
+│   │   ├── auth/               # LoginForm, SignupForm, VerificationStatus
 │   │   ├── tournaments/        # TournamentCard, FilterBar, Pagination, RegistrationButton
 │   │   ├── dashboard/          # CancelRegistrationButton
 │   │   ├── profile/            # ProfileForm
@@ -71,6 +74,7 @@ OCP/
 │   ├── lib/
 │   │   ├── actions/            # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts — includes promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin)
 │   │   ├── points.ts           # Client-side points calculation
+│   │   ├── didit.ts            # Didit API + webhook signature validation
 │   │   ├── auth/routes.ts      # Route classification (public/protected/organizer/admin)
 │   │   └── supabase/           # client.ts, server.ts, admin.ts, middleware.ts
 │   ├── middleware.ts            # Route protection + session refresh
@@ -183,7 +187,7 @@ OCP/
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
 - **Test before done:** No feature is considered complete until it has been properly tested and verified
-- **Unit tests:** `npm run test:unit` (Vitest + RTL, 147 tests passing, 32 files)
+- **Unit tests:** `npm run test:unit` (Vitest + RTL, 155 tests passing, 34 files)
 - **DB tests:** `npm run test:db` (pgTAP, 7 test files)
 - **E2E tests:** `npm run test:e2e` (Playwright)
 - **All tests:** `npm run test:all`

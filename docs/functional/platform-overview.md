@@ -59,11 +59,16 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 6. Player sees registration in their dashboard
 7. Player can cancel registration before the tournament starts
 
-### Age Verification (Phase 5)
-- Third-party verification via **Didit** Web SDK
+### Age Verification (Didit Integration)
+- Third-party verification via **Didit** Web SDK (`@didit-protocol/sdk-web`)
+- Dedicated `/verify-identity` page with SDK modal (ID upload + selfie)
+- API route `/api/verification/create-session` creates Didit sessions
+- Webhook handler `/api/webhooks/didit` receives verification results with HMAC-SHA256 signature validation
 - Once verified, the player is trusted for all future tournaments
 - Organizers can require verification per tournament via `requires_verification` flag
-- Verification status stored on player profile (`identity_verified`, `identity_verified_at`)
+- Verification status stored on player profile (`identity_verified`, `identity_verified_at`, `date_of_birth`)
+- `VerificationStatus` component shown on profile page (always) and dashboard (when unverified)
+- Registration button links to `/verify-identity` when verification is required but not completed
 
 ### Points & Rankings
 - Points awarded based on configurable placement brackets (default 9 ranges)
@@ -97,6 +102,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 |------|-----|-------------|
 | Dashboard | `/dashboard` | Personal registrations and stats |
 | Profile | `/profile` | View/edit profile with avatar upload |
+| Verify Identity | `/verify-identity` | Didit SDK identity verification (age 18+) |
 
 ### Organizer (organizer role required)
 | Page | URL | Description |
@@ -127,4 +133,4 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 3B | Results entry, points calculation, achievement logic | ✅ Complete |
 | 3C | Country points, admin points config UI | ✅ Complete |
 | 4 | Rankings, player profiles, achievements, leaderboard | ✅ Complete |
-| 5 | Didit verification, admin panel, email notifications | ✅ Partial (admin panel complete, verification/emails deferred) |
+| 5 | Admin panel, Didit verification | ✅ Partial (admin panel + Didit verification complete, email notifications deferred) |

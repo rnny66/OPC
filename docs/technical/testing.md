@@ -73,7 +73,7 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 147 (32 files)
+### Current Test Count: 155 (34 files)
 
 | File | Tests | What it covers |
 |------|-------|----------------|
@@ -82,7 +82,8 @@ afterEach(() => cleanup())
 | `test-utils/__tests__/msw.test.ts` | 1 | MSW server |
 | `test-utils/__tests__/render.test.tsx` | 1 | Render helper |
 | `lib/supabase/__tests__/client.test.ts` | 1 | Browser client creation |
-| `lib/__tests__/middleware-routes.test.ts` | 5 | Route classification |
+| `lib/__tests__/middleware-routes.test.ts` | 7 | Route classification (incl. webhooks, verify-identity) |
+| `lib/__tests__/didit.test.ts` | 3 | Webhook signature validation (valid, invalid, empty) |
 | `components/auth/__tests__/login-form.test.tsx` | 4 | Login form rendering |
 | `components/auth/__tests__/signup-form.test.tsx` | 4 | Signup form rendering |
 | `components/tournaments/__tests__/tournament-card.test.tsx` | 7 | Card rendering, date format, entry fee |
@@ -111,6 +112,7 @@ afterEach(() => cleanup())
 | `components/admin/__tests__/invite-organizer-form.test.tsx` | 2 | Invite form rendering, submission |
 | `components/admin/__tests__/admin-tournament-table.test.tsx` | 4 | Tournament table, status, cancel action |
 | `lib/actions/__tests__/admin.test.ts` | 8 | Admin server actions (promote, invite, cancel) |
+| `components/auth/__tests__/verification-status.test.tsx` | 4 | Verified/unverified badge, verify link |
 
 ### Testing Server Actions
 
