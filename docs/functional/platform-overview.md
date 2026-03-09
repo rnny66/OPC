@@ -60,9 +60,9 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 7. Player can cancel registration before the tournament starts
 
 ### Age Verification (Didit Integration)
-- Third-party verification via **Didit** Web SDK (`@didit-protocol/sdk-web`)
-- Dedicated `/verify-identity` page with SDK modal (ID upload + selfie)
-- API route `/api/verification/create-session` creates Didit sessions
+- Third-party verification via **Didit** v3 API (redirect-based flow, no client SDK)
+- Dedicated `/verify-identity` page — creates session then redirects to Didit's hosted verification
+- API route `/api/verification/create-session` creates Didit sessions via `x-api-key` auth
 - Webhook handler `/api/webhooks/didit` receives verification results with HMAC-SHA256 signature validation
 - Once verified, the player is trusted for all future tournaments
 - Organizers can require verification per tournament via `requires_verification` flag
@@ -102,7 +102,7 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 |------|-----|-------------|
 | Dashboard | `/dashboard` | Personal registrations and stats |
 | Profile | `/profile` | View/edit profile with avatar upload |
-| Verify Identity | `/verify-identity` | Didit SDK identity verification (age 18+) |
+| Verify Identity | `/verify-identity` | Didit identity verification (redirects to Didit, age 18+) |
 
 ### Organizer (organizer role required)
 | Page | URL | Description |
@@ -133,4 +133,4 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 3B | Results entry, points calculation, achievement logic | ✅ Complete |
 | 3C | Country points, admin points config UI | ✅ Complete |
 | 4 | Rankings, player profiles, achievements, leaderboard | ✅ Complete |
-| 5 | Admin panel, Didit verification | ✅ Partial (admin panel + Didit verification complete, email notifications deferred) |
+| 5 | Admin panel, Didit verification | ✅ Complete (email notifications deferred) |

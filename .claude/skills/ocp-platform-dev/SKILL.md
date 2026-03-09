@@ -147,7 +147,7 @@ Invoke `superpowers:test-driven-development` before writing implementation code.
 
 ### 5. Test scripts
 ```bash
-npm run test:unit     # Vitest (155 tests, 34 files)
+npm run test:unit     # Vitest (155 tests, 35 files)
 npm run test:db       # pgTAP
 npm run test:e2e      # Playwright
 npm run test:all      # All of the above
@@ -179,7 +179,7 @@ After completing each phase:
 | 3B | Results entry, points calculation, achievements | ✅ Complete | `phase-3-organizer-tools.md` |
 | 3C | Country points, admin UI, unified sidebar | ✅ Complete | `phase-3-organizer-tools.md` |
 | 4 | Public leaderboard, profiles, achievements | ✅ Complete | `phase-4-rankings-stats.md` |
-| 5 | Admin panel, Didit verification | ✅ Partial (admin panel + Didit complete, emails deferred) | `phase-5-verification-admin.md` |
+| 5 | Admin panel, Didit verification | ✅ Complete (emails deferred) | `phase-5-verification-admin.md` |
 
 ## Common Mistakes
 - Skipping RLS policy testing — always verify access control

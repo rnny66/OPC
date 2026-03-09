@@ -40,7 +40,7 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── layout.tsx      # Player layout (delegates to AppSidebar)
 │   │   │   ├── dashboard/page.tsx  # Registrations list + stats
 │   │   │   ├── profile/page.tsx    # Profile edit + avatar upload
-│   │   │   ├── verify-identity/page.tsx  # Didit SDK verification
+│   │   │   ├── verify-identity/page.tsx  # Identity verification page
 │   │   │   ├── rankings/page.tsx   # Public leaderboard (Phase 4)
 │   │   │   ├── players/[slug]/page.tsx  # Public player profile (Phase 4)
 │   │   │   └── tournaments/
@@ -189,7 +189,7 @@ OCP/                            # Root (npm workspaces)
 | Runtime | Node.js | 18+ |
 | Auth | Supabase Auth | via @supabase/ssr |
 | Database | PostgreSQL (Supabase hosted) | 15.x |
-| Identity verification | Didit Web SDK (`@didit-protocol/sdk-web`) | Implemented |
+| Identity verification | Didit v3 API (redirect-based, no client SDK) | Implemented |
 | Unit testing | Vitest + React Testing Library | 4.x |
 | API mocking | MSW | 2.x |
 | E2E testing | Playwright | latest |
@@ -259,6 +259,19 @@ Next.js App Router
 - **Location:** `platform/e2e/*.spec.ts`
 - **Config:** Chromium only, localhost:3000
 - **Run:** `npm run test:e2e`
+
+## Phase Status
+
+| Phase | Scope | Status |
+|-------|-------|--------|
+| Phase 0 | Testing framework (Vitest, MSW, Playwright, pgTAP) | Complete |
+| Phase 1 | Foundation (auth, middleware, DB migrations, design bridge) | Complete |
+| Phase 2 | Tournament flow (browse, detail, register, dashboard, profile) | Complete |
+| Phase 3A | Organizer tools (dashboard, tournament CRUD, registrations) | Complete |
+| Phase 3B | Results & points (results entry, points calculation, achievements) | Complete |
+| Phase 3C | Country points & admin (country points, admin UI, unified sidebar) | Complete |
+| Phase 4 | Rankings & stats (leaderboard, public profiles, achievements) | Complete |
+| Phase 5 | Verification & admin (identity verification, admin dashboard, user/organizer management) | Complete (email notifications deferred) |
 
 ## Deployment (planned)
 

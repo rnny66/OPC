@@ -123,6 +123,69 @@ CREATE TRIGGER on_auth_user_created
 
 The trigger copies `id` and `email` from the auth user. All other profile fields start as null/default. The player must complete their profile (`onboarding_complete = true`) before they can register for tournaments.
 
+## Identity Verification (Didit)
+
+### Flow
+
+```
+User navigates to /verify-identity
+  ↓
+Clicks "Start Verification"
+  ↓
+Client POSTs to /api/verification/create-session
+  ↓
+Server: checks auth, checks if already verified
+  ↓
+Server: calls Didit v3 API (POST https://verification.didit.me/v3/session/)
+  - Auth: x-api-key header
+  - Body: workflow_id, vendor_data (user ID), callback URL
+  ↓
+Server: stores didit_session_id on profile
+  ↓
+Server: returns { url } to client
+  ↓
+Client: redirects to Didit's hosted verification page (url)
+  ↓
+User completes verification on Didit (ID upload + selfie)
+  ↓
+Didit sends webhook POST to /api/webhooks/didit
+  ↓
+Server: validates HMAC-SHA256 signature (x-signature-simple header)
+  - Payload: session_id|status|created_at
+  ↓
+If status === "Approved":
+  - Sets identity_verified = true
+  - Sets identity_verified_at
+  - Extracts date_of_birth from decision.document (if available)
+  ↓
+Profile updated — user is now verified for all future tournaments
+```
+
+### Key Files
+
+| File | Role |
+|------|------|
+| `lib/didit.ts` | `createVerificationSession()` + `validateWebhookSignature()` |
+| `app/api/verification/create-session/route.ts` | Session creation API route |
+| `app/api/webhooks/didit/route.ts` | Webhook handler (signature validation + profile update) |
+| `app/(player)/verify-identity/page.tsx` | Client page (redirect-based flow) |
+| `components/auth/verification-status.tsx` | Verified/unverified badge component |
+
+### Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `DIDIT_API_KEY` | API key for Didit v3 session creation |
+| `DIDIT_WEBHOOK_SECRET` | HMAC secret for webhook signature validation |
+| `NEXT_PUBLIC_DIDIT_WORKFLOW_ID` | Didit workflow identifier |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for webhook callback (production) |
+
+### Verification Status Display
+
+- **Profile page** — always shows `VerificationStatus` component
+- **Dashboard** — shows when unverified (yellow banner with "Verify Now" link)
+- **Registration button** — links to `/verify-identity` when tournament requires verification
+
 ## Supabase Client Usage
 
 | Client | File | Use Case |

@@ -16,7 +16,7 @@ Static marketing website for a European poker championship platform, evolving in
 - **Next.js 15** (App Router, TypeScript)
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
-- **Didit** (`@didit-protocol/sdk-web`) — identity verification (age 18+)
+- **Didit** v3 API (redirect-based verification, no client SDK) — identity verification (age 18+)
 - **Vitest 4** + React Testing Library + MSW 2 — unit testing
 - **Playwright** — E2E testing
 - **pgTAP** — database/RLS testing
@@ -169,8 +169,8 @@ OCP/
 - **Supabase Auth:** email/password + Google + Facebook OAuth
 - **Session management:** `@supabase/ssr` with cookie-based sessions, refreshed in middleware
 - **Route classification** (`lib/auth/routes.ts`):
-  - `public`: `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`, etc.
-  - `protected`: `/dashboard`, `/profile`, `/profile/*`, `/tournaments/*/register`
+  - `public`: `/api/webhooks/*`, `/login`, `/signup`, `/verify-*`, `/`, `/tournaments`, `/rankings`, `/players/*`
+  - `protected`: `/dashboard`, `/profile`, `/profile/*`, `/verify-identity`, `/tournaments/*/register`
   - `organizer`: `/organizer/*`
   - `admin`: `/admin/*`
 - **Middleware** redirects unauthenticated users to `/login`, logged-in users away from auth pages
@@ -187,7 +187,7 @@ OCP/
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
 - **Test before done:** No feature is considered complete until it has been properly tested and verified
-- **Unit tests:** `npm run test:unit` (Vitest + RTL, 155 tests passing, 34 files)
+- **Unit tests:** `npm run test:unit` (Vitest + RTL, 155 tests, 35 files)
 - **DB tests:** `npm run test:db` (pgTAP, 7 test files)
 - **E2E tests:** `npm run test:e2e` (Playwright)
 - **All tests:** `npm run test:all`

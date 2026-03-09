@@ -1,4 +1,4 @@
-# Phase 5 — Verification, Admin & Polish
+# Phase 5 — Verification, Admin & Polish ✅ COMPLETE (email notifications deferred)
 
 **Parent plan:** [2026-03-08-tournament-platform-design.md](2026-03-08-tournament-platform-design.md)
 **Depends on:** [Phase 4 — Rankings, Profiles & Stats](phase-4-rankings-stats.md)
@@ -9,30 +9,22 @@ Integrate Didit identity verification, build the admin panel, implement the orga
 
 ## Tasks
 
-### 1. Didit identity verification — ⏳ Deferred to future phase
-- Research Didit Web SDK and API documentation
-- Create Supabase Edge Function: `create-didit-session`
-  - Called when user navigates to `/verify-identity`
-  - Creates a Didit verification session via their API
-  - Stores `didit_session_id` in `profiles`
-  - Returns SDK token to frontend
-- Build `/verify-identity` page
-  - Load Didit Web SDK
-  - Show verification modal (ID upload + selfie)
-  - Show "Verifying..." state while waiting
-  - Poll for completion or wait for redirect
-- Create Supabase Edge Function: `didit-webhook`
-  - Receive webhook from Didit on check completion
-  - Validate webhook signature
-  - If check passes and age >= 18: set `identity_verified = true`, `identity_verified_at`, `date_of_birth`
-  - If check fails: leave `identity_verified = false`
-- Add verification status to player dashboard and profile
+### 1. Didit identity verification ✅
+- Didit v3 API integration (session creation via `POST /v3/session/` with `x-api-key` auth)
+- API route: `app/api/verification/create-session/route.ts`
+  - Checks auth + existing verification, creates Didit session, stores `didit_session_id` on profile
+- Build `/verify-identity` page (redirect-based flow, no SDK dependency)
+  - Creates session via API route, redirects to Didit's hosted verification URL
+- Webhook handler: `app/api/webhooks/didit/route.ts`
+  - Validates HMAC-SHA256 signature (`x-signature-simple` header)
+  - On "Approved" status: sets `identity_verified = true`, `identity_verified_at`, `date_of_birth`
+- `VerificationStatus` component on profile (always) and dashboard (when unverified)
+- `lib/didit.ts` — `createVerificationSession()` + `validateWebhookSignature()`
 
-### 2. Per-tournament verification enforcement — ⏳ Deferred to future phase
-- On tournament detail page: show "ID verification required" notice if `requires_verification = true`
-- Registration flow: check `identity_verified` before allowing registration
-- Show "Verify your identity" CTA linking to `/verify-identity` if not verified
-- Organizer tournament editor: toggle `requires_verification`
+### 2. Per-tournament verification enforcement ✅
+- Tournament detail page shows "ID verification required" notice when `requires_verification = true`
+- Registration button links to `/verify-identity` when verification is required but not completed
+- Organizer tournament editor already has `requires_verification` toggle (Phase 3A)
 
 ### 3. Admin dashboard (`/admin/dashboard`) ✅
 - Overview stats: total users, verified users, total tournaments, active tournaments
@@ -62,20 +54,19 @@ Integrate Didit identity verification, build the admin panel, implement the orga
 - Organizer invite — sent when admin invites a new organizer
 - Use Supabase Edge Functions + a transactional email service (Resend, Postmark, or similar)
 
-## Components to build
-- `VerificationStatus` — shows current verification state with CTA
-- `DiditVerificationModal` — wrapper for Didit Web SDK
-- `AdminStatsGrid` — overview metrics cards
-- `UserTable` — searchable, filterable user list
-- `InviteOrganizerForm` — email input + send invite
-- `AdminTournamentTable` — all-tournaments view
+## Components built
+- `VerificationStatus` — shows verified/unverified badge with CTA link (`components/auth/verification-status.tsx`)
+- `UserTable` — searchable, filterable user list (`components/admin/user-table.tsx`)
+- `InviteOrganizerForm` — email input + send invite (`components/admin/invite-organizer-form.tsx`)
+- `AdminTournamentTable` — all-tournaments view (`components/admin/admin-tournament-table.tsx`)
+- `PointsConfigEditor` — bracket + country config (`components/admin/points-config-editor.tsx`)
 
 ## Verification
 
-- [ ] Didit verification flow works end-to-end (create session → upload ID → webhook → profile updated) — ⏳ Deferred
-- [ ] Verified status persists and is visible on profile/dashboard — ⏳ Deferred
-- [ ] Cannot register for `requires_verification` tournament without verification — ⏳ Deferred
-- [ ] Can register for non-verified tournaments without verification — ⏳ Deferred
+- [x] Didit verification flow works end-to-end (create session → verify on Didit → webhook → profile updated)
+- [x] Verified status persists and is visible on profile/dashboard
+- [x] Cannot register for `requires_verification` tournament without verification
+- [x] Can register for non-verified tournaments without verification
 - [x] Admin can view all users, change roles, disable accounts
 - [x] Organizer invitation flow: invite email → user signs up → gets organizer role
 - [x] Admin can directly promote existing user to organizer
