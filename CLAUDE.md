@@ -147,8 +147,10 @@ OCP/
 - **Accessibility:** Alt text present, keyboard navigation works, color contrast meets WCAG AA
 
 ## Documentation Requirements
-- **Document every feature** after implementation — update relevant docs and plans
-- **Update CLAUDE.md and skills after every phase** — keep project knowledge current
+- **After every phase:** Use the `ocp-phase-docs` skill to update ALL documentation
+- **Functional docs** (`docs/functional/`): platform-overview, database-schema, auth-flow
+- **Technical docs** (`docs/technical/`): architecture, testing
+- **Also update:** CLAUDE.md, `ocp-platform-dev` skill, MEMORY.md, phase plan files
 - If a new pattern or component is introduced, add it to the style guide and relevant skills
 - Mark completed plan tasks/phases as done in the plan documents
 
