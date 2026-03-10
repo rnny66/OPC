@@ -1,5 +1,6 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { SidebarLayout, type NavSection } from '@/components/layout/sidebar-layout'
+import { getFeatureFlags } from '@/lib/feature-flags'
 
 export async function AppSidebar({ children }: { children: React.ReactNode }) {
   const supabase = await createSupabaseServer()
@@ -18,17 +19,21 @@ export async function AppSidebar({ children }: { children: React.ReactNode }) {
   const isOrganizer = role === 'organizer' || role === 'admin'
   const isAdmin = role === 'admin'
 
-  const sections: NavSection[] = [
-    {
-      items: [
-        { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-        { href: '/rankings', label: 'Rankings', icon: '🏅' },
-        { href: '/tournaments', label: 'Tournaments', icon: '🏆' },
-      ],
-    },
-  ]
+  const flags = await getFeatureFlags()
 
-  if (isOrganizer) {
+  const playerItems = [
+    { href: '/dashboard', label: 'Dashboard', icon: '📊' },
+  ]
+  if (flags.get('rankings')) {
+    playerItems.push({ href: '/rankings', label: 'Rankings', icon: '🏅' })
+  }
+  if (flags.get('tournament_browsing')) {
+    playerItems.push({ href: '/tournaments', label: 'Tournaments', icon: '🏆' })
+  }
+
+  const sections: NavSection[] = [{ items: playerItems }]
+
+  if (isOrganizer && flags.get('organizer_tools')) {
     sections.push({
       label: 'Organizer',
       items: [
@@ -38,7 +43,7 @@ export async function AppSidebar({ children }: { children: React.ReactNode }) {
     })
   }
 
-  if (isAdmin) {
+  if (isAdmin && flags.get('admin_panel')) {
     sections.push({
       label: 'Admin',
       items: [
@@ -47,6 +52,15 @@ export async function AppSidebar({ children }: { children: React.ReactNode }) {
         { href: '/admin/organizers', label: 'Organizers', icon: '📋' },
         { href: '/admin/tournaments', label: 'Tournaments', icon: '🏆' },
         { href: '/admin/points-config', label: 'Points Config', icon: '🎯' },
+      ],
+    })
+  }
+
+  if (isAdmin && flags.get('cms_admin')) {
+    sections.push({
+      label: 'Content',
+      items: [
+        { href: '/cms', label: 'CMS', icon: '📝' },
       ],
     })
   }

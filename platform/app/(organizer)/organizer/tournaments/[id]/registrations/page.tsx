@@ -3,6 +3,7 @@ import { redirect, notFound } from 'next/navigation'
 import { RegistrationStatusSelect } from '@/components/organizer/registration-status-select'
 import { ExportCSVButton } from '@/components/organizer/export-csv-button'
 import Link from 'next/link'
+import { isFeatureEnabled } from '@/lib/feature-flags'
 
 export async function generateMetadata({
   params,
@@ -107,6 +108,10 @@ export default async function RegistrationsPage({
     .order('registered_at', { ascending: false })
 
   const regs = registrations || []
+  const [csvEnabled, resultsEnabled] = await Promise.all([
+    isFeatureEnabled('csv_export'),
+    isFeatureEnabled('results_entry'),
+  ])
 
   return (
     <div>
@@ -122,21 +127,25 @@ export default async function RegistrationsPage({
           </span>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <Link
-            href={`/organizer/tournaments/${id}/results`}
-            style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: 'var(--color-brand)',
-              color: '#fff',
-              borderRadius: 'var(--radius-md, 0.5rem)',
-              textDecoration: 'none',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-            }}
-          >
-            Enter Results
-          </Link>
-          <ExportCSVButton registrations={regs} tournamentName={tournament.name} />
+          {resultsEnabled && (
+            <Link
+              href={`/organizer/tournaments/${id}/results`}
+              style={{
+                padding: '0.5rem 1rem',
+                backgroundColor: 'var(--color-brand)',
+                color: '#fff',
+                borderRadius: 'var(--radius-md, 0.5rem)',
+                textDecoration: 'none',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+              }}
+            >
+              Enter Results
+            </Link>
+          )}
+          {csvEnabled && (
+            <ExportCSVButton registrations={regs} tournamentName={tournament.name} />
+          )}
         </div>
       </div>
 

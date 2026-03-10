@@ -1,6 +1,7 @@
 import { createSupabaseServer } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { RegistrationButton } from '@/components/tournaments/registration-button'
+import { isFeatureEnabled } from '@/lib/feature-flags'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -129,6 +130,7 @@ export default async function TournamentDetailPage({
   const isPastDeadline = tournament.registration_deadline
     ? new Date() > new Date(tournament.registration_deadline)
     : false
+  const registrationEnabled = await isFeatureEnabled('tournament_registration')
 
   return (
     <div style={styles.container}>
@@ -184,17 +186,19 @@ export default async function TournamentDetailPage({
         </div>
       )}
 
-      <RegistrationButton
-        tournamentId={tournament.id}
-        isLoggedIn={!!user}
-        isRegistered={!!userRegistration}
-        isOnboarded={userProfile?.onboarding_complete || false}
-        isVerified={userProfile?.identity_verified || false}
-        requiresVerification={tournament.requires_verification}
-        registrationOpen={tournament.registration_open}
-        isFull={isFull}
-        isPastDeadline={isPastDeadline}
-      />
+      {registrationEnabled && (
+        <RegistrationButton
+          tournamentId={tournament.id}
+          isLoggedIn={!!user}
+          isRegistered={!!userRegistration}
+          isOnboarded={userProfile?.onboarding_complete || false}
+          isVerified={userProfile?.identity_verified || false}
+          requiresVerification={tournament.requires_verification}
+          registrationOpen={tournament.registration_open}
+          isFull={isFull}
+          isPastDeadline={isPastDeadline}
+        />
+      )}
     </div>
   )
 }

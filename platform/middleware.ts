@@ -1,9 +1,16 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 import { classifyRoute } from '@/lib/auth/routes'
+import { getRequiredFlagForMiddleware } from '@/lib/feature-flags'
 
 export async function middleware(request: NextRequest) {
-  const { user, response } = await updateSession(request)
+  // Payload CMS handles its own auth and routing
+  if (request.nextUrl.pathname.startsWith('/cms') ||
+      request.nextUrl.pathname.startsWith('/api/payload')) {
+    return NextResponse.next()
+  }
+
+  const { supabase, user, response } = await updateSession(request)
   const routeType = classifyRoute(request.nextUrl.pathname)
 
   // Public routes — always accessible
@@ -24,7 +31,6 @@ export async function middleware(request: NextRequest) {
 
   // Role-gated routes — need to check profile
   if (routeType === 'organizer' || routeType === 'admin') {
-    const { supabase } = await updateSession(request)
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
@@ -37,6 +43,14 @@ export async function middleware(request: NextRequest) {
     if (routeType === 'admin' && profile?.role !== 'admin') {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
+  }
+
+  // Feature flag check — redirect to dashboard if feature is disabled
+  const blockedFlag = await getRequiredFlagForMiddleware(supabase, request.nextUrl.pathname)
+  if (blockedFlag) {
+    const url = new URL('/dashboard', request.url)
+    url.searchParams.set('feature_unavailable', blockedFlag)
+    return NextResponse.redirect(url)
   }
 
   return response

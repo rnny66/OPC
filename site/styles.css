@@ -2025,6 +2025,26 @@ a {
   }
 }
 
+/* --- Latest News --- */
+
+.latest-news {
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.latest-news-container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.latest-news-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
 /* --- Animations --- */
 
 /* Hero entrance (page load) */

@@ -12,10 +12,11 @@ Static marketing website for a European poker championship platform, evolving in
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
-### Platform (`platform/`) — Phase 5 + Didit verification
-- **Next.js 15** (App Router, TypeScript)
+### Platform (`platform/`) — Phase 5 + Didit verification + Payload CMS
+- **Next.js 15.4.11** (App Router, TypeScript) — pinned for Payload CMS compatibility
 - **Supabase** — auth (email + Google + Facebook), Postgres, RLS
 - **@supabase/ssr** — cookie-based server-side auth sessions
+- **Payload CMS v3** — embedded in Next.js, Lexical rich text editor, own `payload` Postgres schema
 - **Didit** v3 API (redirect-based verification, no client SDK) — identity verification (age 18+)
 - **Vitest 4** + React Testing Library + MSW 2 — unit testing
 - **Playwright** — E2E testing
@@ -54,7 +55,15 @@ OCP/
 │   │   │       ├── users/      # User management
 │   │   │       ├── organizers/ # Organizer invitations
 │   │   │       └── tournaments/# Tournament oversight
+│   │   ├── (payload)/          # Payload CMS admin (own layout, no sidebar)
+│   │   │   ├── cms/[[...segments]]/ # CMS admin catch-all
+│   │   │   └── api/[...slug]/  # Payload REST API
+│   │   ├── (public)/           # Public content pages (no sidebar)
+│   │   │   ├── news/           # News listing + [slug] detail
+│   │   │   ├── blog/           # Blog listing + [slug] detail
+│   │   │   └── events/         # Events listing + [slug] detail
 │   │   ├── api/
+│   │   │   ├── tournaments-list/ # Tournament list for CMS selector
 │   │   │   ├── verification/  # Didit session creation
 │   │   │   └── webhooks/didit/# Didit webhook handler
 │   │   ├── auth/callback/      # OAuth callback route
@@ -70,18 +79,28 @@ OCP/
 │   │   ├── admin/              # points-config-editor.tsx, user-table.tsx, invite-organizer-form.tsx, admin-tournament-table.tsx
 │   │   ├── rankings/           # RankBadge, LeaderboardSearch
 │   │   ├── players/            # AchievementBadge, AchievementGrid, StatsGrid, PlayerProfileHeader, TournamentHistoryTable
-│   │   └── organizer/          # TournamentForm, RegistrationStatusSelect, ExportCsvButton
+│   │   ├── organizer/          # TournamentForm, RegistrationStatusSelect, ExportCsvButton
+│   │   ├── content/            # ContentCard, ContentGrid, FeaturedHero, PublicHeader
+│   │   └── cms/                # TournamentSelect (Payload admin field component)
 │   ├── lib/
 │   │   ├── actions/            # Server Actions (tournament.ts, registration.ts, results.ts, admin.ts — includes promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin)
 │   │   ├── points.ts           # Client-side points calculation
 │   │   ├── didit.ts            # Didit API + webhook signature validation
+│   │   ├── feature-flags.ts    # Feature flags (server) + route→flag mapping
+│   │   ├── feature-flags-shared.ts # Shared flag types/constants (server+client)
 │   │   ├── auth/routes.ts      # Route classification (public/protected/organizer/admin)
 │   │   └── supabase/           # client.ts, server.ts, admin.ts, middleware.ts
+│   ├── collections/            # Payload CMS collections
+│   │   ├── Posts.ts            # News + blog posts (category field)
+│   │   ├── EventAnnouncements.ts # Tournament announcements
+│   │   ├── Media.ts            # Image uploads
+│   │   └── Users.ts            # CMS auth users
+│   ├── payload.config.ts       # Payload CMS configuration
 │   ├── middleware.ts            # Route protection + session refresh
 │   ├── test-utils/             # MSW handlers, render helpers, data factories
 │   └── e2e/                    # Playwright E2E tests
 ├── supabase/
-│   ├── migrations/             # 001_profiles through 013_organizer_invitations
+│   ├── migrations/             # 001_profiles through 015_cms_feature_flags
 │   └── tests/                  # pgTAP tests
 ├── designs/                    # Figma design screenshots
 └── docs/
@@ -164,6 +183,16 @@ OCP/
   - Trigger: on profiles INSERT, auto-promotes matching email to organizer
 - **Postgres functions:** `calculate_points`, `compute_player_stats`, `compute_all_player_stats`, `check_achievements`, `generate_profile_slug`, `handle_organizer_invitation`
 - **Trigger:** on `tournament_results` insert/update to auto-compute points and stats
+- **`feature_flags`** — feature toggle table (key, enabled, label, description, tier, sort_order)
+  - CMS flags: `cms_admin`, `cms_news`, `cms_blog`, `cms_events` (tier 8, disabled by default)
+
+### Payload CMS Schema
+- Payload uses a separate `payload` Postgres schema in the same Supabase database
+- Tables are auto-managed by Payload (Posts, EventAnnouncements, Media, Users)
+- Payload has its own JWT auth — separate from Supabase Auth
+- CMS admin panel at `/cms`, REST API at `/api/[...slug]`
+- `next.config.ts` wrapped with `withPayload()` from `@payloadcms/next/withPayload`
+- Next.js pinned to `15.4.11` (Payload v3 requires `>=15.4.11 <15.5.0`)
 
 ## Auth & Middleware
 - **Supabase Auth:** email/password + Google + Facebook OAuth
@@ -174,6 +203,8 @@ OCP/
   - `organizer`: `/organizer/*`
   - `admin`: `/admin/*`
 - **Middleware** redirects unauthenticated users to `/login`, logged-in users away from auth pages
+- **Middleware skips** `/cms` and `/api/payload` routes (Payload handles its own auth)
+- **Feature flags** gate routes via `FLAG_ROUTE_MAP` in `lib/feature-flags.ts` (e.g., `/news` → `cms_news`)
 
 ## Creating New Static Pages
 1. Copy the `<head>` block from `site/index.html` (includes fonts, favicon, viewport)

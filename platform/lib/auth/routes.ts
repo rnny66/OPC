@@ -16,6 +16,7 @@ function isProtectedRoute(pathname: string): boolean {
 
 export function classifyRoute(pathname: string): RouteType {
   if (pathname.startsWith('/api/webhooks/')) return 'public'
+  if (pathname.startsWith('/dev')) return 'public'
   if (pathname.startsWith(ADMIN_PREFIX)) return 'admin'
   if (pathname.startsWith(ORGANIZER_PREFIX)) return 'organizer'
   if (isProtectedRoute(pathname)) return 'protected'

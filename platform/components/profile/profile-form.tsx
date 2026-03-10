@@ -84,7 +84,7 @@ const formStyles = {
   } as React.CSSProperties,
 }
 
-export function ProfileForm({ profile }: { profile: Profile }) {
+export function ProfileForm({ profile, avatarEnabled = true }: { profile: Profile; avatarEnabled?: boolean }) {
   const [displayName, setDisplayName] = useState(profile.display_name || '')
   const [city, setCity] = useState(profile.city || '')
   const [homeCountry, setHomeCountry] = useState(profile.home_country || '')
@@ -155,26 +155,28 @@ export function ProfileForm({ profile }: { profile: Profile }) {
 
   return (
     <form onSubmit={handleSubmit} style={formStyles.card}>
-      <div style={formStyles.avatarRow}>
-        {avatarUrl ? (
-          <img src={avatarUrl} alt="Avatar" style={formStyles.avatar} />
-        ) : (
-          <div style={{ ...formStyles.avatar, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', color: 'var(--color-text-secondary)' }}>
-            {displayName?.[0]?.toUpperCase() || '?'}
-          </div>
-        )}
-        <label>
-          <span style={formStyles.label}>Avatar</span>
-          <input
-            type="file"
-            accept="image/*"
-            aria-label="Avatar"
-            onChange={handleAvatarUpload}
-            disabled={uploadingAvatar}
-            style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}
-          />
-        </label>
-      </div>
+      {avatarEnabled && (
+        <div style={formStyles.avatarRow}>
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="Avatar" style={formStyles.avatar} />
+          ) : (
+            <div style={{ ...formStyles.avatar, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', color: 'var(--color-text-secondary)' }}>
+              {displayName?.[0]?.toUpperCase() || '?'}
+            </div>
+          )}
+          <label>
+            <span style={formStyles.label}>Avatar</span>
+            <input
+              type="file"
+              accept="image/*"
+              aria-label="Avatar"
+              onChange={handleAvatarUpload}
+              disabled={uploadingAvatar}
+              style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}
+            />
+          </label>
+        </div>
+      )}
 
       <div style={formStyles.field}>
         <label htmlFor="displayName" style={formStyles.label}>Display Name</label>

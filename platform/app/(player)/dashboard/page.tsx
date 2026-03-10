@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { CancelRegistrationButton } from '@/components/dashboard/cancel-registration-button'
 import { VerificationStatus } from '@/components/auth/verification-status'
+import { isFeatureEnabled } from '@/lib/feature-flags'
 
 export const metadata = { title: 'Dashboard — OPC Europe' }
 
@@ -77,11 +78,15 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('identity_verified, identity_verified_at')
-    .eq('id', user.id)
-    .single()
+  const [{ data: profile }, cancelEnabled, verificationEnabled] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('identity_verified, identity_verified_at')
+      .eq('id', user.id)
+      .single(),
+    isFeatureEnabled('cancel_registration'),
+    isFeatureEnabled('identity_verification'),
+  ])
 
   // Fetch registrations with tournament data
   const { data: registrations } = await supabase
@@ -99,7 +104,7 @@ export default async function DashboardPage() {
     <div>
       <h2 style={styles.title}>Dashboard</h2>
 
-      {!profile?.identity_verified && (
+      {verificationEnabled && !profile?.identity_verified && (
         <VerificationStatus
           isVerified={false}
           verifiedAt={null}
@@ -132,7 +137,7 @@ export default async function DashboardPage() {
                 <th style={styles.th}>Date</th>
                 <th style={styles.th}>City</th>
                 <th style={styles.th}>Status</th>
-                <th style={styles.th}></th>
+                {cancelEnabled && <th style={styles.th}></th>}
               </tr>
             </thead>
             <tbody>
@@ -146,9 +151,11 @@ export default async function DashboardPage() {
                   <td style={styles.td}>{reg.tournaments?.start_date}</td>
                   <td style={styles.td}>{reg.tournaments?.city}</td>
                   <td style={styles.td}>{reg.status}</td>
-                  <td style={styles.td}>
-                    <CancelRegistrationButton registrationId={reg.id} />
-                  </td>
+                  {cancelEnabled && (
+                    <td style={styles.td}>
+                      <CancelRegistrationButton registrationId={reg.id} />
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
