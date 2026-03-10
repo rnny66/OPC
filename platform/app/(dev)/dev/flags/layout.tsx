@@ -1,3 +1,5 @@
+import '../../../globals.css'
+
 export default function DevLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
