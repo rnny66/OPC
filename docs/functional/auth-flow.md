@@ -87,6 +87,8 @@ Every request passes through middleware which:
 ```
 /api/webhooks/*                   → public (webhook handlers, no auth)
 /login, /signup, /verify-*        → public
+/news, /news/*, /blog, /blog/*    → public (CMS content, feature-flagged)
+/events, /events/*                → public (CMS content, feature-flagged)
 /dashboard, /profile, /profile/*  → protected
 /verify-identity                  → protected
 /tournaments/*/register           → protected
@@ -94,6 +96,24 @@ Every request passes through middleware which:
 /admin/*                          → admin
 / , /tournaments, /about, etc.    → public (default)
 ```
+
+### Middleware Bypasses
+
+- **`/cms` and `/cms/*`** — Payload CMS admin panel. Middleware skips these entirely; Payload handles its own JWT-based auth.
+- **`/api/[...slug]`** — Payload REST API. Handled by Payload's own route handler.
+
+### Feature Flag Gating
+
+CMS content routes are gated by feature flags in the `feature_flags` table. When a flag is disabled, the corresponding route returns a "Coming Soon" page instead of the actual content.
+
+| Route | Feature Flag |
+|-------|-------------|
+| `/news`, `/news/*` | `cms_news` |
+| `/blog`, `/blog/*` | `cms_blog` |
+| `/events`, `/events/*` | `cms_events` |
+| `/cms` | `cms_admin` |
+
+Flags are checked server-side via `lib/feature-flags.ts` using the `FLAG_ROUTE_MAP` mapping.
 
 ### Redirect Handling
 

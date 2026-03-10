@@ -35,6 +35,15 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 
 ## Core Features
 
+### Content Management (Payload CMS)
+- **Payload CMS v3** embedded in Next.js — admin panel at `/cms`
+- **News & Blog posts** — rich text content with Lexical editor, categories (news/blog), featured flag, cover images
+- **Event Announcements** — tournament-linked content with denormalized venue/date data
+- **Media library** — image uploads managed via Payload's built-in media handling
+- **Feature-flagged** — each content type gated by `cms_news`, `cms_blog`, `cms_events` flags
+- **Public SSR pages** — `/news`, `/blog`, `/events` with listing + detail views, SEO metadata
+- **Separate auth** — Payload uses its own JWT-based user system (independent from Supabase Auth)
+
 ### Authentication
 - **Email/password** signup with email confirmation
 - **Google OAuth** login
@@ -96,6 +105,17 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | Tournament Detail | `/tournaments/[id]` | Single tournament info + registration |
 | Rankings | `/rankings` | Public leaderboard with search/filter/pagination |
 | Player Profile | `/players/[slug]` | Public player profile with stats, achievements, history |
+| News | `/news` | News listing (feature-flagged via `cms_news`) |
+| News Detail | `/news/[slug]` | Individual news article |
+| Blog | `/blog` | Blog listing (feature-flagged via `cms_blog`) |
+| Blog Detail | `/blog/[slug]` | Individual blog post |
+| Events | `/events` | Event announcements (feature-flagged via `cms_events`) |
+| Event Detail | `/events/[slug]` | Individual event announcement |
+
+### CMS Admin (Payload auth required)
+| Page | URL | Description |
+|------|-----|-------------|
+| CMS Admin | `/cms` | Payload CMS admin panel (feature-flagged via `cms_admin`) |
 
 ### Player (login required)
 | Page | URL | Description |
@@ -134,3 +154,4 @@ The **European Open Poker Championship (OPC)** platform is a tournament manageme
 | 3C | Country points, admin points config UI | ✅ Complete |
 | 4 | Rankings, player profiles, achievements, leaderboard | ✅ Complete |
 | 5 | Admin panel, Didit verification | ✅ Complete (email notifications deferred) |
+| CMS | Payload CMS integration (news, blog, events) | ✅ Complete (feature-flagged) |

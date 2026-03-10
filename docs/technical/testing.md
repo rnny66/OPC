@@ -73,7 +73,9 @@ function renderMyComponent() {
 afterEach(() => cleanup())
 ```
 
-### Current Test Count: 155 (34 files)
+### Current Test Count: 163 (37 files)
+
+> Note: Payload CMS v3 integration may cause test environment issues. If tests fail to initialize, ensure `payload.config.ts` is excluded from test resolution or mock Payload imports.
 
 | File | Tests | What it covers |
 |------|-------|----------------|

@@ -20,6 +20,12 @@ OCP/                            # Root (npm workspaces)
 │   ├── package.json
 │   ├── next.config.ts
 │   ├── tsconfig.json           # Path alias: @/* → ./*
+│   ├── payload.config.ts       # Payload CMS configuration
+│   ├── collections/            # Payload CMS collection definitions
+│   │   ├── Posts.ts            # News + blog posts (category field)
+│   │   ├── EventAnnouncements.ts  # Tournament-linked announcements
+│   │   ├── Media.ts            # Image uploads
+│   │   └── Users.ts            # CMS admin users
 │   ├── middleware.ts            # Route protection + session refresh
 │   ├── vitest.config.ts        # Vitest + jsdom + React plugin
 │   ├── vitest.setup.ts         # jest-dom + MSW lifecycle
@@ -64,7 +70,23 @@ OCP/                            # Root (npm workspaces)
 │   │   │       ├── users/page.tsx             # User management (Phase 5)
 │   │   │       ├── organizers/page.tsx        # Organizer invitations (Phase 5)
 │   │   │       └── tournaments/page.tsx       # Tournament oversight (Phase 5)
+│   │   ├── (payload)/              # Payload CMS (own layout, no sidebar)
+│   │   │   ├── layout.tsx          # Minimal layout for CMS admin
+│   │   │   ├── api/[...slug]/route.ts  # Payload REST API
+│   │   │   └── cms/[[...segments]]/    # CMS admin catch-all
+│   │   │       └── page.tsx
+│   │   ├── (public)/               # Public content pages (no sidebar)
+│   │   │   ├── layout.tsx          # Public layout with header
+│   │   │   ├── news/page.tsx       # News listing
+│   │   │   ├── news/[slug]/page.tsx    # News detail
+│   │   │   ├── blog/page.tsx       # Blog listing
+│   │   │   ├── blog/[slug]/page.tsx    # Blog detail
+│   │   │   ├── events/page.tsx     # Events listing
+│   │   │   └── events/[slug]/page.tsx  # Event detail
+│   │   ├── (dev)/                  # Dev-only pages
+│   │   │   └── dev/flags/page.tsx  # Feature flag management
 │   │   ├── api/
+│   │   │   ├── tournaments-list/route.ts  # Tournament list for CMS selector
 │   │   │   ├── verification/
 │   │   │   │   └── create-session/route.ts  # Didit session creation
 │   │   │   └── webhooks/
@@ -113,17 +135,30 @@ OCP/                            # Root (npm workspaces)
 │   │   │   ├── player-profile-header.tsx       # Server Component (Phase 4)
 │   │   │   ├── tournament-history-table.tsx    # Server Component (Phase 4)
 │   │   │   └── __tests__/
+│   │   ├── content/
+│   │   │   ├── ContentCard.tsx                 # Content card (news/blog/events)
+│   │   │   ├── ContentGrid.tsx                 # Grid layout for content cards
+│   │   │   ├── FeaturedHero.tsx                # Featured content hero section
+│   │   │   └── PublicHeader.tsx                # Header for public content pages
+│   │   ├── cms/
+│   │   │   └── TournamentSelect.tsx            # Custom Payload field for tournament selection
+│   │   ├── feature-flags/
+│   │   │   ├── coming-soon.tsx                 # Coming soon placeholder (for disabled flags)
+│   │   │   └── flag-toggle.tsx                 # Feature flag toggle component
 │   │   └── layout/
 │   │       ├── sidebar-layout.tsx              # Reusable sidebar layout shell
 │   │       └── app-sidebar.tsx                 # Unified role-based sidebar
 │   ├── lib/
 │   │   ├── points.ts              # Client-side points calculation utility
 │   │   ├── didit.ts               # Didit API + webhook signature validation
+│   │   ├── feature-flags.ts       # Feature flag server utilities + route→flag mapping
+│   │   ├── feature-flags-shared.ts # Shared flag types/constants (server+client)
 │   │   ├── actions/
 │   │   │   ├── tournament.ts      # createTournament, updateTournament (Server Actions)
 │   │   │   ├── registration.ts    # updateRegistrationStatus (Server Action)
 │   │   │   ├── results.ts         # saveResults (Server Action, Phase 3B)
-│   │   │   └── admin.ts           # updateDefaultBrackets, updateCountryConfig, recomputeAllStats, promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin (Phase 3C + 5)
+│   │   │   ├── admin.ts           # updateDefaultBrackets, updateCountryConfig, recomputeAllStats, promoteToOrganizer, inviteOrganizer, cancelTournamentAdmin (Phase 3C + 5)
+│   │   │   └── feature-flags.ts   # toggleFeatureFlag (Server Action)
 │   │   ├── auth/
 │   │   │   └── routes.ts          # classifyRoute() — pure function
 │   │   ├── supabase/
@@ -161,7 +196,9 @@ OCP/                            # Root (npm workspaces)
 │   │   ├── 010_country_stats_functions.sql
 │   │   ├── 011_profile_slugs.sql
 │   │   ├── 012_additional_achievements.sql
-│   │   └── 013_organizer_invitations.sql
+│   │   ├── 013_organizer_invitations.sql
+│   │   ├── 014_feature_flags.sql
+│   │   └── 015_cms_feature_flags.sql
 │   └── tests/
 │       ├── 00_smoke.test.sql
 │       ├── 01_profiles.test.sql
@@ -184,9 +221,10 @@ OCP/                            # Root (npm workspaces)
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Frontend framework | Next.js (App Router) | 15.x |
+| Frontend framework | Next.js (App Router) | 15.4.11 (pinned) |
 | Language | TypeScript | 5.x |
 | Runtime | Node.js | 18+ |
+| CMS | Payload CMS v3 (embedded in Next.js) | 3.79 |
 | Auth | Supabase Auth | via @supabase/ssr |
 | Database | PostgreSQL (Supabase hosted) | 15.x |
 | Identity verification | Didit v3 API (redirect-based, no client SDK) | Implemented |
@@ -205,6 +243,8 @@ OCP/                            # Root (npm workspaces)
 | `DIDIT_API_KEY` | Didit verification API key | Server only |
 | `DIDIT_WEBHOOK_SECRET` | Didit webhook HMAC secret | Server only |
 | `NEXT_PUBLIC_DIDIT_WORKFLOW_ID` | Didit workflow identifier | Browser + server |
+| `DATABASE_URL` | Direct Postgres connection (port 5432) for Payload CMS | Server only |
+| `PAYLOAD_SECRET` | Payload CMS JWT secret | Server only |
 
 ## Request Flow
 
@@ -212,7 +252,9 @@ OCP/                            # Root (npm workspaces)
 Browser Request
   ↓
 Next.js Middleware (middleware.ts)
+  ├── Skip /cms, /api/payload routes (Payload handles own auth)
   ├── updateSession() — refresh Supabase cookies
+  ├── Check feature flags for CMS content routes (/news, /blog, /events)
   ├── classifyRoute() — determine route type
   ├── Check authentication
   ├── Check role (for organizer/admin routes)
@@ -220,7 +262,8 @@ Next.js Middleware (middleware.ts)
   ↓
 Next.js App Router
   ├── Server Component → createSupabaseServer() for data
-  └── Client Component → createBrowserClient() for mutations
+  ├── Client Component → createBrowserClient() for mutations
+  └── Payload CMS → /cms admin panel, /api REST endpoints
 ```
 
 ## Component Architecture
@@ -272,6 +315,7 @@ Next.js App Router
 | Phase 3C | Country points & admin (country points, admin UI, unified sidebar) | Complete |
 | Phase 4 | Rankings & stats (leaderboard, public profiles, achievements) | Complete |
 | Phase 5 | Verification & admin (identity verification, admin dashboard, user/organizer management) | Complete (email notifications deferred) |
+| CMS | Payload CMS v3 (news, blog, events, feature flags) | Complete (feature-flagged) |
 
 ## Deployment (planned)
 

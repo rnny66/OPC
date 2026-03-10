@@ -322,6 +322,54 @@ Tracks organizer invitations sent by admins. New users with matching email are a
 
 ---
 
+### `feature_flags`
+
+Feature toggle system for gating routes and functionality.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Flag ID |
+| `key` | text | — | Unique flag identifier (e.g. `cms_news`) |
+| `enabled` | boolean | `false` | Whether the feature is active |
+| `label` | text | — | Human-readable display name |
+| `description` | text | null | What the flag controls |
+| `tier` | integer | `0` | Grouping tier for UI display |
+| `sort_order` | integer | `0` | Display ordering within tier |
+| `created_at` | timestamptz | `now()` | Creation time |
+| `updated_at` | timestamptz | `now()` | Auto-updated via trigger |
+
+**Constraints:** Unique on `key`.
+
+**Seed data:**
+- CMS flags (tier 8): `cms_admin`, `cms_news`, `cms_blog`, `cms_events` — all disabled by default
+
+**RLS Policies:**
+- **Select:** Public — anyone can read flags
+- **Insert/Update/Delete:** Admins only
+
+---
+
+## Payload CMS Schema
+
+Payload CMS uses a separate `payload` Postgres schema in the same Supabase database. Tables are auto-managed by Payload and should not be manually modified.
+
+### Collections (Payload-managed)
+
+| Collection | Description |
+|-----------|-------------|
+| `Posts` | News and blog articles — `category` field (news/blog), `featured` flag, `coverImage`, Lexical rich text `content`, `slug` |
+| `EventAnnouncements` | Tournament-linked announcements — `tournament` (Supabase UUID), denormalized `tournamentName`/`tournamentVenue`/`tournamentDate`, rich text content |
+| `Media` | Image uploads for CMS content |
+| `Users` | Payload's own JWT-based admin users (separate from Supabase Auth) |
+
+### Key Details
+- All tables live in the `payload` schema (not `public`)
+- Payload handles its own migrations automatically
+- Admin panel at `/cms`, REST API at `/api/[...slug]`
+- `EventAnnouncements` uses a `beforeChange` hook to denormalize tournament data from Supabase
+
+---
+
 ## Postgres Functions
 
 | Function | Description |
@@ -364,4 +412,12 @@ country_config ←── default_points_brackets (standalone config)
 
 organizer_invitations (invited_by → profiles)
   └── trigger on profiles INSERT → auto-promote matching email
+
+feature_flags (standalone config — gates routes/features)
+
+payload.* (separate schema — Payload CMS auto-managed)
+  ├── posts (news + blog articles)
+  ├── event_announcements (tournament-linked content)
+  ├── media (image uploads)
+  └── users (CMS admin users)
 ```
