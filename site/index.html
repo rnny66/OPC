@@ -33,9 +33,15 @@
               <a href="responsible-gaming.html">Responsible Gaming</a>
             </div>
           </div>
+          <a href="#join" class="btn btn-primary nav-mobile-cta">How to join</a>
         </nav>
       </div>
       <a href="#join" class="btn btn-primary">How to join</a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
     </div>
   </header>
 
@@ -495,6 +501,26 @@ Now bringing transparency, fairness, and international standards to European ama
     window.addEventListener('scroll', () => {
       document.querySelector('.header').classList.toggle('header--scrolled', window.scrollY > 40);
     }, { passive: true });
+
+    // Mobile nav toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    if (navToggle && nav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('nav--open');
+        navToggle.classList.toggle('nav-toggle--active', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('nav--open');
+          navToggle.classList.remove('nav-toggle--active');
+          navToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
   </script>
 
 </body>
