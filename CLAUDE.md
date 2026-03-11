@@ -41,7 +41,12 @@ OCP/
 │   ├── country-england.html    # Country page — England
 │   ├── country-poland.html     # Country page — Poland
 │   ├── country-austria.html    # Country page — Austria
-│   ├── styles.css              # Shared stylesheet (~2400 lines)
+│   ├── tournament-detail.html  # Tournament detail page (single placeholder)
+│   ├── news.html               # News — coming soon placeholder
+│   ├── blog.html               # Blog — coming soon placeholder
+│   ├── events.html             # Events — coming soon placeholder
+│   ├── about.html              # About OPC page
+│   ├── styles.css              # Shared stylesheet (~2600 lines)
 │   └── assets/                 # Images, logos, flags
 ├── platform/                   # Next.js 15 app
 │   ├── app/
@@ -220,6 +225,12 @@ OCP/
 5. Follow the design in `designs/` folder if a Figma screenshot exists
 6. Add `.reveal` classes to content sections for scroll-reveal animations
 7. Include the scroll-reveal JS snippet (IntersectionObserver) if the page has reveal elements
+
+## Navigation (Static Site)
+- All pages share the same header nav: Home, Rankings, Tournaments, News, Countries dropdown, About OPC dropdown
+- Tournament cards (`<a class="tournament-card">`) on `tournaments.html` link to `tournament-detail.html`
+- Event cards (`<a class="event-card">`) on homepage and country pages also link to `tournament-detail.html`
+- Currently a single tournament detail page exists as a placeholder (Amsterdam Open)
 
 ## Creating New Country Pages
 1. Copy `site/country-netherlands.html` as template

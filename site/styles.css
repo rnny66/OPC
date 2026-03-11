@@ -2666,6 +2666,807 @@ a {
   }
 }
 
+/* --- Tournament Detail Page --- */
+
+.td-breadcrumb {
+  padding: 96px 80px 0;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+}
+
+.td-breadcrumb a:hover {
+  color: var(--color-brand);
+}
+
+.td-breadcrumb-separator {
+  margin: 0 8px;
+}
+
+.td-hero {
+  padding: 32px 80px 64px;
+  text-align: center;
+}
+
+.td-hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.td-hero-flag {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  overflow: hidden;
+}
+
+.td-hero-flag img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.td-hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.96px;
+  margin-bottom: 12px;
+}
+
+.td-hero-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-brand-light);
+  background: rgba(21, 112, 239, 0.12);
+  border: 1px solid rgba(21, 112, 239, 0.25);
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.td-hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.td-hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+.td-hero-meta-item svg {
+  flex-shrink: 0;
+}
+
+.td-hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.td-section {
+  padding: 80px 80px;
+}
+
+.td-section--alt {
+  background-color: var(--color-bg-secondary);
+}
+
+.td-section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.td-section-text {
+  max-width: 800px;
+  margin-top: 32px;
+}
+
+.td-section-text p {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.td-schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.td-schedule-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.td-schedule-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-brand);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.td-schedule-date {
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 16px;
+}
+
+.td-schedule-events {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.td-schedule-event {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  padding-left: 16px;
+  position: relative;
+}
+
+.td-schedule-event::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-brand);
+}
+
+.td-format-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.td-format-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+}
+
+.td-format-icon {
+  margin-bottom: 12px;
+}
+
+.td-format-label {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 4px;
+}
+
+.td-format-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.td-venue-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.td-venue-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.td-venue-address {
+  font-size: 15px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 16px;
+}
+
+.td-venue-description {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--color-text-secondary);
+}
+
+.td-venue-image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.td-venue-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.td-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.td-related-cta {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.td-cta {
+  padding: 80px 80px;
+  text-align: center;
+}
+
+.td-cta-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.td-cta h2 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  margin-bottom: 16px;
+}
+
+.td-cta p {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+}
+
+.td-cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Tournament card as link */
+a.tournament-card {
+  display: block;
+}
+
+a.tournament-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Event card as link */
+a.event-card {
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .td-breadcrumb {
+    padding: 88px 40px 0;
+  }
+
+  .td-hero {
+    padding: 24px 40px 48px;
+  }
+
+  .td-hero-title {
+    font-size: 36px;
+  }
+
+  .td-section {
+    padding: 64px 40px;
+  }
+
+  .td-schedule-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .td-format-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .td-venue-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .td-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .td-cta {
+    padding: 64px 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .td-breadcrumb {
+    padding: 80px 20px 0;
+  }
+
+  .td-hero {
+    padding: 20px 20px 40px;
+  }
+
+  .td-hero-title {
+    font-size: 28px;
+  }
+
+  .td-hero-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .td-section {
+    padding: 48px 20px;
+  }
+
+  .td-schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .td-format-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .td-related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .td-cta {
+    padding: 48px 20px;
+  }
+
+  .td-cta h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .td-cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* --- About Page --- */
+.about-hero {
+  padding: 140px 80px 64px;
+  text-align: center;
+  background: #0c0e12;
+}
+
+.about-hero .section-label {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.about-hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  margin-bottom: 16px;
+}
+
+.about-hero p {
+  font-size: 20px;
+  line-height: 32px;
+  color: var(--color-text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.about-founders {
+  padding: 80px 80px;
+  background: #13161b;
+}
+
+.about-founder {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  display: flex;
+  gap: 64px;
+  align-items: flex-start;
+}
+
+.about-founder:last-child {
+  margin-bottom: 0;
+}
+
+.about-founder--reversed {
+  flex-direction: row-reverse;
+}
+
+.about-founder-photo {
+  flex: 0 0 328px;
+  max-width: 100%;
+}
+
+.about-founder-photo img {
+  width: 100%;
+  max-width: 328px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.about-founder-photo-name {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.about-founder-photo-name h3 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.about-founder-photo-name span {
+  font-size: 16px;
+  color: var(--color-brand);
+  line-height: 24px;
+}
+
+.about-founder-body {
+  flex: 1;
+  padding-top: 8px;
+}
+
+.about-founder-role {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-brand);
+  margin-bottom: 16px;
+}
+
+.about-founder-bio {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.about-founder-bio p {
+  margin-bottom: 12px;
+}
+
+.about-founder-bio p:last-child {
+  margin-bottom: 0;
+}
+
+.about-founder-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.about-stat-card {
+  background: #0c0e12;
+  padding: 16px 20px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.about-stat-card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-brand);
+  line-height: 28px;
+}
+
+.about-stat-card-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+  line-height: 16px;
+}
+
+.about-story {
+  padding: 96px 80px;
+  background: #0c0e12;
+}
+
+.about-story-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-story h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 44px;
+  margin-bottom: 32px;
+}
+
+.about-story-text {
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-text-secondary);
+}
+
+.about-story-text p {
+  margin-bottom: 16px;
+}
+
+.about-story-text p:last-child {
+  margin-bottom: 0;
+}
+
+.about-values {
+  padding: 80px 80px;
+  background: #13161b;
+}
+
+.about-values .section-header {
+  margin-bottom: 48px;
+}
+
+.about-values-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.about-value-card {
+  background: #0c0e12;
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.about-value-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand);
+  border-radius: 12px;
+}
+
+.about-value-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.about-value-card p {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+}
+
+.about-cta {
+  padding: 96px 80px;
+  text-align: center;
+  background: #0c0e12;
+}
+
+.about-cta h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 44px;
+  margin-bottom: 16px;
+}
+
+.about-cta p {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .about-founder {
+    gap: 48px;
+  }
+
+  .about-founder-photo {
+    flex: 0 0 280px;
+  }
+}
+
+@media (max-width: 992px) {
+  .about-hero {
+    padding: 120px 40px 48px;
+  }
+
+  .about-hero h1 {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .about-founders {
+    padding: 64px 40px;
+  }
+
+  .about-founder {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .about-founder--reversed {
+    flex-direction: column;
+  }
+
+  .about-founder-photo {
+    flex: none;
+  }
+
+  .about-founder-role {
+    text-align: center;
+  }
+
+  .about-founder-stats {
+    justify-content: center;
+  }
+
+  .about-story {
+    padding: 64px 40px;
+  }
+
+  .about-story h2 {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .about-values {
+    padding: 64px 40px;
+  }
+
+  .about-values-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .about-cta {
+    padding: 64px 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding: 100px 20px 40px;
+  }
+
+  .about-hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .about-hero p {
+    font-size: 16px;
+  }
+
+  .about-founders {
+    padding: 48px 20px;
+  }
+
+  .about-founder {
+    margin-bottom: 56px;
+  }
+
+  .about-founder-photo {
+    flex: none;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .about-founder-stats {
+    gap: 12px;
+  }
+
+  .about-stat-card {
+    min-width: 80px;
+    padding: 12px 14px;
+  }
+
+  .about-stat-card-value {
+    font-size: 18px;
+  }
+
+  .about-story {
+    padding: 48px 20px;
+  }
+
+  .about-values {
+    padding: 48px 20px;
+  }
+
+  .about-cta {
+    padding: 48px 20px;
+  }
+
+  .about-cta h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .about-cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* --- Coming Soon Pages --- */
+
+.coming-soon-hero {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+.coming-soon-container {
+  max-width: 560px;
+  text-align: center;
+}
+
+.coming-soon-icon {
+  margin-bottom: 32px;
+  opacity: 0.8;
+}
+
+.coming-soon-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.coming-soon-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.coming-soon-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 40px;
+}
+
 /* --- Animations --- */
 
 /* Hero entrance (page load) */

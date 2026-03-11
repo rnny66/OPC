@@ -3,22 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms &amp; Conditions — OPC Europe</title>
-  <meta name="description" content="Review the terms and conditions for participating in OPC Europe poker tournaments. Understand your rights, responsibilities, and tournament rules.">
+  <title>Blog — OPC Europe</title>
+  <meta name="description" content="Read the OPC Europe blog — strategy tips, player interviews, tournament recaps, and behind-the-scenes stories from the European Open Poker Championship.">
   <meta name="theme-color" content="#0c0e12">
-  <link rel="canonical" href="https://opc-europe.com/terms.html">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Terms &amp; Conditions — OPC Europe">
-  <meta property="og:description" content="Review the terms and conditions for participating in OPC Europe poker tournaments. Understand your rights, responsibilities, and tournament rules.">
-  <meta property="og:image" content="https://opc-europe.com/assets/img/og-image.jpg">
-  <meta property="og:url" content="https://opc-europe.com/terms.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="OPC Europe">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Terms &amp; Conditions — OPC Europe">
-  <meta name="twitter:description" content="Review the terms and conditions for participating in OPC Europe poker tournaments. Understand your rights, responsibilities, and tournament rules.">
-  <meta name="twitter:image" content="https://opc-europe.com/assets/img/og-image.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="assets/img/opc_logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,42 +61,19 @@
     </div>
   </header>
 
-  <!-- Terms & Conditions -->
-  <section class="legal-page">
-    <div class="legal-container">
-      <div class="legal-header">
-        <h1>Terms &amp; Conditions</h1>
-        <p class="legal-meta">Last updated: March 2026</p>
+  <!-- Coming Soon Section -->
+  <section class="coming-soon-hero">
+    <div class="coming-soon-container">
+      <div class="coming-soon-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
       </div>
-
-      <div class="legal-content">
-        <h2>1. Acceptance of Terms</h2>
-        <p>By accessing and using the OPC Europe website and services, you agree to be bound by these Terms &amp; Conditions. If you do not agree with any part of these terms, you may not use our services.</p>
-
-        <h2>2. Eligibility</h2>
-        <p>You must be at least 18 years of age to participate in OPC-certified tournaments and to register as a verified player. By registering, you confirm that you meet this age requirement and that you are legally permitted to participate in poker tournaments in your jurisdiction.</p>
-
-        <h2>3. Player Verification</h2>
-        <p>All players must complete age and identity verification before appearing in the official OPC rankings. Verification is free and is required only once. OPC reserves the right to request additional documentation at any time to maintain the integrity of the platform.</p>
-
-        <h2>4. Tournament Rules</h2>
-        <p>All OPC-certified tournaments follow the International Poker Rules as established by FIDPA (Federation Internationale de Poker Association). Individual tournament organizers may apply additional house rules, provided they do not conflict with FIDPA standards. OPC is not responsible for disputes arising from individual tournament operations.</p>
-
-        <h2>5. Ranking System</h2>
-        <p>Rankings are calculated based on tournament performance using OPC's proprietary points system. Your best 10 results from the past 12 months count towards your overall ranking. OPC reserves the right to adjust the ranking algorithm and recalculate historical results at any time.</p>
-
-        <h2>6. Limitation of Liability</h2>
-        <p>OPC Europe is a ranking and promotion platform. We do not operate tournaments directly, handle buy-ins, or manage prize pools. OPC is not liable for any losses, injuries, or disputes that occur during tournaments operated by our partner organizers. Participation in any tournament is at your own risk.</p>
-
-        <h2>7. Intellectual Property</h2>
-        <p>All content on this website, including text, graphics, logos, and software, is the property of OPC Europe or its licensors and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without prior written consent.</p>
-
-        <h2>8. Changes to Terms</h2>
-        <p>We reserve the right to modify these Terms &amp; Conditions at any time. Changes will be posted on this page with an updated revision date. Continued use of our services after changes constitutes acceptance of the revised terms.</p>
-
-        <h2>9. Contact</h2>
-        <p>For questions about these terms, please visit our <a href="contact.html">contact page</a>.</p>
-      </div>
+      <h1 class="coming-soon-title">Blog</h1>
+      <p class="coming-soon-subtitle">Coming Soon</p>
+      <p class="coming-soon-text">Our blog is on its way. Expect strategy deep-dives, player interviews, tournament recaps, and behind-the-scenes stories from the OPC Europe circuit. Stay tuned.</p>
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
     </div>
   </section>
 
@@ -154,23 +118,10 @@
   </footer>
 
   <script>
-    // Scroll-reveal observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('reveal--visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Header scroll effect
     window.addEventListener('scroll', () => {
       document.querySelector('.header').classList.toggle('header--scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    // Mobile nav toggle
     const navToggle = document.querySelector('.nav-toggle');
     const nav = document.querySelector('.nav');
     if (navToggle && nav) {
