@@ -29,6 +29,17 @@ De site bevat:
 - **Contact** — contactformulier voor spelers, organisatoren en partners
 - **SEO** — gestructureerde data, metatags, sitemap en optimalisatie voor social media op alle pagina's
 
+### Domeinstrategie: Eén Domein met Landenpagina's
+
+OPC Europe gebruikt één domein (`europe-opc.com`) met landspecifieke subpagina's (bijv. `europe-opc.com/netherlands`) in plaats van aparte domeinen per land (bijv. `dutch-opc.com`, `german-opc.com`). Deze aanpak is op elk vlak superieur:
+
+- **SEO** — Alle pagina's dragen bij aan de autoriteit van één domein. Elke backlink naar een landenpagina versterkt de gehele site. Aparte `.com`-domeinen bieden geen geo-targeting voordeel (alleen landcode-TLD's zoals `.nl` doen dat) en beginnen elk vanaf nul autoriteit.
+- **Onderhoud** — Eén deployment, één SSL-certificaat, één analytics-setup, één sitemap. Aparte domeinen zouden betekenen dat 7+ websites beheerd moeten worden met gedupliceerde deployments, DNS-configuraties en updates.
+- **Kosten** — Eén hostingsetup in plaats van 7. Geen extra domeinregistraties of aparte hostingkosten.
+- **Merk** — `europe-opc.com/netherlands` communiceert duidelijk een verenigd Europees merk. Aparte domeinen fragmenteren het merk en verwarren gebruikers over of de sites gerelateerd zijn.
+
+Aparte landendomeinen zijn alleen zinvol wanneer landen onafhankelijk opereren met verschillende talen, contentteams en designs — wat niet het geval is bij OPC Europe.
+
 ### Contentbeheer (Payload CMS)
 
 Een zelfgehost beheerpaneel waarmee het OPC-team content kan publiceren en beheren zonder tussenkomst van een ontwikkelaar:

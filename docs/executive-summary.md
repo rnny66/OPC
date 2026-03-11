@@ -29,6 +29,17 @@ The site includes:
 - **Contact** — inquiry form for players, organizers, and partners
 - **SEO** — structured data, meta tags, sitemap, and social sharing optimization across all pages
 
+### Domain Strategy: Single Domain with Country Pages
+
+OPC Europe uses a single domain (`europe-opc.com`) with country-specific subpages (e.g., `europe-opc.com/netherlands`) rather than separate domains per country (e.g., `dutch-opc.com`, `german-opc.com`). This approach is superior in every dimension:
+
+- **SEO** — All pages contribute to one domain's authority. Every backlink to any country page strengthens the entire site. Separate `.com` domains provide zero geo-targeting benefit (only country-code TLDs like `.nl` do) and would each start from zero authority.
+- **Maintenance** — One deployment, one SSL certificate, one analytics setup, one sitemap. Separate domains would mean managing 7+ websites with duplicated deployments, DNS configurations, and updates.
+- **Cost** — One hosting setup instead of 7. No extra domain registrations or separate hosting bills.
+- **Brand** — `europe-opc.com/netherlands` clearly communicates a unified European brand. Separate domains fragment the brand and confuse users about whether the sites are related.
+
+Separate country domains only make sense when countries operate independently with different languages, content teams, and designs — which is not the case for OPC Europe.
+
 ### Content Management (Payload CMS)
 
 A self-hosted admin panel for the OPC team to publish and manage content without developer involvement:
