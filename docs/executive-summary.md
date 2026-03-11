@@ -76,3 +76,61 @@ The project is structured so that the static marketing site can launch independe
 | **Web application** | Live rankings, tournaments, user accounts | Yes (replaces static data) |
 
 This means OPC Europe can go live quickly with the static site while the more complex functionality is developed in parallel.
+
+---
+
+## Cost Breakdown
+
+### One-Time: Development
+
+| Phase | Description | Estimated Hours |
+|-------|-------------|-----------------|
+| Design system & foundation | Tokens, components, responsive framework, animations | 24 |
+| Homepage | Full landing page with 8 sections | 16 |
+| Tournaments page | Listing, filters, cards, pagination | 10 |
+| Rankings page | Table, filters, sidebar, pagination | 10 |
+| Country pages (6) | Template + 6 country variants | 14 |
+| Contact page | Form and layout | 4 |
+| Legal pages (3) | Privacy, terms, responsible gaming | 6 |
+| SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
+| CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
+| QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
+| **Total** | | **120 hours** |
+
+> Web application development (live rankings, tournaments, user accounts) is scoped separately.
+
+### Recurring: Hosting & Infrastructure
+
+| Service | What It Covers | Plan | Monthly Cost |
+|---------|---------------|------|-------------|
+| **Vercel** | Website hosting, Next.js server-side rendering, CMS deployment | Pro (1 seat) | $20/mo |
+| **Supabase** | PostgreSQL database, user authentication, file storage | Pro (with spend cap) | $25/mo |
+| **Payload CMS** | Content management admin panel | Open source (free) | $0 |
+| **Total** | | | **$45/mo** |
+
+**Notes on hosting costs:**
+
+- **Vercel Pro** includes 1 TB bandwidth and 10M edge requests/month — more than sufficient for a site with a few thousand monthly visitors. Since OPC is a commercial project, the free tier is not permitted.
+- **Supabase Pro** includes 8 GB database, 100K monthly active users for auth, 100 GB file storage, and daily backups. The spend cap option locks the bill at exactly $25/mo (usage is throttled instead of billed for overages).
+- **Payload CMS** is open source (MIT license) and runs as part of the Next.js app on Vercel — no additional hosting or license cost.
+- These costs cover both the static site/CMS **and** the future web application. No additional infrastructure is needed when the web app launches.
+
+### Other Costs
+
+| Item | Cost | Notes |
+|------|------|-------|
+| **Domain name** | ~€10–15/yr | Already owned by client. Annual renewal only. |
+| **Transactional email** | $0–20/mo | Needed for auth emails (signup confirmation, password reset). Supabase includes basic email via built-in SMTP. For higher volume or custom branding, a service like Resend or Postmark starts at ~$20/mo. |
+| **Analytics** | $0 | Vercel Analytics is included on Pro. Alternatively, free options like Plausible Cloud ($9/mo) or self-hosted Umami ($0). |
+| **SSL certificate** | $0 | Included with Vercel. |
+| **CDN** | $0 | Included with Vercel (global edge network). |
+| **Identity verification** | Usage-based | Required only for the web application phase. Provider costs (e.g., Didit, Onfido) vary by volume — typically €0.50–2.00 per verification. |
+
+### Cost Summary
+
+| Category | Cost |
+|----------|------|
+| Development (one-time) | 120 hours |
+| Hosting & infrastructure (monthly) | ~$45/mo |
+| Domain (annual) | ~€10–15/yr (client-owned) |
+| Optional services | $0–20/mo depending on choices |
