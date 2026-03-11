@@ -24,6 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -80,7 +81,7 @@
       <div class="ranking-header">
         <h1 class="ranking-title">International European OPC Rating</h1>
         <p class="ranking-subtitle">Live rankings of verified players across Europe</p>
-        <p class="ranking-meta">250+ Verified Players · 20+ Tournaments/Player · Last updated: 25 Jan 2025, 13:12</p>
+        <p class="ranking-meta" id="ranking-meta">Loading rankings...</p>
       </div>
 
       <div class="ranking-controls">
@@ -97,12 +98,11 @@
           </button>
           <div class="ranking-filter-dropdown">
             <button class="ranking-filter-option ranking-filter-option--active" data-country="">All Countries</button>
-            <button class="ranking-filter-option" data-country="Dutch">Dutch</button>
-            <button class="ranking-filter-option" data-country="German">German</button>
-            <button class="ranking-filter-option" data-country="Belgian">Belgian</button>
-            <button class="ranking-filter-option" data-country="British">British</button>
-            <button class="ranking-filter-option" data-country="Polish">Polish</button>
-            <button class="ranking-filter-option" data-country="Austrian">Austrian</button>
+            <button class="ranking-filter-option" data-country="Netherlands">Netherlands</button>
+            <button class="ranking-filter-option" data-country="Belgium">Belgium</button>
+            <button class="ranking-filter-option" data-country="Germany">Germany</button>
+            <button class="ranking-filter-option" data-country="Poland">Poland</button>
+            <button class="ranking-filter-option" data-country="Ireland">Ireland</button>
           </div>
         </div>
       </div>
@@ -116,171 +116,12 @@
                 <th class="ranking-col-avatar"></th>
                 <th class="ranking-col-name">Name</th>
                 <th class="ranking-col-nationality">Nationality</th>
-                <th class="ranking-col-points">Points in events</th>
-                <th class="ranking-col-played">Played in</th>
+                <th class="ranking-col-points">Total Points</th>
+                <th class="ranking-col-played">Country</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="ranking-row ranking-row--top">
-                <td>1</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2e90fa"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">ML</text></svg></td>
-                <td>Marcel Lüske</td>
-                <td>Dutch</td>
-                <td>10000</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>2</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#6941c6"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">NB</text></svg></td>
-                <td>Noah Boeken</td>
-                <td>Dutch</td>
-                <td>9800</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>3</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#c4320a"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">SM</text></svg></td>
-                <td>Sophie Müller</td>
-                <td>German</td>
-                <td>9600</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>4</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#067647"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">EL</text></svg></td>
-                <td>Emma Laurent</td>
-                <td>Belgian</td>
-                <td>9400</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="8" height="24" fill="#000"/><rect x="8" width="8" height="24" fill="#FDDA24"/><rect x="16" width="8" height="24" fill="#EF3340"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>5</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#b93815"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">JV</text></svg></td>
-                <td>Jan de Vries</td>
-                <td>Dutch</td>
-                <td>9200</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>6</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#363f72"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">TF</text></svg></td>
-                <td>Thomas Fischer</td>
-                <td>German</td>
-                <td>9050</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>7</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#5925dc"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">JH</text></svg></td>
-                <td>James Harrison</td>
-                <td>British</td>
-                <td>8900</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="24" fill="#012169"/><rect x="10" width="4" height="24" fill="#C8102E"/><rect y="10" width="24" height="4" fill="#C8102E"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>8</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#c11574"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">LJ</text></svg></td>
-                <td>Lotte Jansen</td>
-                <td>Dutch / Belgian</td>
-                <td>8750</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>9</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2e90fa"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">KW</text></svg></td>
-                <td>Klaus Weber</td>
-                <td>German</td>
-                <td>8600</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>10</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#067647"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">PD</text></svg></td>
-                <td>Pieter van Dam</td>
-                <td>Dutch</td>
-                <td>8450</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>11</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#b93815"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">ST</text></svg></td>
-                <td>Sarah Thompson</td>
-                <td>British</td>
-                <td>8300</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="24" fill="#012169"/><rect x="10" width="4" height="24" fill="#C8102E"/><rect y="10" width="24" height="4" fill="#C8102E"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>12</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#363f72"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">MD</text></svg></td>
-                <td>Marc Dupont</td>
-                <td>Belgian</td>
-                <td>8150</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="8" height="24" fill="#000"/><rect x="8" width="8" height="24" fill="#FDDA24"/><rect x="16" width="8" height="24" fill="#EF3340"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>13</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#6941c6"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">AS</text></svg></td>
-                <td>Anna Schmitt</td>
-                <td>German / Dutch</td>
-                <td>8000</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>14</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#c4320a"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">DB</text></svg></td>
-                <td>Daan Bakker</td>
-                <td>Dutch</td>
-                <td>7850</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>15</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#5925dc"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">OB</text></svg></td>
-                <td>Oliver Bennett</td>
-                <td>British</td>
-                <td>7700</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="24" fill="#012169"/><rect x="10" width="4" height="24" fill="#C8102E"/><rect y="10" width="24" height="4" fill="#C8102E"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>16</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#c11574"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">LH</text></svg></td>
-                <td>Lukas Hoffmann</td>
-                <td>German</td>
-                <td>7550</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>17</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#067647"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">IP</text></svg></td>
-                <td>Isabelle Peeters</td>
-                <td>Belgian / Dutch</td>
-                <td>7400</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="8" height="24" fill="#000"/><rect x="8" width="8" height="24" fill="#FDDA24"/><rect x="16" width="8" height="24" fill="#EF3340"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>18</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2e90fa"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">WV</text></svg></td>
-                <td>Willem Visser</td>
-                <td>Dutch</td>
-                <td>7250</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>19</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#363f72"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">FB</text></svg></td>
-                <td>Friedrich Braun</td>
-                <td>German</td>
-                <td>7100</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg></td>
-              </tr>
-              <tr class="ranking-row">
-                <td>20</td>
-                <td><svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#b93815"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">CE</text></svg></td>
-                <td>Charlotte Evans</td>
-                <td>British</td>
-                <td>6950</td>
-                <td><svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="c"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#c)"><rect width="24" height="24" fill="#012169"/><rect x="10" width="4" height="24" fill="#C8102E"/><rect y="10" width="24" height="4" fill="#C8102E"/></g></svg></td>
-              </tr>
+            <tbody id="ranking-tbody">
+              <!-- Populated dynamically from Supabase -->
             </tbody>
           </table>
         </div>
@@ -363,6 +204,184 @@
   </footer>
 
   <script>
+    // ─── Config ───
+    const SUPABASE_URL = 'https://uxlnhyeijfeiurwleecy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4bG5oeWVpamZlaXVyd2xlZWN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDEzNzMsImV4cCI6MjA4ODU3NzM3M30.eTN24hvQjitsLvOXo7hAs92YIQprgjks6rfhzkmdbgY';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const PAGE_SIZE = 50;
+    let allPlayers = [];
+    let filteredPlayers = [];
+    let currentPage = 1;
+    let activeCountry = '';
+
+    // ─── Avatar colors (deterministic from name) ───
+    const AVATAR_COLORS = ['#2e90fa','#6941c6','#c4320a','#067647','#b93815','#363f72','#5925dc','#c11574'];
+    function hashCode(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      return Math.abs(hash);
+    }
+    function getInitials(name) {
+      const parts = name.trim().split(/\s+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+    function avatarSVG(name) {
+      const color = AVATAR_COLORS[hashCode(name) % AVATAR_COLORS.length];
+      const initials = getInitials(name);
+      return `<svg class="ranking-avatar" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="${color}"/><text x="16" y="21" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter,sans-serif" font-weight="600">${initials}</text></svg>`;
+    }
+
+    // ─── Flag SVGs ───
+    const FLAGS = {
+      Netherlands: '<svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="f-nl"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#f-nl)"><rect width="24" height="8" fill="#AE1C28"/><rect y="8" width="24" height="8" fill="#FFF"/><rect y="16" width="24" height="8" fill="#21468B"/></g></svg>',
+      Belgium: '<svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="f-be"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#f-be)"><rect width="8" height="24" fill="#000"/><rect x="8" width="8" height="24" fill="#FDDA24"/><rect x="16" width="8" height="24" fill="#EF3340"/></g></svg>',
+      Germany: '<svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="f-de"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#f-de)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCC00"/></g></svg>',
+      Poland: '<svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="f-pl"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#f-pl)"><rect width="24" height="12" fill="#FFF"/><rect y="12" width="24" height="12" fill="#DC143C"/></g></svg>',
+      Ireland: '<svg class="ranking-flag-round" viewBox="0 0 24 24"><clipPath id="f-ie"><circle cx="12" cy="12" r="12"/></clipPath><g clip-path="url(#f-ie)"><rect width="8" height="24" fill="#169B62"/><rect x="8" width="8" height="24" fill="#FFF"/><rect x="16" width="8" height="24" fill="#FF883E"/></g></svg>'
+    };
+    function flagSVG(nationality) {
+      return FLAGS[nationality] || '';
+    }
+
+    // ─── Render table ───
+    function renderTable() {
+      const tbody = document.getElementById('ranking-tbody');
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageData = filteredPlayers.slice(start, start + PAGE_SIZE);
+
+      tbody.innerHTML = pageData.map(p => {
+        const isTop = p.rank <= 3 ? ' ranking-row--top' : '';
+        return `<tr class="ranking-row${isTop}">
+          <td>${p.rank}</td>
+          <td>${avatarSVG(p.name)}</td>
+          <td>${p.name}</td>
+          <td>${p.nationality}</td>
+          <td>${p.total_points}</td>
+          <td>${flagSVG(p.nationality)}</td>
+        </tr>`;
+      }).join('');
+
+      renderPagination();
+    }
+
+    // ─── Pagination ───
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredPlayers.length / PAGE_SIZE);
+      const pagesDiv = document.querySelector('.pagination-pages');
+      pagesDiv.innerHTML = '';
+
+      const maxVisible = 5;
+      let startPage = Math.max(1, currentPage - 2);
+      let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+      if (endPage - startPage < maxVisible - 1) startPage = Math.max(1, endPage - maxVisible + 1);
+
+      if (startPage > 1) {
+        pagesDiv.innerHTML += `<a href="#" class="pagination-page" data-page="1">1</a>`;
+        if (startPage > 2) pagesDiv.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        const active = i === currentPage ? ' pagination-page--active' : '';
+        pagesDiv.innerHTML += `<a href="#" class="pagination-page${active}" data-page="${i}">${i}</a>`;
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) pagesDiv.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+        pagesDiv.innerHTML += `<a href="#" class="pagination-page" data-page="${totalPages}">${totalPages}</a>`;
+      }
+
+      // Bind page clicks
+      pagesDiv.querySelectorAll('.pagination-page').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentPage = parseInt(el.dataset.page);
+          renderTable();
+          document.querySelector('.ranking-table-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Prev/Next
+      const prevBtn = document.querySelector('.pagination-prev');
+      const nextBtn = document.querySelector('.pagination-next');
+      prevBtn.style.opacity = currentPage <= 1 ? '0.4' : '1';
+      prevBtn.style.pointerEvents = currentPage <= 1 ? 'none' : '';
+      nextBtn.style.opacity = currentPage >= totalPages ? '0.4' : '1';
+      nextBtn.style.pointerEvents = currentPage >= totalPages ? 'none' : '';
+    }
+
+    // ─── Filter + Search ───
+    function applyFilters() {
+      const query = document.querySelector('.ranking-search-input').value.toLowerCase().trim();
+      filteredPlayers = allPlayers.filter(p => {
+        const matchesSearch = !query || p.name.toLowerCase().includes(query);
+        const matchesCountry = !activeCountry || p.nationality === activeCountry;
+        return matchesSearch && matchesCountry;
+      });
+      currentPage = 1;
+      renderTable();
+    }
+
+    // ─── Load data ───
+    async function loadRankings() {
+      const { data, error } = await sb.from('master_players')
+        .select('rank,name,nationality,total_points')
+        .order('rank', { ascending: true });
+
+      if (error) {
+        document.getElementById('ranking-meta').textContent = 'Failed to load rankings.';
+        console.error(error);
+        return;
+      }
+
+      allPlayers = data || [];
+      filteredPlayers = [...allPlayers];
+
+      const countries = [...new Set(allPlayers.map(p => p.nationality))];
+      document.getElementById('ranking-meta').textContent =
+        `${allPlayers.length} Players · ${countries.length} Countries · Live rankings`;
+
+      renderTable();
+    }
+
+    // ─── Init ───
+    document.querySelector('.ranking-search-input').addEventListener('input', applyFilters);
+
+    const filterBtn = document.querySelector('.ranking-filter-btn');
+    const filterDropdown = document.querySelector('.ranking-filter-dropdown');
+
+    filterBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      filterDropdown.classList.toggle('ranking-filter-dropdown--open');
+    });
+
+    document.querySelectorAll('.ranking-filter-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        activeCountry = opt.dataset.country;
+        document.querySelectorAll('.ranking-filter-option').forEach(o => o.classList.remove('ranking-filter-option--active'));
+        opt.classList.add('ranking-filter-option--active');
+        filterBtn.childNodes[0].textContent = opt.textContent + ' ';
+        filterDropdown.classList.remove('ranking-filter-dropdown--open');
+        applyFilters();
+      });
+    });
+
+    document.addEventListener('click', () => {
+      filterDropdown.classList.remove('ranking-filter-dropdown--open');
+    });
+
+    document.querySelector('.pagination-prev').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentPage > 1) { currentPage--; renderTable(); }
+    });
+
+    document.querySelector('.pagination-next').addEventListener('click', (e) => {
+      e.preventDefault();
+      const totalPages = Math.ceil(filteredPlayers.length / PAGE_SIZE);
+      if (currentPage < totalPages) { currentPage++; renderTable(); }
+    });
+
     // Scroll-reveal observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -373,53 +392,6 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Ranking search & filter
-    (() => {
-      const searchInput = document.querySelector('.ranking-search-input');
-      const filterBtn = document.querySelector('.ranking-filter-btn');
-      const filterDropdown = document.querySelector('.ranking-filter-dropdown');
-      const filterOptions = document.querySelectorAll('.ranking-filter-option');
-      const rows = document.querySelectorAll('.ranking-table tbody .ranking-row');
-
-      let activeCountry = '';
-
-      function filterRows() {
-        const query = searchInput.value.toLowerCase().trim();
-        let visibleCount = 0;
-        rows.forEach(row => {
-          const name = row.children[2].textContent.toLowerCase();
-          const nationality = row.children[3].textContent.toLowerCase();
-          const matchesSearch = !query || name.includes(query);
-          const matchesCountry = !activeCountry || nationality.includes(activeCountry.toLowerCase());
-          const visible = matchesSearch && matchesCountry;
-          row.style.display = visible ? '' : 'none';
-          if (visible) visibleCount++;
-        });
-      }
-
-      searchInput.addEventListener('input', filterRows);
-
-      filterBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        filterDropdown.classList.toggle('ranking-filter-dropdown--open');
-      });
-
-      filterOptions.forEach(opt => {
-        opt.addEventListener('click', () => {
-          activeCountry = opt.dataset.country;
-          filterOptions.forEach(o => o.classList.remove('ranking-filter-option--active'));
-          opt.classList.add('ranking-filter-option--active');
-          filterBtn.childNodes[0].textContent = opt.textContent + ' ';
-          filterDropdown.classList.remove('ranking-filter-dropdown--open');
-          filterRows();
-        });
-      });
-
-      document.addEventListener('click', () => {
-        filterDropdown.classList.remove('ranking-filter-dropdown--open');
-      });
-    })();
 
     // Header scroll effect
     window.addEventListener('scroll', () => {
@@ -445,6 +417,9 @@
         });
       });
     }
+
+    // Load rankings on page load
+    loadRankings();
   </script>
 
 </body>
