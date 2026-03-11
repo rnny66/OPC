@@ -95,8 +95,8 @@ Dedicated landing pages for each country where OPC operates, designed for local 
 | Germany | Complete |
 | England | Complete |
 | Poland | Complete |
-| Belgium | To be built |
-| Austria | To be built |
+| Belgium | Complete |
+| Austria | Complete |
 
 **Each country page includes:**
 
@@ -107,7 +107,37 @@ Dedicated landing pages for each country where OPC operates, designed for local 
 - CTA section — "Register as Player" and "Become Partner" buttons
 - All sections with scroll-reveal animations
 
-### 2.6 Contact Page
+### 2.6 Tournament Detail Page
+
+A dedicated detail page for individual tournaments, providing full event information to prospective players.
+
+**Deliverables:**
+
+- Breadcrumb navigation (Home > Tournaments > Tournament Name)
+- Hero section with country flag, tournament name, series badge, and key meta info (date, venue, entry type)
+- "Register Now" and "All Tournaments" CTA buttons
+- About This Tournament section — 2-3 paragraphs describing the event
+- Schedule & Format section — 4-day schedule grid (Day 1–4 with event breakdown) and format info cards (blind levels, starting stack, structure)
+- Venue section — two-column layout with venue name, address, description, and placeholder image
+- Related Tournaments section — 3 tournament cards linking to other events, plus "View All Tournaments" button
+- CTA section — "Register as Player" and "View All Tournaments" buttons
+- JSON-LD structured data (`Event` schema with start/end date, location, organizer)
+- All tournament cards on the Tournaments page, homepage, and country pages link to this detail page
+- Responsive at all three breakpoints (desktop, tablet, mobile)
+- CSS classes use `.td-*` prefix (tournament detail)
+
+### 2.7 About Us Page
+
+A dedicated page introducing OPC Europe, its mission, and its founders.
+
+**Deliverables:**
+
+- About OPC section with mission statement and background
+- Founder profiles (Marcel Lüske, Noah Boeken) with photos and bios
+- Consistent header/footer
+- Linked from the "About OPC" dropdown and founder "Read full story" buttons on the homepage
+
+### 2.8 Contact Page
 
 **Deliverables:**
 
@@ -115,7 +145,7 @@ Dedicated landing pages for each country where OPC operates, designed for local 
 - Support/partnership information
 - Consistent header/footer
 
-### 2.7 Legal & Compliance Pages
+### 2.9 Legal & Compliance Pages
 
 Three legal pages required for regulatory compliance.
 
@@ -125,7 +155,7 @@ Three legal pages required for regulatory compliance.
 - **Terms & Conditions** — Platform terms of use, user responsibilities, and disclaimers
 - **Responsible Gaming** — Educational content about responsible gambling, self-exclusion resources, and age verification policy
 
-### 2.8 SEO & Technical Optimization
+### 2.10 SEO & Technical Optimization
 
 Search engine optimization and technical best practices applied across all pages.
 
@@ -147,13 +177,13 @@ Search engine optimization and technical best practices applied across all pages
 - Font preconnect hints for Google Fonts
 - Favicon configuration
 
-### 2.9 Global Components
+### 2.11 Global Components
 
 Shared components consistent across every page.
 
 **Deliverables:**
 
-- **Header navigation** — logo, 5 nav items (Rankings, Tournaments, News, Countries dropdown, About OPC dropdown), "How to join" CTA button
+- **Header navigation** — logo, 6 nav items (Home, Rankings, Tournaments, News, Countries dropdown, About OPC dropdown), "How to join" CTA button
 - **Countries dropdown** — 6 country links in mega-menu style
 - **About OPC dropdown** — About, Contact, Responsible Gaming links
 - **Mobile navigation** — hamburger toggle, full-screen overlay menu, auto-close on link tap
@@ -161,11 +191,11 @@ Shared components consistent across every page.
 
 ---
 
-## 3. Content Management System (CMS)
+## 3. Phase 2 — Content Management System (CMS) & Dynamic Content
 
-A headless CMS integration using Payload CMS v3, providing a self-hosted admin interface for managing dynamic content.
+A headless CMS integration using Payload CMS v3, providing a self-hosted admin interface for managing dynamic content. This is Phase 2 of the project, to be implemented after the static site is complete.
 
-**This is a separate workstream from the static site and includes:**
+**Phase 2 replaces the current placeholder pages (news.html, blog.html, events.html) with dynamic CMS-powered pages.**
 
 ### 3.1 CMS Setup
 
@@ -181,15 +211,15 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 
 ### 3.3 Public Pages
 
-- `/news` — News listing page with latest articles
-- `/blog` — Blog listing page
-- `/events` — Events listing page
+- `/news` — News listing page with latest articles (replaces `news.html` placeholder)
+- `/blog` — Blog listing page (replaces `blog.html` placeholder)
+- `/events` — Events listing page (replaces `events.html` placeholder)
 - Individual detail pages for each content type
 
 ### 3.4 Navigation Integration
 
-- "News" link added to main navigation across all static pages
-- Links to `/blog` and `/events` from the homepage Latest News section
+- News, Blog, and Events nav links updated to point to CMS-powered pages
+- Links from the homepage Latest News section updated accordingly
 
 ---
 
@@ -211,21 +241,34 @@ Setup and configuration of production infrastructure to launch the website.
 
 ## 5. Summary of Deliverables
 
+### Phase 1 — Static Site
+
 | # | Deliverable | Pages/Items |
 |---|-------------|-------------|
 | 1 | Design system & CSS framework | 1 stylesheet (~2,700 lines) |
 | 2 | Homepage | 1 page, 8 sections |
 | 3 | Tournaments page | 1 page |
-| 4 | Rankings page | 1 page |
-| 5 | Country landing pages | 6 pages (4 complete, 2 remaining) |
-| 6 | Contact page | 1 page |
-| 7 | Privacy Policy | 1 page |
-| 8 | Terms & Conditions | 1 page |
-| 9 | Responsible Gaming | 1 page |
-| 10 | SEO optimization | All pages + sitemap + robots.txt |
-| 11 | CMS (Payload) | Admin panel + 3 content types + 3 public pages |
-| 12 | Deployment & go-live | Vercel, DNS, Supabase, Brevo, SSL |
-| **Total** | | **13 static pages + CMS + deployment** |
+| 4 | Tournament detail page | 1 page, 6 sections |
+| 5 | Rankings page | 1 page |
+| 6 | Country landing pages | 6 pages |
+| 7 | About Us page | 1 page |
+| 8 | Contact page | 1 page |
+| 9 | Privacy Policy | 1 page |
+| 10 | Terms & Conditions | 1 page |
+| 11 | Responsible Gaming | 1 page |
+| 12 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
+| 13 | SEO optimization | All pages + sitemap + robots.txt |
+| 14 | Deployment & go-live | Vercel, DNS, SSL |
+| **Phase 1 Total** | | **19 static pages + deployment** |
+
+### Phase 2 — CMS & Dynamic Content
+
+| # | Deliverable | Pages/Items |
+|---|-------------|-------------|
+| 1 | CMS (Payload v3) | Admin panel + 3 content types |
+| 2 | News, Blog, Events pages | 3 dynamic pages (replace placeholders) |
+| 3 | Supabase & Brevo setup | Database, auth, transactional email |
+| **Phase 2 Total** | | **CMS admin + 3 dynamic pages** |
 
 ---
 
@@ -265,17 +308,30 @@ Setup and configuration of production infrastructure to launch the website.
 
 > *This section is provided as a guideline and can be adjusted based on discussion.*
 
-| Phase | Description | Estimated Hours |
-|-------|-------------|-----------------|
+### Phase 1 — Static Site
+
+| Task | Description | Estimated Hours |
+|------|-------------|-----------------|
 | Design system & foundation | Tokens, components, responsive framework, animations | 24 |
 | Homepage | Full landing page with 8 sections | 16 |
 | Tournaments page | Listing, filters, cards, pagination | 10 |
+| Tournament detail page | Hero, schedule, venue, related tournaments, CTA | 8 |
 | Rankings page | Table, filters, sidebar, pagination | 10 |
 | Country pages (6) | Template + 6 country variants | 14 |
+| About Us page | Mission, founder profiles | 4 |
 | Contact page | Form and layout | 4 |
 | Legal pages (3) | Privacy, terms, responsible gaming | 6 |
+| Coming-soon pages (3) | News, blog, events placeholders | 2 |
 | SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
-| CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
-| Deployment & go-live | Vercel setup, DNS, Supabase provisioning, Brevo email setup, SSL, launch | 6 |
-| **Total** | | **126 hours** |
+| Deployment & go-live | Vercel setup, DNS, SSL, launch | 4 |
+| **Phase 1 Total** | | **118 hours** |
+
+### Phase 2 — CMS & Dynamic Content
+
+| Task | Description | Estimated Hours |
+|------|-------------|-----------------|
+| CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
+| Supabase & Brevo setup | Database provisioning, auth, transactional email | 6 |
+| QA & testing | CMS content flow, public page rendering | 4 |
+| **Phase 2 Total** | | **30 hours** |

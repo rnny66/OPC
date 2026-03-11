@@ -95,8 +95,8 @@ Specifieke landingspagina's voor elk land waar OPC actief is, ontworpen voor lok
 | Duitsland | Gereed |
 | Engeland | Gereed |
 | Polen | Gereed |
-| België | Nog te bouwen |
-| Oostenrijk | Nog te bouwen |
+| België | Gereed |
+| Oostenrijk | Gereed |
 
 **Elke landenpagina bevat:**
 
@@ -107,7 +107,37 @@ Specifieke landingspagina's voor elk land waar OPC actief is, ontworpen voor lok
 - CTA-sectie — "Registreer als Speler" en "Word Partner" knoppen
 - Alle secties met scroll-reveal animaties
 
-### 2.6 Contactpagina
+### 2.6 Toernooidetailpagina
+
+Een speciale detailpagina voor individuele toernooien, met volledige evenementinformatie voor potentiële spelers.
+
+**Deliverables:**
+
+- Breadcrumb-navigatie (Home > Toernooien > Toernooinaam)
+- Hero-sectie met landvlag, toernooinaam, seriebadge en kerninfo (datum, locatie, inschrijftype)
+- "Nu Registreren" en "Alle Toernooien" CTA-knoppen
+- Over Dit Toernooi-sectie — 2-3 alinea's met beschrijving van het evenement
+- Schema & Format-sectie — 4-daags schemagrid (Dag 1–4 met programma-overzicht) en formatinfokaarten (blindniveaus, startstack, structuur)
+- Locatie-sectie — twee-koloms layout met locatienaam, adres, beschrijving en placeholder-afbeelding
+- Gerelateerde Toernooien-sectie — 3 toernooikaarten met links naar andere evenementen, plus "Alle Toernooien" knop
+- CTA-sectie — "Registreer als Speler" en "Alle Toernooien" knoppen
+- JSON-LD gestructureerde data (`Event` schema met start-/einddatum, locatie, organisator)
+- Alle toernooikaarten op de toernooienpagina, homepage en landenpagina's linken naar deze detailpagina
+- Responsief op alle drie breakpoints (desktop, tablet, mobiel)
+- CSS-classes gebruiken `.td-*` prefix (toernooidetail)
+
+### 2.7 Over Ons-pagina
+
+Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
+
+**Deliverables:**
+
+- Over OPC-sectie met missieverklaring en achtergrond
+- Oprichtersprofielen (Marcel Lüske, Noah Boeken) met foto's en bio's
+- Consistente header/footer
+- Gelinkt vanuit de "Over OPC" dropdown en "Lees het volledige verhaal" knoppen op de homepage
+
+### 2.8 Contactpagina
 
 **Deliverables:**
 
@@ -115,7 +145,7 @@ Specifieke landingspagina's voor elk land waar OPC actief is, ontworpen voor lok
 - Ondersteunings-/partnerinformatie
 - Consistente header/footer
 
-### 2.7 Juridische & Compliance-pagina's
+### 2.9 Juridische & Compliance-pagina's
 
 Drie juridische pagina's vereist voor wettelijke naleving.
 
@@ -125,7 +155,7 @@ Drie juridische pagina's vereist voor wettelijke naleving.
 - **Algemene Voorwaarden** — Platformvoorwaarden, gebruikersverantwoordelijkheden en disclaimers
 - **Verantwoord Spelen** — Educatieve content over verantwoord gokken, zelfuitsluiting en leeftijdsverificatiebeleid
 
-### 2.8 SEO & Technische Optimalisatie
+### 2.10 SEO & Technische Optimalisatie
 
 Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's.
 
@@ -147,13 +177,13 @@ Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's
 - Font preconnect hints voor Google Fonts
 - Favicon-configuratie
 
-### 2.9 Globale Componenten
+### 2.11 Globale Componenten
 
 Gedeelde componenten die consistent zijn op elke pagina.
 
 **Deliverables:**
 
-- **Headernavigatie** — logo, 5 navigatie-items (Rankings, Toernooien, Nieuws, Landen-dropdown, Over OPC-dropdown), "Hoe mee te doen" CTA-knop
+- **Headernavigatie** — logo, 6 navigatie-items (Home, Rankings, Toernooien, Nieuws, Landen-dropdown, Over OPC-dropdown), "Hoe mee te doen" CTA-knop
 - **Landen-dropdown** — 6 landenlinks in mega-menustijl
 - **Over OPC-dropdown** — Over ons, Contact, Verantwoord Spelen links
 - **Mobiele navigatie** — hamburgertoggle, volledig scherm overlay-menu, automatisch sluiten bij linktap
@@ -161,11 +191,11 @@ Gedeelde componenten die consistent zijn op elke pagina.
 
 ---
 
-## 3. Contentmanagementsysteem (CMS)
+## 3. Fase 2 — Contentmanagementsysteem (CMS) & Dynamische Content
 
-Een headless CMS-integratie met Payload CMS v3, die een zelfgehoste beheerinterface biedt voor het beheren van dynamische content.
+Een headless CMS-integratie met Payload CMS v3, die een zelfgehoste beheerinterface biedt voor het beheren van dynamische content. Dit is Fase 2 van het project, te implementeren nadat de statische site is afgerond.
 
-**Dit is een apart werkpakket van de statische site en omvat:**
+**Fase 2 vervangt de huidige placeholder-pagina's (news.html, blog.html, events.html) door dynamische CMS-gestuurde pagina's.**
 
 ### 3.1 CMS-setup
 
@@ -181,15 +211,15 @@ Een headless CMS-integratie met Payload CMS v3, die een zelfgehoste beheerinterf
 
 ### 3.3 Publieke Pagina's
 
-- `/news` — Nieuwsoverzichtspagina met laatste artikelen
-- `/blog` — Blogoverzichtspagina
-- `/events` — Evenementenoverzichtspagina
+- `/news` — Nieuwsoverzichtspagina met laatste artikelen (vervangt `news.html` placeholder)
+- `/blog` — Blogoverzichtspagina (vervangt `blog.html` placeholder)
+- `/events` — Evenementenoverzichtspagina (vervangt `events.html` placeholder)
 - Individuele detailpagina's voor elk contenttype
 
 ### 3.4 Navigatie-integratie
 
-- "Nieuws" link toegevoegd aan hoofdnavigatie op alle statische pagina's
-- Links naar `/blog` en `/events` vanuit de homepage Laatste Nieuws-sectie
+- Nieuws-, Blog- en Evenementen-navlinks bijgewerkt naar CMS-gestuurde pagina's
+- Links vanuit de homepage Laatste Nieuws-sectie dienovereenkomstig bijgewerkt
 
 ---
 
@@ -211,21 +241,34 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 
 ## 5. Overzicht Deliverables
 
+### Fase 1 — Statische Site
+
 | # | Deliverable | Pagina's/Items |
 |---|-------------|----------------|
 | 1 | Designsysteem & CSS-framework | 1 stylesheet (~2.700 regels) |
 | 2 | Homepage | 1 pagina, 8 secties |
 | 3 | Toernooienpagina | 1 pagina |
-| 4 | Rankingspagina | 1 pagina |
-| 5 | Landingspagina's per land | 6 pagina's (4 gereed, 2 resterend) |
-| 6 | Contactpagina | 1 pagina |
-| 7 | Privacybeleid | 1 pagina |
-| 8 | Algemene Voorwaarden | 1 pagina |
-| 9 | Verantwoord Spelen | 1 pagina |
-| 10 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
-| 11 | CMS (Payload) | Beheerpaneel + 3 contenttypes + 3 publieke pagina's |
-| 12 | Deployment & livegang | Vercel, DNS, Supabase, Brevo, SSL |
-| **Totaal** | | **13 statische pagina's + CMS + deployment** |
+| 4 | Toernooidetailpagina | 1 pagina, 6 secties |
+| 5 | Rankingspagina | 1 pagina |
+| 6 | Landingspagina's per land | 6 pagina's |
+| 7 | Over Ons-pagina | 1 pagina |
+| 8 | Contactpagina | 1 pagina |
+| 9 | Privacybeleid | 1 pagina |
+| 10 | Algemene Voorwaarden | 1 pagina |
+| 11 | Verantwoord Spelen | 1 pagina |
+| 12 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
+| 13 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
+| 14 | Deployment & livegang | Vercel, DNS, SSL |
+| **Fase 1 Totaal** | | **19 statische pagina's + deployment** |
+
+### Fase 2 — CMS & Dynamische Content
+
+| # | Deliverable | Pagina's/Items |
+|---|-------------|----------------|
+| 1 | CMS (Payload v3) | Beheerpaneel + 3 contenttypes |
+| 2 | Nieuws-, Blog-, Evenementenpagina's | 3 dynamische pagina's (vervangen placeholders) |
+| 3 | Supabase & Brevo setup | Database, authenticatie, transactionele e-mail |
+| **Fase 2 Totaal** | | **CMS-beheerpaneel + 3 dynamische pagina's** |
 
 ---
 
@@ -265,17 +308,30 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 
 > *Deze sectie is indicatief en kan worden aangepast op basis van overleg.*
 
-| Fase | Omschrijving | Geschatte uren |
+### Fase 1 — Statische Site
+
+| Taak | Omschrijving | Geschatte uren |
 |------|-------------|----------------|
 | Designsysteem & basis | Tokens, componenten, responsief framework, animaties | 24 |
 | Homepage | Volledige landingspagina met 8 secties | 16 |
 | Toernooienpagina | Overzicht, filters, kaarten, paginering | 10 |
+| Toernooidetailpagina | Hero, schema, locatie, gerelateerde toernooien, CTA | 8 |
 | Rankingspagina | Tabel, filters, zijbalk, paginering | 10 |
 | Landenpagina's (6) | Template + 6 landvarianten | 14 |
+| Over Ons-pagina | Missie, oprichtersprofielen | 4 |
 | Contactpagina | Formulier en layout | 4 |
 | Juridische pagina's (3) | Privacy, voorwaarden, verantwoord spelen | 6 |
+| Coming-soon pagina's (3) | Nieuws, blog, evenementen placeholders | 2 |
 | SEO & technisch | Metatags, gestructureerde data, sitemap, robots.txt | 8 |
-| CMS-integratie (Payload) | Setup, 3 contenttypes, 3 publieke pagina's, beheerpaneel | 20 |
 | QA & cross-browser testen | Desktop, tablet, mobiel in alle browsers | 8 |
-| Deployment & livegang | Vercel-setup, DNS, Supabase-provisioning, Brevo e-mailsetup, SSL, lancering | 6 |
-| **Totaal** | | **126 uur** |
+| Deployment & livegang | Vercel-setup, DNS, SSL, lancering | 4 |
+| **Fase 1 Totaal** | | **118 uur** |
+
+### Fase 2 — CMS & Dynamische Content
+
+| Taak | Omschrijving | Geschatte uren |
+|------|-------------|----------------|
+| CMS-integratie (Payload) | Setup, 3 contenttypes, 3 publieke pagina's, beheerpaneel | 20 |
+| Supabase & Brevo setup | Databaseprovisioning, authenticatie, transactionele e-mail | 6 |
+| QA & testen | CMS-contentflow, publieke paginarendering | 4 |
+| **Fase 2 Totaal** | | **30 uur** |
