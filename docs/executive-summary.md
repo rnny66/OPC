@@ -79,6 +79,20 @@ This means OPC Europe can go live quickly with the static site while the more co
 
 ---
 
+## Technology Stack
+
+The project uses three core services. All are industry-standard, well-supported, and used by thousands of companies worldwide.
+
+**Vercel** — Website hosting platform. Vercel serves the website to visitors worldwide via a global network of servers (CDN), ensuring fast load times regardless of location. It handles SSL certificates, deployments, and scaling automatically. When code is updated, Vercel builds and publishes the new version within minutes. It is purpose-built for modern websites and web applications.
+
+**Supabase** — Backend-as-a-service. Supabase provides the database (PostgreSQL), user authentication (login/signup), and file storage in a single managed platform. Instead of setting up and maintaining our own servers and database, Supabase handles all of this with automatic backups, security, and uptime monitoring. It is also used by Payload CMS to store content.
+
+**Payload CMS** — Content management system. Payload provides an admin panel (similar in concept to WordPress) where the OPC team can create and manage news articles, blog posts, and events without needing a developer. It is open source and free — there is no license fee. It runs as part of the website on Vercel and stores its data in Supabase.
+
+**Brevo** — Transactional email service. Brevo handles automated emails sent by the platform — account verification, password resets, registration confirmations, and notifications. These are not marketing emails; they are system emails triggered by user actions. Brevo ensures reliable delivery and provides branded email templates.
+
+---
+
 ## Cost Breakdown
 
 ### One-Time: Development
@@ -95,7 +109,8 @@ This means OPC Europe can go live quickly with the static site while the more co
 | SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
 | CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
-| **Total** | | **120 hours** |
+| Deployment & go-live | Vercel setup, DNS configuration, Supabase provisioning, Brevo integration, SSL, production launch | 6 |
+| **Total** | | **126 hours** |
 
 > Web application development (live rankings, tournaments, user accounts) is scoped separately.
 
@@ -120,7 +135,7 @@ This means OPC Europe can go live quickly with the static site while the more co
 | Item | Cost | Notes |
 |------|------|-------|
 | **Domain name** | ~€10–15/yr | Already owned by client. Annual renewal only. |
-| **Transactional email** | $0–20/mo | Needed for auth emails (signup confirmation, password reset). Supabase includes basic email via built-in SMTP. For higher volume or custom branding, a service like Resend or Postmark starts at ~$20/mo. |
+| **Transactional email (Brevo)** | $0 | Free tier includes 300 emails/day (9,000/mo). Covers account verification, password resets, and notifications. More than sufficient at launch. Starter plan at $9/mo if volume grows beyond 300/day. |
 | **Analytics** | $0 | Vercel Analytics is included on Pro. Alternatively, free options like Plausible Cloud ($9/mo) or self-hosted Umami ($0). |
 | **SSL certificate** | $0 | Included with Vercel. |
 | **CDN** | $0 | Included with Vercel (global edge network). |
@@ -130,7 +145,7 @@ This means OPC Europe can go live quickly with the static site while the more co
 
 | Category | Cost |
 |----------|------|
-| Development (one-time) | 120 hours |
+| Development (one-time) | 126 hours |
 | Hosting & infrastructure (monthly) | ~$45/mo |
+| Transactional email (Brevo) | $0 (free tier) |
 | Domain (annual) | ~€10–15/yr (client-owned) |
-| Optional services | $0–20/mo depending on choices |

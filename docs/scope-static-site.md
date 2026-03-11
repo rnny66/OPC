@@ -193,7 +193,23 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 
 ---
 
-## 4. Summary of Deliverables
+## 4. Deployment & Go-Live
+
+Setup and configuration of production infrastructure to launch the website.
+
+**Deliverables:**
+
+- Vercel project creation and production deployment configuration
+- DNS configuration — pointing the client's domain to Vercel (A/CNAME records)
+- SSL certificate provisioning (automatic via Vercel)
+- Supabase project provisioning — production database, auth configuration, RLS policies
+- Brevo account setup — transactional email templates (verification, password reset), SMTP integration, sender domain authentication (SPF/DKIM)
+- Environment variables and secrets configuration
+- Production smoke testing and launch verification
+
+---
+
+## 5. Summary of Deliverables
 
 | # | Deliverable | Pages/Items |
 |---|-------------|-------------|
@@ -208,11 +224,12 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 | 9 | Responsible Gaming | 1 page |
 | 10 | SEO optimization | All pages + sitemap + robots.txt |
 | 11 | CMS (Payload) | Admin panel + 3 content types + 3 public pages |
-| **Total** | | **13 static pages + CMS** |
+| 12 | Deployment & go-live | Vercel, DNS, Supabase, Brevo, SSL |
+| **Total** | | **13 static pages + CMS + deployment** |
 
 ---
 
-## 5. Technical Specifications
+## 6. Technical Specifications
 
 | Attribute | Detail |
 |-----------|--------|
@@ -228,7 +245,7 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 
 ---
 
-## 6. What Is Not Included
+## 7. What Is Not Included
 
 - User authentication or login functionality
 - Database or backend API development
@@ -239,12 +256,12 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 - Multi-language / internationalization (i18n)
 - Ongoing content writing (copy provided by client or as separate engagement)
 - Photography or custom illustration
-- Domain registration and DNS configuration
-- Hosting setup and ongoing hosting costs
+- Domain registration (assumed client-owned)
+- Ongoing hosting costs (estimated separately)
 
 ---
 
-## 7. Estimates
+## 8. Estimates
 
 > *This section is provided as a guideline and can be adjusted based on discussion.*
 
@@ -260,4 +277,5 @@ A headless CMS integration using Payload CMS v3, providing a self-hosted admin i
 | SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
 | CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
-| **Total** | | **120 hours** |
+| Deployment & go-live | Vercel setup, DNS, Supabase provisioning, Brevo email setup, SSL, launch | 6 |
+| **Total** | | **126 hours** |
