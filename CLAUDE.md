@@ -35,7 +35,13 @@ OCP/
 │   ├── privacy.html            # Privacy policy
 │   ├── terms.html              # Terms & conditions
 │   ├── responsible-gaming.html # Responsible gaming
-│   ├── styles.css              # Shared stylesheet (~2088 lines)
+│   ├── country-netherlands.html # Country page — Netherlands
+│   ├── country-belgium.html    # Country page — Belgium
+│   ├── country-germany.html    # Country page — Germany
+│   ├── country-england.html    # Country page — England
+│   ├── country-poland.html     # Country page — Poland
+│   ├── country-austria.html    # Country page — Austria
+│   ├── styles.css              # Shared stylesheet (~2400 lines)
 │   └── assets/                 # Images, logos, flags
 ├── platform/                   # Next.js 15 app
 │   ├── app/
@@ -208,12 +214,20 @@ OCP/
 
 ## Creating New Static Pages
 1. Copy the `<head>` block from `site/index.html` (includes fonts, favicon, viewport)
-2. Reuse the same `<header>` and `<footer>` markup
+2. Reuse the same `<header>` and `<footer>` markup (includes Countries and About OPC dropdowns)
 3. Add page-specific styles to `site/styles.css` under a new section comment
 4. Link from the navigation in all existing pages
 5. Follow the design in `designs/` folder if a Figma screenshot exists
 6. Add `.reveal` classes to content sections for scroll-reveal animations
 7. Include the scroll-reveal JS snippet (IntersectionObserver) if the page has reveal elements
+
+## Creating New Country Pages
+1. Copy `site/country-netherlands.html` as template
+2. Replace country name, flag image, city names, and descriptions
+3. Country pages have 4 sections: hero (with flag), partners grid, upcoming tournaments, country info, and CTA
+4. CSS classes: `.country-hero`, `.country-section`, `.country-partners-grid`, `.country-partner-card`, `.country-cta`
+5. Responsive breakpoints already included in `styles.css` (992px, 640px)
+6. Add the country to the Countries dropdown in ALL page headers
 
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work

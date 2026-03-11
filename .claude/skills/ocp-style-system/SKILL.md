@@ -109,7 +109,7 @@ All animations live in the `/* --- Animations --- */` section at the end of `sty
 | Class | Use For |
 |-------|---------|
 | `.btn .btn-primary` | Blue filled button |
-| `.btn .btn-outline` | White outlined button |
+| `.btn .btn-outline` | Transparent bg, `#cecfd2` text, blue border |
 | `.link-arrow` | Text link with arrow icon |
 | `.section-header` | Centered section title block |
 | `.section-label` | Small colored label above heading |
@@ -123,6 +123,12 @@ All animations live in the `/* --- Animations --- */` section at the end of `sty
 | `.pagination-*` | Pagination controls |
 | `.reveal` | Scroll-reveal animation target |
 | `.reveal-stagger` | Container for staggered reveal children |
+| `.country-hero` | Country page hero with flag |
+| `.country-section` | Country page content section |
+| `.country-section--alt` | Alt background country section |
+| `.country-partners-grid` | 3-col grid for partner cards |
+| `.country-partner-card` | Partner card with logo + desc |
+| `.country-cta` | Country page call-to-action |
 
 ## Icon Conventions
 - Format: Inline SVG

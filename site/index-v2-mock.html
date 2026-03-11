@@ -3,47 +3,385 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OPC — European Open Poker Championship</title>
-  <meta name="description" content="Join the European Open Poker Championship — live poker tournaments across 6 countries with a unified ranking system and exciting prizes. Register today.">
-  <meta name="theme-color" content="#0c0e12">
-  <link rel="canonical" href="https://opc-europe.com/">
-  <!-- Open Graph -->
-  <meta property="og:title" content="OPC — European Open Poker Championship">
-  <meta property="og:description" content="Join the European Open Poker Championship — live poker tournaments across 6 countries with a unified ranking system and exciting prizes.">
-  <meta property="og:image" content="https://opc-europe.com/assets/img/og-image.jpg">
-  <meta property="og:url" content="https://opc-europe.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="OPC Europe">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="OPC — European Open Poker Championship">
-  <meta name="twitter:description" content="Join the European Open Poker Championship — live poker tournaments across 6 countries with a unified ranking system and exciting prizes.">
-  <meta name="twitter:image" content="https://opc-europe.com/assets/img/og-image.jpg">
+  <title>OPC — V2 Mock: Subtle Visuals</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="assets/img/opc_logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "OPC Europe",
-    "alternateName": "European Open Poker Championship",
-    "url": "https://opc-europe.com",
-    "logo": "https://opc-europe.com/assets/img/opc_logo.png",
-    "description": "Live poker tournaments across 6 European countries with a unified ranking system."
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "OPC Europe",
-    "url": "https://opc-europe.com"
-  }
-  </script>
+  <style>
+    /* --- Hero V2: Centered logo-centric layout --- */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 78px;
+      margin-top: -40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      min-height: auto;
+    }
+
+    .hero-content {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 720px;
+      padding-right: 0;
+      z-index: 2;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 56px;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    /* Logo centerpiece */
+    .hero-logo {
+      margin-bottom: 56px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-logo-img {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 0 40px rgba(21, 112, 239, 0.4))
+              drop-shadow(0 0 80px rgba(21, 112, 239, 0.2));
+    }
+
+    /* Radial glow behind logo */
+    .hero-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(
+        circle,
+        rgba(21, 112, 239, 0.15) 0%,
+        rgba(21, 112, 239, 0.05) 40%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Faded hero image as background texture */
+    .hero-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image: radial-gradient(
+        ellipse 70% 60% at 50% 40%,
+        rgba(0,0,0,0.6) 0%,
+        rgba(0,0,0,0.3) 50%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        ellipse 70% 60% at 50% 40%,
+        rgba(0,0,0,0.6) 0%,
+        rgba(0,0,0,0.3) 50%,
+        transparent 100%
+      );
+    }
+
+    .hero-backdrop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.12;
+      filter: blur(2px);
+    }
+
+    .hero-image { display: none; }
+
+    /* --- Hero V2 Keyframes --- */
+
+    @keyframes heroLogoReveal {
+      from { opacity: 0; transform: scale(0.7) translateY(-30px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes logoPulse {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(21,112,239,0.4)) drop-shadow(0 0 80px rgba(21,112,239,0.2)); }
+      50% { filter: drop-shadow(0 0 60px rgba(21,112,239,0.6)) drop-shadow(0 0 100px rgba(21,112,239,0.3)); }
+    }
+
+    @keyframes glowBreathe {
+      0%, 100% { opacity: 1; transform: translate(-50%, -60%) scale(1); }
+      50% { opacity: 0.7; transform: translate(-50%, -60%) scale(1.15); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 300% center; }
+      100% { background-position: -300% center; }
+    }
+
+    /* --- Hero V2 Animation Application --- */
+
+    .hero-logo-img {
+      animation: heroLogoReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both,
+                 logoPulse 4s ease-in-out 1.5s infinite;
+    }
+
+    .hero-glow {
+      animation: glowBreathe 6s ease-in-out infinite;
+    }
+
+    .hero-title {
+      background: linear-gradient(
+        90deg,
+        var(--color-text-primary) 0%,
+        var(--color-text-primary) 40%,
+        var(--color-brand-light) 50%,
+        var(--color-text-primary) 60%,
+        var(--color-text-primary) 100%
+      );
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.6s ease 0.3s both,
+                 shimmer 6s ease-in-out 1.2s 1;
+    }
+
+    .hero-subtitle {
+      animation: fadeInUp 0.6s ease 0.5s both;
+    }
+
+    .hero-actions {
+      animation: fadeInUp 0.6s ease 0.7s both;
+    }
+
+    /* --- Hero V2 Responsive --- */
+
+    @media (max-width: 1440px) {
+      .hero { min-height: auto; }
+      .hero-container { padding: 80px 40px 60px; }
+      .hero-glow { width: 500px; height: 500px; }
+    }
+
+    @media (max-width: 992px) {
+      .hero-container { padding: 60px 40px 48px; flex-direction: column; }
+      .hero-content { width: 100%; margin-bottom: 0; }
+      .hero-title { font-size: 42px; line-height: 52px; }
+      .hero-logo-img { width: 120px; }
+      .hero-glow { width: 400px; height: 400px; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-container { padding: 40px 16px 32px; }
+      .hero-title { font-size: 32px; line-height: 40px; }
+      .hero-subtitle { font-size: 16px; margin-bottom: 32px; }
+      .hero-actions { flex-direction: column; }
+      .hero-logo { margin-bottom: 24px; }
+      .hero-logo-img { width: 100px; }
+      .hero-glow { width: 300px; height: 300px; }
+    }
+
+    /* --- About V2: Three Pillar Cards --- */
+    .about {
+      position: relative;
+      overflow: hidden;
+      padding: 96px 80px;
+      min-height: auto;
+    }
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      padding: 0;
+      min-height: auto;
+    }
+    .about-image { display: none; }
+
+    .about-header {
+      text-align: center;
+      max-width: 720px;
+      margin-bottom: 56px;
+    }
+    .about-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-brand-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .about-header h2 {
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: -0.72px;
+      line-height: 44px;
+      margin-bottom: 16px;
+      color: var(--color-text-primary);
+    }
+    .about-header-desc {
+      font-size: 20px;
+      color: var(--color-text-secondary);
+      line-height: 30px;
+    }
+
+    .about-cards {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+      margin-bottom: 48px;
+    }
+    .about-card {
+      flex: 1;
+      background: var(--color-bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-xl);
+      padding: 40px 32px;
+      text-align: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(10, 13, 18, 0.3);
+    }
+    .about-card-icon {
+      width: 64px;
+      height: 64px;
+      background: #194185;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .about-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 12px;
+    }
+    .about-card-desc {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 24px;
+    }
+    .about-cta {
+      text-align: center;
+    }
+
+    /* About backdrop */
+    .about-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+    }
+    .about-backdrop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.06;
+      filter: blur(4px);
+    }
+
+    /* About responsive */
+    @media (max-width: 992px) {
+      .about { padding: 80px 40px; }
+      .about-cards { flex-direction: column; max-width: 480px; margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 640px) {
+      .about { padding: 64px 16px; }
+      .about-header h2 { font-size: 28px; line-height: 36px; }
+      .about-header-desc { font-size: 17px; }
+      .about-card { padding: 32px 24px; }
+    }
+
+    /* ============================================= */
+    /* === MOCK: Subtle visual enhancements below === */
+    /* ============================================= */
+
+    /* --- Why Join: faded backdrop + subtle glow --- */
+    .why-join {
+      position: relative;
+      overflow: hidden;
+    }
+    .section-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .section-backdrop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.05;
+      filter: blur(6px) saturate(0.6);
+    }
+    /* Mask fades edges so image blends into the dark bg */
+    .section-backdrop--center {
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+    }
+    /* Variant: image weighted to bottom for Latest News */
+    .section-backdrop--bottom {
+      -webkit-mask-image: radial-gradient(ellipse 100% 90% at 50% 70%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+      mask-image: radial-gradient(ellipse 100% 90% at 50% 70%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+    }
+    .why-join .section-header,
+    .why-join .why-join-cards {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Subtle blue accent glow for Why Join (echoes hero glow) */
+    .section-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(21, 112, 239, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* --- Latest News: backdrop + glow for atmosphere --- */
+    .latest-news {
+      position: relative;
+      overflow: hidden;
+    }
+    .latest-news .latest-news-container {
+      position: relative;
+      z-index: 2;
+    }
+
+  </style>
 </head>
 <body>
 
@@ -93,9 +431,15 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section — V2: Centered logo-centric -->
   <section class="hero">
+    <div class="hero-glow"></div>
+
     <div class="hero-container">
+      <div class="hero-logo">
+        <img src="assets/img/opc_logo.png" alt="OPC Europe" class="hero-logo-img">
+      </div>
+
       <div class="hero-content">
         <h1 class="hero-title">European Open Poker Championship</h1>
         <p class="hero-subtitle">Play Local Tournaments. Earn International Rankings.</p>
@@ -107,9 +451,10 @@
           <a href="contact.html" class="btn btn-outline">Are you tournament organizer?</a>
         </div>
       </div>
-      <div class="hero-image">
-        <img src="assets/img/hero.png" alt="Poker players at a tournament table">
-      </div>
+    </div>
+
+    <div class="hero-backdrop">
+      <img src="assets/img/hero.png" alt="">
     </div>
   </section>
 
@@ -155,27 +500,52 @@
 
   <!-- What is OPC Section -->
   <section class="about" id="about">
+    <div class="about-backdrop">
+      <img src="assets/img/what-is-opc.png" alt="">
+    </div>
     <div class="about-container">
-      <div class="about-image">
-        <img src="assets/img/what-is-opc.png" alt="Poker players enjoying a game" loading="lazy">
-      </div>
-      <div class="about-text reveal">
+      <div class="about-header">
+        <span class="about-label">About OPC</span>
         <h2>What is OPC?</h2>
-        <div class="about-paragraphs">
-          <p>OPC connects live poker tournaments across Europe into <strong>one international ranking</strong> system.</p>
-          <p>Players compete locally and earn points towards a European championship.</p>
-          <p>All events are <strong>verified</strong>, all players are <strong>age-checked</strong>. It's completely <strong>free</strong> for players and organizers.</p>
+        <p class="about-header-desc">OPC connects live poker tournaments across Europe into one international ranking system. Players compete locally and earn points towards a European championship.</p>
+      </div>
+
+      <div class="about-cards reveal-stagger">
+        <div class="about-card reveal">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          </div>
+          <h3 class="about-card-title">International Rankings</h3>
+          <p class="about-card-desc">Compete in local tournaments and earn points that count towards the European championship standings.</p>
         </div>
-        <a href="#join" class="link-arrow">
-          Learn more
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <div class="about-card reveal">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="about-card-title">Verified & Fair</h3>
+          <p class="about-card-desc">All events are verified, all players are age-checked. Fair play is guaranteed across every tournament.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="about-card-title">Free for Everyone</h3>
+          <p class="about-card-desc">No cost for players or organizers. No hidden fees, no catches — just poker.</p>
+        </div>
+      </div>
+
+      <div class="about-cta">
+        <a href="#join" class="btn btn-primary">Join OPC</a>
       </div>
     </div>
   </section>
 
-  <!-- Why Join Section -->
+  <!-- Why Join Section — MOCK: added backdrop + glow -->
   <section class="why-join">
+    <div class="section-backdrop section-backdrop--center">
+      <img src="assets/img/cards.png" alt="">
+    </div>
+    <div class="section-glow"></div>
     <div class="section-header">
       <span class="section-label">Benefits for players and organizers</span>
       <h2>Why join OPC?</h2>
@@ -226,7 +596,6 @@
         <div class="how-card-content">
           <h3 class="how-card-title">For Players</h3>
           <div class="how-steps">
-            <!-- Curved dotted connector line -->
             <svg class="how-steps-line" viewBox="0 0 80 200" fill="none">
               <path d="M40 0 C75 25, 75 75, 40 100 C5 125, 5 175, 40 200"
                     stroke="#2e90fa" stroke-width="2" stroke-dasharray="6 6" stroke-opacity="0.35" fill="none"/>
@@ -269,7 +638,6 @@
         <div class="how-card-content">
           <h3 class="how-card-title">For Organizers</h3>
           <div class="how-steps">
-            <!-- Curved dotted connector line -->
             <svg class="how-steps-line" viewBox="0 0 80 200" fill="none">
               <path d="M40 0 C75 25, 75 75, 40 100 C5 125, 5 175, 40 200"
                     stroke="#2e90fa" stroke-width="2" stroke-dasharray="6 6" stroke-opacity="0.35" fill="none"/>
@@ -335,7 +703,7 @@
         <h4 class="event-title">Amsterdam Open</h4>
         <div class="event-details">
           <div class="event-avatar">
-            <img src="assets/img/tournament_placeholder.png" alt="Tournament" loading="lazy">
+            <img src="assets/img/tournament_placeholder.png" alt="Tournament">
           </div>
           <div class="event-info">
             <div class="event-row">
@@ -360,7 +728,7 @@
         <h4 class="event-title">Rotterdam Series</h4>
         <div class="event-details">
           <div class="event-avatar">
-            <img src="assets/img/tournament_placeholder.png" alt="Tournament" loading="lazy">
+            <img src="assets/img/tournament_placeholder.png" alt="Tournament">
           </div>
           <div class="event-info">
             <div class="event-row">
@@ -385,7 +753,7 @@
         <h4 class="event-title">Berlin Poker Cup</h4>
         <div class="event-details">
           <div class="event-avatar">
-            <img src="assets/img/tournament_placeholder.png" alt="Tournament" loading="lazy">
+            <img src="assets/img/tournament_placeholder.png" alt="Tournament">
           </div>
           <div class="event-info">
             <div class="event-row">
@@ -410,7 +778,7 @@
         <h4 class="event-title">Brussels Classic</h4>
         <div class="event-details">
           <div class="event-avatar">
-            <img src="assets/img/tournament_placeholder.png" alt="Tournament" loading="lazy">
+            <img src="assets/img/tournament_placeholder.png" alt="Tournament">
           </div>
           <div class="event-info">
             <div class="event-row">
@@ -451,7 +819,7 @@ Now bringing transparency, fairness, and international standards to European ama
         <a href="#" class="btn btn-outline">Read full story</a>
       </div>
       <div class="founder-image">
-        <img src="assets/img/marcelluske.jpg" alt="Marcel Lüske" loading="lazy">
+        <img src="assets/img/marcelluske.jpg" alt="Marcel Lüske">
         <div class="founder-name-role founder-name-role--centered">
           <h3>Marcel L&uuml;ske</h3>
           <span>"The Flying Dutchman"</span>
@@ -461,7 +829,7 @@ Now bringing transparency, fairness, and international standards to European ama
 
     <div class="founder-block founder-block--reversed reveal">
       <div class="founder-image">
-        <img src="assets/img/noahboeken.png" alt="Noah Boeken" loading="lazy">
+        <img src="assets/img/noahboeken.png" alt="Noah Boeken">
         <div class="founder-name-role founder-name-role--centered">
           <h3>Noah Boeken</h3>
         </div>
@@ -479,10 +847,10 @@ Now bringing transparency, fairness, and international standards to European ama
       <div class="partners-logos reveal">
         <h2>Partners</h2>
         <div class="logo-row">
-          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo" loading="lazy">
-          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo" loading="lazy">
-          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo" loading="lazy">
-          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo" loading="lazy">
+          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo">
+          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo">
+          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo">
+          <img src="assets/img/partner_logos.png" alt="Partner" class="partner-logo">
         </div>
       </div>
       <div class="partners-text reveal">

@@ -90,11 +90,19 @@ Use the `superpowers:test-driven-development` skill. Before marking the page as 
 - If new components or patterns were introduced, update `docs/STYLE_GUIDE.md`
 - Update CLAUDE.md and skills if conventions changed
 
+## Country Pages
+Country pages (`country-{name}.html`) use a standard template. To add a new country:
+1. Copy `country-netherlands.html` as base
+2. Replace country name, flag SVG, city/venue names, descriptions
+3. Add the country to the Countries dropdown in ALL page headers
+4. CSS classes already exist: `.country-hero`, `.country-section`, `.country-partners-grid`, `.country-partner-card`, `.country-cta`
+
 ## Existing Pages (for reference)
 - `index.html` — landing page
 - `ranking.html` — leaderboard
 - `tournaments.html` — tournament cards
 - `contact.html`, `privacy.html`, `terms.html`, `responsible-gaming.html` — info pages
+- `country-netherlands.html`, `country-belgium.html`, `country-germany.html`, `country-england.html`, `country-poland.html`, `country-austria.html` — country pages
 
 ## Common Mistakes
 - Forgetting to update nav links in ALL pages (not just the new one)

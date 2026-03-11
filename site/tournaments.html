@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tournaments — OPC Europe</title>
+  <meta name="description" content="Browse upcoming OPC Europe poker tournaments in the Netherlands, Belgium, Germany, England, Poland, and Austria. Find events near you and register.">
+  <meta name="theme-color" content="#0c0e12">
+  <link rel="canonical" href="https://opc-europe.com/tournaments.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tournaments — OPC Europe">
+  <meta property="og:description" content="Browse upcoming OPC Europe poker tournaments in the Netherlands, Belgium, Germany, England, Poland, and Austria. Find events near you and register.">
+  <meta property="og:image" content="https://opc-europe.com/assets/img/og-image.jpg">
+  <meta property="og:url" content="https://opc-europe.com/tournaments.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OPC Europe">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tournaments — OPC Europe">
+  <meta name="twitter:description" content="Browse upcoming OPC Europe poker tournaments in the Netherlands, Belgium, Germany, England, Poland, and Austria. Find events near you and register.">
+  <meta name="twitter:image" content="https://opc-europe.com/assets/img/og-image.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="assets/img/opc_logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,6 +38,19 @@
           <a href="ranking.html" class="nav-link">Rankings</a>
           <a href="tournaments.html" class="nav-link">Tournaments</a>
           <a href="/news" class="nav-link">News</a>
+          <div class="nav-dropdown">
+            <a href="#" class="nav-link">Countries
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="country-netherlands.html">Netherlands</a>
+              <a href="country-belgium.html">Belgium</a>
+              <a href="country-germany.html">Germany</a>
+              <a href="country-england.html">England</a>
+              <a href="country-poland.html">Poland</a>
+              <a href="country-austria.html">Austria</a>
+            </div>
+          </div>
           <div class="nav-dropdown">
             <a href="index.html#about" class="nav-link">About OPC
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -56,25 +84,77 @@
 
       <div class="tournaments-controls">
         <div class="tournaments-filters">
-          <button class="tournaments-filter-btn" type="button">
-            All Countries
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="tournaments-filter-btn" type="button">
-            All Series
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          <div class="tournaments-filter-wrapper">
+            <button class="tournaments-filter-btn" data-filter="country" type="button">
+              All Countries
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="tournaments-filter-dropdown">
+              <button class="tournaments-filter-option tournaments-filter-option--active" data-value="">All Countries</button>
+              <button class="tournaments-filter-option" data-value="Netherlands">Netherlands</button>
+              <button class="tournaments-filter-option" data-value="Germany">Germany</button>
+              <button class="tournaments-filter-option" data-value="Belgium">Belgium</button>
+              <button class="tournaments-filter-option" data-value="UK">United Kingdom</button>
+            </div>
+          </div>
+          <div class="tournaments-filter-wrapper">
+            <button class="tournaments-filter-btn" data-filter="series" type="button">
+              All Series
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="tournaments-filter-dropdown">
+              <button class="tournaments-filter-option tournaments-filter-option--active" data-value="">All Series</button>
+              <button class="tournaments-filter-option" data-value="Open">Open</button>
+              <button class="tournaments-filter-option" data-value="Masters">Masters</button>
+              <button class="tournaments-filter-option" data-value="Classic">Classic</button>
+              <button class="tournaments-filter-option" data-value="Series">Series</button>
+              <button class="tournaments-filter-option" data-value="Cup">Cup</button>
+              <button class="tournaments-filter-option" data-value="Invitational">Invitational</button>
+              <button class="tournaments-filter-option" data-value="Grand">Grand</button>
+              <button class="tournaments-filter-option" data-value="Championship">Championship</button>
+            </div>
+          </div>
+          <div class="tournaments-filter-wrapper">
+            <button class="tournaments-filter-btn" data-filter="entry" type="button">
+              All Entry Types
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="tournaments-filter-dropdown tournaments-filter-dropdown--entry">
+              <button class="tournaments-filter-option tournaments-filter-option--active" data-value="">All Entry Types</button>
+              <button class="tournaments-filter-option" data-value="free">Free Entry</button>
+              <button class="tournaments-filter-option" data-value="paid">Buy-in</button>
+            </div>
+          </div>
+          <div class="buyin-slider" style="display:none;">
+            <div class="buyin-slider-labels">
+              <span class="buyin-slider-min-label">€0</span>
+              <span class="buyin-slider-dash">–</span>
+              <span class="buyin-slider-max-label">€200</span>
+            </div>
+            <div class="buyin-slider-track">
+              <input type="range" class="buyin-range buyin-range-min" min="0" max="200" step="10" value="0">
+              <input type="range" class="buyin-range buyin-range-max" min="0" max="200" step="10" value="200">
+            </div>
+          </div>
         </div>
         <div class="tournaments-sort">
-          <button class="tournaments-filter-btn" type="button">
-            Soonest first
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          <div class="tournaments-filter-wrapper">
+            <button class="tournaments-filter-btn" data-filter="sort" type="button">
+              Soonest first
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="tournaments-filter-dropdown">
+              <button class="tournaments-filter-option tournaments-filter-option--active" data-value="soonest">Soonest first</button>
+              <button class="tournaments-filter-option" data-value="latest">Latest first</button>
+              <button class="tournaments-filter-option" data-value="az">Name A–Z</button>
+              <button class="tournaments-filter-option" data-value="za">Name Z–A</button>
+            </div>
+          </div>
           <div class="tournaments-view-toggle">
-            <button class="tournaments-view-btn tournaments-view-btn--active" type="button">
+            <button class="tournaments-view-btn tournaments-view-btn--active" data-view="grid" type="button">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="5.5" height="5.5" rx="1"/><rect x="9.5" y="1" width="5.5" height="5.5" rx="1"/><rect x="1" y="9.5" width="5.5" height="5.5" rx="1"/><rect x="9.5" y="9.5" width="5.5" height="5.5" rx="1"/></svg>
             </button>
-            <button class="tournaments-view-btn" type="button">
+            <button class="tournaments-view-btn" data-view="list" type="button">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="3" x2="15" y2="3"/><line x1="1" y1="8" x2="15" y2="8"/><line x1="1" y1="13" x2="15" y2="13"/></svg>
             </button>
           </div>
@@ -84,9 +164,9 @@
       <div class="tournaments-grid">
 
         <!-- Card 1: Amsterdam Open -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Netherlands" data-series="Open" data-date="2026-03-11" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Amsterdam Open">
+            <img src="assets/img/tournament_placeholder.png" alt="Amsterdam Open" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Amsterdam Open</h3>
@@ -108,9 +188,9 @@
         </div>
 
         <!-- Card 2: Berlin Masters -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Germany" data-series="Masters" data-date="2026-03-18" data-entry="paid" data-buyin="50">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Berlin Masters">
+            <img src="assets/img/tournament_placeholder.png" alt="Berlin Masters" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Berlin Masters</h3>
@@ -132,9 +212,9 @@
         </div>
 
         <!-- Card 3: Brussels Classic -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Belgium" data-series="Classic" data-date="2026-03-25" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Brussels Classic">
+            <img src="assets/img/tournament_placeholder.png" alt="Brussels Classic" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Brussels Classic</h3>
@@ -156,9 +236,9 @@
         </div>
 
         <!-- Card 4: London Series -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="UK" data-series="Series" data-date="2026-04-01" data-entry="paid" data-buyin="100">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="London Series">
+            <img src="assets/img/tournament_placeholder.png" alt="London Series" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">London Series</h3>
@@ -180,9 +260,9 @@
         </div>
 
         <!-- Card 5: Rotterdam Cup -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Netherlands" data-series="Cup" data-date="2026-04-08" data-entry="paid" data-buyin="50">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Rotterdam Cup">
+            <img src="assets/img/tournament_placeholder.png" alt="Rotterdam Cup" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Rotterdam Cup</h3>
@@ -204,9 +284,9 @@
         </div>
 
         <!-- Card 6: Munich Invitational -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Germany" data-series="Invitational" data-date="2026-04-15" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Munich Invitational">
+            <img src="assets/img/tournament_placeholder.png" alt="Munich Invitational" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Munich Invitational</h3>
@@ -228,9 +308,9 @@
         </div>
 
         <!-- Card 7: Antwerp Open -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Belgium" data-series="Open" data-date="2026-04-22" data-entry="paid" data-buyin="100">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Antwerp Open">
+            <img src="assets/img/tournament_placeholder.png" alt="Antwerp Open" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Antwerp Open</h3>
@@ -252,9 +332,9 @@
         </div>
 
         <!-- Card 8: Edinburgh Grand -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="UK" data-series="Grand" data-date="2026-04-29" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Edinburgh Grand">
+            <img src="assets/img/tournament_placeholder.png" alt="Edinburgh Grand" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Edinburgh Grand</h3>
@@ -276,9 +356,9 @@
         </div>
 
         <!-- Card 9: The Hague Championship -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Netherlands" data-series="Championship" data-date="2026-05-06" data-entry="paid" data-buyin="50">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="The Hague Championship">
+            <img src="assets/img/tournament_placeholder.png" alt="The Hague Championship" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">The Hague Championship</h3>
@@ -300,9 +380,9 @@
         </div>
 
         <!-- Card 10: Hamburg Open -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Germany" data-series="Open" data-date="2026-05-13" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Hamburg Open">
+            <img src="assets/img/tournament_placeholder.png" alt="Hamburg Open" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Hamburg Open</h3>
@@ -324,9 +404,9 @@
         </div>
 
         <!-- Card 11: Ghent Classic -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Belgium" data-series="Classic" data-date="2026-05-20" data-entry="paid" data-buyin="100">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Ghent Classic">
+            <img src="assets/img/tournament_placeholder.png" alt="Ghent Classic" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Ghent Classic</h3>
@@ -348,9 +428,9 @@
         </div>
 
         <!-- Card 12: Manchester Series -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="UK" data-series="Series" data-date="2026-05-27" data-entry="paid" data-buyin="50">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Manchester Series">
+            <img src="assets/img/tournament_placeholder.png" alt="Manchester Series" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Manchester Series</h3>
@@ -372,9 +452,9 @@
         </div>
 
         <!-- Card 13: Utrecht Open -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Netherlands" data-series="Open" data-date="2026-06-03" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Utrecht Open">
+            <img src="assets/img/tournament_placeholder.png" alt="Utrecht Open" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Utrecht Open</h3>
@@ -396,9 +476,9 @@
         </div>
 
         <!-- Card 14: Cologne Cup -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Germany" data-series="Cup" data-date="2026-06-10" data-entry="paid" data-buyin="50">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Cologne Cup">
+            <img src="assets/img/tournament_placeholder.png" alt="Cologne Cup" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Cologne Cup</h3>
@@ -420,9 +500,9 @@
         </div>
 
         <!-- Card 15: Bruges Invitational -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="Belgium" data-series="Invitational" data-date="2026-06-17" data-entry="free" data-buyin="0">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Bruges Invitational">
+            <img src="assets/img/tournament_placeholder.png" alt="Bruges Invitational" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Bruges Invitational</h3>
@@ -444,9 +524,9 @@
         </div>
 
         <!-- Card 16: Bristol Championship -->
-        <div class="tournament-card">
+        <div class="tournament-card" data-country="UK" data-series="Championship" data-date="2026-06-24" data-entry="paid" data-buyin="100">
           <div class="tournament-card-img">
-            <img src="assets/img/tournament_placeholder.png" alt="Bristol Championship">
+            <img src="assets/img/tournament_placeholder.png" alt="Bristol Championship" loading="lazy">
           </div>
           <div class="tournament-card-body">
             <h3 class="tournament-card-title">Bristol Championship</h3>
@@ -465,6 +545,10 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="tournaments-empty" style="display:none;">
+          <p>No tournaments match your filters.</p>
         </div>
 
       </div>
@@ -522,6 +606,148 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Tournament filters, sort & view toggle
+    (() => {
+      const grid = document.querySelector('.tournaments-grid');
+      const cards = Array.from(document.querySelectorAll('.tournament-card'));
+      const emptyMsg = document.querySelector('.tournaments-empty');
+      const viewBtns = document.querySelectorAll('.tournaments-view-btn');
+
+      let activeCountry = '';
+      let activeSeries = '';
+      let activeEntry = '';
+      let buyinMin = 0;
+      let buyinMax = 200;
+      let activeSort = 'soonest';
+
+      // Buy-in slider
+      const sliderPanel = document.querySelector('.buyin-slider');
+      const rangeMin = document.querySelector('.buyin-range-min');
+      const rangeMax = document.querySelector('.buyin-range-max');
+      const minLabel = document.querySelector('.buyin-slider-min-label');
+      const maxLabel = document.querySelector('.buyin-slider-max-label');
+      const entryBtn = document.querySelector('[data-filter="entry"]');
+
+      function updateSliderLabels() {
+        minLabel.textContent = '€' + rangeMin.value;
+        maxLabel.textContent = '€' + rangeMax.value;
+        buyinMin = parseInt(rangeMin.value);
+        buyinMax = parseInt(rangeMax.value);
+        entryBtn.childNodes[0].textContent = 'Buy-in ';
+      }
+
+      rangeMin.addEventListener('input', () => {
+        if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+          rangeMin.value = rangeMax.value;
+        }
+        updateSliderLabels();
+        filterAndRender();
+      });
+
+      rangeMax.addEventListener('input', () => {
+        if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+          rangeMax.value = rangeMin.value;
+        }
+        updateSliderLabels();
+        filterAndRender();
+      });
+
+      // Filter dropdowns
+      document.querySelectorAll('.tournaments-filter-wrapper').forEach(wrapper => {
+        const btn = wrapper.querySelector('.tournaments-filter-btn');
+        const dropdown = wrapper.querySelector('.tournaments-filter-dropdown');
+        const options = wrapper.querySelectorAll('.tournaments-filter-option');
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Close other dropdowns
+          document.querySelectorAll('.tournaments-filter-dropdown').forEach(d => {
+            if (d !== dropdown) d.classList.remove('tournaments-filter-dropdown--open');
+          });
+          dropdown.classList.toggle('tournaments-filter-dropdown--open');
+        });
+
+        options.forEach(opt => {
+          opt.addEventListener('click', () => {
+            options.forEach(o => o.classList.remove('tournaments-filter-option--active'));
+            opt.classList.add('tournaments-filter-option--active');
+
+            const filterType = btn.dataset.filter;
+            if (filterType === 'entry') {
+              activeEntry = opt.dataset.value;
+              if (activeEntry === 'paid') {
+                sliderPanel.style.display = '';
+                updateSliderLabels();
+              } else {
+                sliderPanel.style.display = 'none';
+                btn.childNodes[0].textContent = opt.textContent + ' ';
+              }
+            } else {
+              btn.childNodes[0].textContent = opt.textContent + ' ';
+            }
+
+            dropdown.classList.remove('tournaments-filter-dropdown--open');
+
+            if (filterType === 'country') activeCountry = opt.dataset.value;
+            else if (filterType === 'series') activeSeries = opt.dataset.value;
+            else if (filterType === 'sort') { activeSort = opt.dataset.value; sortCards(); }
+
+            filterAndRender();
+          });
+        });
+      });
+
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.tournaments-filter-dropdown').forEach(d => {
+          d.classList.remove('tournaments-filter-dropdown--open');
+        });
+      });
+
+      function filterAndRender() {
+        let visible = 0;
+        cards.forEach(card => {
+          const matchCountry = !activeCountry || card.dataset.country === activeCountry;
+          const matchSeries = !activeSeries || card.dataset.series === activeSeries;
+          let matchEntry = true;
+          if (activeEntry === 'free') {
+            matchEntry = card.dataset.entry === 'free';
+          } else if (activeEntry === 'paid') {
+            const amt = parseInt(card.dataset.buyin);
+            matchEntry = card.dataset.entry === 'paid' && amt >= buyinMin && amt <= buyinMax;
+          }
+          const show = matchCountry && matchSeries && matchEntry;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        emptyMsg.style.display = visible === 0 ? '' : 'none';
+      }
+
+      function sortCards() {
+        const sorted = [...cards].sort((a, b) => {
+          if (activeSort === 'soonest') return a.dataset.date.localeCompare(b.dataset.date);
+          if (activeSort === 'latest') return b.dataset.date.localeCompare(a.dataset.date);
+          const nameA = a.querySelector('.tournament-card-title').textContent;
+          const nameB = b.querySelector('.tournament-card-title').textContent;
+          if (activeSort === 'az') return nameA.localeCompare(nameB);
+          return nameB.localeCompare(nameA);
+        });
+        sorted.forEach(card => grid.appendChild(card));
+      }
+
+      // View toggle (grid / list)
+      viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          viewBtns.forEach(b => b.classList.remove('tournaments-view-btn--active'));
+          btn.classList.add('tournaments-view-btn--active');
+          if (btn.dataset.view === 'list') {
+            grid.classList.add('tournaments-grid--list');
+          } else {
+            grid.classList.remove('tournaments-grid--list');
+          }
+        });
+      });
+    })();
 
     // Header scroll effect
     window.addEventListener('scroll', () => {

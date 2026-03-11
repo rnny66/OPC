@@ -114,7 +114,7 @@ Use multiples of **4px** for consistency:
 ```css
 /* Base */        .btn          — inline-flex, 12px 20px padding, 16px font, 600 weight, radius-md
 /* Primary */     .btn-primary  — brand blue bg, white text, subtle inset shadow
-/* Outline */     .btn-outline  — white bg, brand blue border, dark text
+/* Outline */     .btn-outline  — transparent bg, brand blue border, light text (#cecfd2)
 ```
 
 All buttons: `transition: all 0.2s ease`, 2px border, `cursor: pointer`
@@ -199,3 +199,18 @@ All buttons: `transition: all 0.2s ease`, 2px border, `cursor: pointer`
 5. **Shared header/footer** duplicated per page (no templating engine)
 6. **Google Fonts loaded** with `preconnect` hints
 7. **Title format:** `Page Name — OPC Europe`
+8. **Navigation dropdowns:** "Countries" (6 countries) and "About OPC" dropdowns in header nav
+
+## Country Pages
+
+Country-specific pages (`country-{name}.html`) follow a standard template:
+
+| Section | Class | Description |
+|---------|-------|-------------|
+| Hero | `.country-hero` | Flag + country name + subtitle |
+| Partners | `.country-partners-grid` | 3-column grid of `.country-partner-card` |
+| Tournaments | `.country-section--alt` | Reuses `.events-grid` + `.event-card` |
+| Info | `.country-info-content` | Prose about poker in the country |
+| CTA | `.country-cta` | Register/partner call-to-action |
+
+Responsive breakpoints: 992px (2-col partners, reduced padding), 640px (1-col, smaller type)

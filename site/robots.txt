@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /index-v2.html
+Disallow: /index-v2-mock.html
+
+Sitemap: https://opc-europe.com/sitemap.xml
