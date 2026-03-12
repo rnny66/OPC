@@ -349,6 +349,96 @@ Feature toggle system for gating routes and functionality.
 
 ---
 
+## Master Ranking Schema (Static Site)
+
+Independent of auth/profiles — used by the static site's ranking page and results upload page.
+
+### `master_config`
+
+Key-value configuration table. No public access — only SECURITY DEFINER functions can read.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `key` | text (PK) | — | Config key (e.g. `upload_password`) |
+| `value` | text | — | Config value |
+
+**RLS Policies:**
+- No SELECT policy — no public reads. Only accessible via SECURITY DEFINER functions.
+
+**Seed data:** `upload_password = 'changeme'`
+
+---
+
+### `master_players`
+
+Standalone player pool for the European OPC Master Ranking. Independent of `profiles`.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Player ID |
+| `name` | text | — | Display name |
+| `name_normalized` | text | — | Lowercase, trimmed (for matching) |
+| `nationality` | text | — | Country name |
+| `total_points` | integer | `0` | Sum of all points_entries |
+| `rank` | integer | null | Current rank (DENSE_RANK by total_points DESC) |
+| `linked_profile_id` | uuid (FK) | null | Optional link to profiles(id) |
+| `created_at` | timestamptz | `now()` | Creation time |
+
+**Indexes:** `name_normalized`, `rank`, `nationality`
+
+**RLS Policies:**
+- **Select:** Public — anyone can read
+- No direct insert/update/delete (all writes via `submit_results` RPC)
+
+**Seed data:** 601 players from legacy Google Sheets European OPC Master Ranking
+
+---
+
+### `points_entries`
+
+Audit log of every points addition.
+
+| Column | Type | Default | Description |
+|--------|------|---------|-------------|
+| `id` | uuid (PK) | `gen_random_uuid()` | Entry ID |
+| `player_id` | uuid (FK) | — | References `master_players(id)`, cascade delete |
+| `points` | integer | — | Points awarded |
+| `event_label` | text | null | Event name (e.g. "Amsterdam Open March 2026") |
+| `uploaded_at` | timestamptz | `now()` | When the entry was recorded |
+| `uploaded_by` | text | null | Who uploaded (e.g. "upload-page") |
+
+**Indexes:** `player_id`
+
+**RLS Policies:**
+- **Select:** Public — anyone can read
+- No direct insert/update/delete (all writes via `submit_results` RPC)
+
+---
+
+### `submit_results` (RPC Function)
+
+Password-protected SECURITY DEFINER function for submitting tournament results.
+
+**Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `p_password` | text | Upload password (validated against `master_config`) |
+| `p_event_label` | text | Event name label |
+| `p_uploaded_by` | text | Uploader identifier |
+| `p_results` | jsonb | Array of `{player_id, name, nationality, points}` |
+
+**Behavior:**
+1. Validates password against `master_config` table
+2. For each result: creates new player if no `player_id`, or uses existing
+3. Inserts `points_entries` row for each result
+4. Recomputes `total_points` = SUM(points_entries) per player
+5. Recomputes `rank` using `DENSE_RANK() OVER (ORDER BY total_points DESC)`
+6. Returns `{success, created, updated}` or `{error}` on failure
+
+**Migrations:** `016_master_ranking.sql` (schema + function), `017_seed_master_ranking.sql` (601 players)
+
+---
+
 ## Payload CMS Schema
 
 Payload CMS uses a separate `payload` Postgres schema in the same Supabase database. Tables are auto-managed by Payload and should not be manually modified.
@@ -414,6 +504,12 @@ organizer_invitations (invited_by → profiles)
   └── trigger on profiles INSERT → auto-promote matching email
 
 feature_flags (standalone config — gates routes/features)
+
+master_config (standalone — upload password, no public access)
+
+master_players (standalone player pool — 601+ players)
+  └── points_entries (player_id → master_players)
+  └── submit_results RPC (SECURITY DEFINER — validates password, manages writes)
 
 payload.* (separate schema — Payload CMS auto-managed)
   ├── posts (news + blog articles)

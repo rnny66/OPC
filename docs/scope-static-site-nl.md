@@ -70,20 +70,53 @@ Een filterbare toernooilijstpagina met aankomende evenementen.
 
 ### 2.4 Rankingspagina
 
-Een publiek klassement met spelersrankings op basis van voorbeelddata.
+Een publiek klassement met spelersrankings, aangedreven door live data uit Supabase.
 
 **Deliverables:**
 
-- Paginakop met titel
+- Paginakop met titel en dynamisch aantal spelers
 - Zoekveld om spelers op naam te vinden
-- Landfilter-dropdown
-- Rankingstabel met kolommen: positie, spelernaam, nationaliteit (vlag), punten, gespeelde toernooien, overwinningen
-- 20 rijen met voorbeeldspelersdata
+- Landfilter-dropdown (Nederland, België, Duitsland, Polen, Ierland)
+- Rankingstabel met kolommen: positie, spelernaam (met avatar), nationaliteit (vlag), totaal punten, land
+- Live data uit Supabase `master_players` tabel (601+ geïmporteerde spelers)
+- Client-side paginering (50 spelers per pagina)
+- Deterministische avatarkleuren op basis van spelernaam-hash
+- Inline SVG-vlaggen voor 5 landen
 - "Hoe Rankings Werken" zijbalk-uitlegpaneel
-- Pagineringscontrols
 - Responsieve tabellayout (horizontaal scrollen op mobiel)
 
-### 2.5 Landingspagina's per Land
+### 2.5 Master Ranking & Resultaten Upload
+
+Een lichtgewicht ranking-beheersysteem dat de statische site verbindt met Supabase voor live spelersdata en resultatenverwerking.
+
+**Deliverables:**
+
+- **Databaseschema** (`supabase/migrations/016_master_ranking.sql`):
+  - `master_config` tabel — key-value configuratie (upload-wachtwoord), geen publieke toegang
+  - `master_players` tabel — zelfstandige spelerspool met naam, genormaliseerde naam, nationaliteit, totaal punten, rang
+  - `points_entries` tabel — auditlog van alle punttoevoegingen per speler
+  - `submit_results` RPC-functie — SECURITY DEFINER, met wachtwoord beveiligd, verwerkt speleraanmaak, puntinvoer, totaal-/rangherberekening via DENSE_RANK()
+  - RLS: publiek leesbaar voor spelers en punten, geen directe schrijfacties (alles via RPC)
+
+- **Legacy-datamigratie** (`supabase/migrations/017_seed_master_ranking.sql`):
+  - 601 spelers geïmporteerd uit bestaande Google Sheets European OPC Master Ranking
+  - Eén `points_entries` rij per speler voor audittrail
+  - Initiële rangberekening
+
+- **Resultaten-uploadpagina** (`site/results-upload.html`):
+  - Met wachtwoord beveiligde toegang (noindex, nofollow, geen navigatielink)
+  - Wachtwoord-weergaveknop (oog-toggle)
+  - Bestandsupload via drag-and-drop of bestandskiezer (CSV en XLSX)
+  - Automatische detectie van Naam-, Land- en Puntenkolommen uit kopteksten
+  - Fuzzy naamherkenning met Levenshtein-afstand tegen alle bestaande spelers
+  - Overzichtstabel met exact (groen), fuzzy (geel) en nieuw (blauw) match-badges
+  - Dropdown-selectie voor fuzzy matches (top 3 kandidaten + "Nieuwe speler aanmaken")
+  - Indienen via `submit_results` RPC met succes-/foutmelding
+  - SheetJS CDN voor XLSX-parsing, Supabase JS client CDN voor databewerkingen
+
+- **CSS-stijlen** — `.upload-*` prefix-classes in `site/styles.css`
+
+### 2.6 Landingspagina's per Land
 
 Specifieke landingspagina's voor elk land waar OPC actief is, ontworpen voor lokale SEO en partnerzichtbaarheid.
 
@@ -107,7 +140,7 @@ Specifieke landingspagina's voor elk land waar OPC actief is, ontworpen voor lok
 - CTA-sectie — "Registreer als Speler" en "Word Partner" knoppen
 - Alle secties met scroll-reveal animaties
 
-### 2.6 Toernooidetailpagina
+### 2.7 Toernooidetailpagina
 
 Een speciale detailpagina voor individuele toernooien, met volledige evenementinformatie voor potentiële spelers.
 
@@ -126,7 +159,7 @@ Een speciale detailpagina voor individuele toernooien, met volledige evenementin
 - Responsief op alle drie breakpoints (desktop, tablet, mobiel)
 - CSS-classes gebruiken `.td-*` prefix (toernooidetail)
 
-### 2.7 Over Ons-pagina
+### 2.8 Over Ons-pagina
 
 Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 
@@ -137,7 +170,7 @@ Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 - Consistente header/footer
 - Gelinkt vanuit de "Over OPC" dropdown en "Lees het volledige verhaal" knoppen op de homepage
 
-### 2.8 Contactpagina
+### 2.9 Contactpagina
 
 **Deliverables:**
 
@@ -145,7 +178,7 @@ Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 - Ondersteunings-/partnerinformatie
 - Consistente header/footer
 
-### 2.9 Juridische & Compliance-pagina's
+### 2.10 Juridische & Compliance-pagina's
 
 Drie juridische pagina's vereist voor wettelijke naleving.
 
@@ -155,7 +188,7 @@ Drie juridische pagina's vereist voor wettelijke naleving.
 - **Algemene Voorwaarden** — Platformvoorwaarden, gebruikersverantwoordelijkheden en disclaimers
 - **Verantwoord Spelen** — Educatieve content over verantwoord gokken, zelfuitsluiting en leeftijdsverificatiebeleid
 
-### 2.10 SEO & Technische Optimalisatie
+### 2.11 SEO & Technische Optimalisatie
 
 Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's.
 
@@ -177,7 +210,7 @@ Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's
 - Font preconnect hints voor Google Fonts
 - Favicon-configuratie
 
-### 2.11 Globale Componenten
+### 2.12 Globale Componenten
 
 Gedeelde componenten die consistent zijn op elke pagina.
 
@@ -249,17 +282,18 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 | 2 | Homepage | 1 pagina, 8 secties |
 | 3 | Toernooienpagina | 1 pagina |
 | 4 | Toernooidetailpagina | 1 pagina, 6 secties |
-| 5 | Rankingspagina | 1 pagina |
-| 6 | Landingspagina's per land | 6 pagina's |
-| 7 | Over Ons-pagina | 1 pagina |
-| 8 | Contactpagina | 1 pagina |
-| 9 | Privacybeleid | 1 pagina |
-| 10 | Algemene Voorwaarden | 1 pagina |
-| 11 | Verantwoord Spelen | 1 pagina |
-| 12 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
-| 13 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
-| 14 | Deployment & livegang | Vercel, DNS, SSL |
-| **Fase 1 Totaal** | | **19 statische pagina's + deployment** |
+| 5 | Rankingspagina (live data) | 1 pagina |
+| 6 | Master ranking & resultaten upload | 1 uploadpagina + 2 DB-migraties + RPC-functie |
+| 7 | Landingspagina's per land | 6 pagina's |
+| 8 | Over Ons-pagina | 1 pagina |
+| 9 | Contactpagina | 1 pagina |
+| 10 | Privacybeleid | 1 pagina |
+| 11 | Algemene Voorwaarden | 1 pagina |
+| 12 | Verantwoord Spelen | 1 pagina |
+| 13 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
+| 14 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
+| 15 | Deployment & livegang | Vercel, DNS, SSL |
+| **Fase 1 Totaal** | | **20 statische pagina's + deployment + ranking-systeem** |
 
 ### Fase 2 — CMS & Dynamische Content
 
@@ -317,6 +351,7 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 | Toernooienpagina | Overzicht, filters, kaarten, paginering | 10 |
 | Toernooidetailpagina | Hero, schema, locatie, gerelateerde toernooien, CTA | 8 |
 | Rankingspagina | Tabel, filters, zijbalk, paginering | 10 |
+| Master ranking-systeem | DB-schema & RPC-functie, datamigratie (601 spelers), resultaten-uploadpagina (CSV/XLSX, fuzzy matching), live ranking-integratie | 18 |
 | Landenpagina's (6) | Template + 6 landvarianten | 14 |
 | Over Ons-pagina | Missie, oprichtersprofielen | 4 |
 | Contactpagina | Formulier en layout | 4 |
@@ -325,7 +360,7 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 | SEO & technisch | Metatags, gestructureerde data, sitemap, robots.txt | 8 |
 | QA & cross-browser testen | Desktop, tablet, mobiel in alle browsers | 8 |
 | Deployment & livegang | Vercel-setup, DNS, SSL, lancering | 4 |
-| **Fase 1 Totaal** | | **118 uur** |
+| **Fase 1 Totaal** | | **136 uur** |
 
 ### Fase 2 — CMS & Dynamische Content
 

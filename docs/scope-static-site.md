@@ -70,20 +70,58 @@ A filterable tournament listing page displaying upcoming events.
 
 ### 2.4 Rankings Page
 
-A public leaderboard displaying player rankings with mock data.
+A public leaderboard displaying player rankings, powered by live data from Supabase.
 
 **Deliverables:**
 
-- Page header with title
+- Page header with title and dynamic player count
 - Search input for finding players by name
-- Country filter dropdown
-- Rankings table with columns: rank, player name, nationality (flag), points, tournaments played, wins
-- 20 rows of mock player data
+- Country filter dropdown (Netherlands, Belgium, Germany, Poland, Ireland)
+- Rankings table with columns: rank, player name (with avatar), nationality (flag), total points, country
+- Live data from Supabase `master_players` table (601+ seeded players)
+- Client-side pagination (50 players per page)
+- Deterministic avatar colors from player name hash
+- Inline SVG flags for 5 countries
 - "How Rankings Work" sidebar explanation panel
-- Pagination controls
 - Responsive table layout (horizontal scroll on mobile)
 
-### 2.5 Country Landing Pages
+### 2.5 Master Ranking & Results Upload
+
+A lightweight ranking management system connecting the static site to Supabase for live player data and results processing.
+
+**Deliverables:**
+
+- **Database schema** (`supabase/migrations/016_master_ranking.sql`):
+  - `master_config` table — key-value config (upload password), no public access
+  - `master_players` table — standalone player pool with name, normalized name, nationality, total points, rank
+  - `points_entries` table — audit log of all points additions per player
+  - `submit_results` RPC function — SECURITY DEFINER, password-protected, handles player creation, points insert, total/rank recomputation via DENSE_RANK()
+  - RLS: public read on players and points, no direct writes (all via RPC)
+
+- **Legacy data migration** (`supabase/migrations/017_seed_master_ranking.sql`):
+  - 601 players imported from existing Google Sheets European OPC Master Ranking
+  - One `points_entries` row per player for audit trail
+  - Initial rank computation
+
+- **Results upload page** (`site/results-upload.html`):
+  - Password-gated access (noindex, nofollow, no navigation link)
+  - Password reveal toggle button
+  - File upload via drag-and-drop or file picker (CSV and XLSX)
+  - Auto-detection of Name, Country, Points columns from headers
+  - Fuzzy name matching using Levenshtein distance against all existing players
+  - Review table with exact (green), fuzzy (yellow), and new (blue) match badges
+  - Dropdown selection for fuzzy matches (top 3 candidates + "Create new")
+  - Submit via `submit_results` RPC with success/error reporting
+  - SheetJS CDN for XLSX parsing, Supabase JS client CDN for data operations
+
+- **CSS styles** — `.upload-*` prefix classes in `site/styles.css`:
+  - `.upload-gate` — password form card
+  - `.upload-dropzone` — drag-and-drop area with active state
+  - `.upload-review-table` — review table with status badges
+  - `.upload-badge--exact`, `.upload-badge--fuzzy`, `.upload-badge--new`
+  - `.upload-submit-status` — success/error feedback
+
+### 2.6 Country Landing Pages
 
 Dedicated landing pages for each country where OPC operates, designed for local SEO and partner visibility.
 
@@ -107,7 +145,7 @@ Dedicated landing pages for each country where OPC operates, designed for local 
 - CTA section — "Register as Player" and "Become Partner" buttons
 - All sections with scroll-reveal animations
 
-### 2.6 Tournament Detail Page
+### 2.7 Tournament Detail Page
 
 A dedicated detail page for individual tournaments, providing full event information to prospective players.
 
@@ -126,7 +164,7 @@ A dedicated detail page for individual tournaments, providing full event informa
 - Responsive at all three breakpoints (desktop, tablet, mobile)
 - CSS classes use `.td-*` prefix (tournament detail)
 
-### 2.7 About Us Page
+### 2.8 About Us Page
 
 A dedicated page introducing OPC Europe, its mission, and its founders.
 
@@ -137,7 +175,7 @@ A dedicated page introducing OPC Europe, its mission, and its founders.
 - Consistent header/footer
 - Linked from the "About OPC" dropdown and founder "Read full story" buttons on the homepage
 
-### 2.8 Contact Page
+### 2.9 Contact Page
 
 **Deliverables:**
 
@@ -145,7 +183,7 @@ A dedicated page introducing OPC Europe, its mission, and its founders.
 - Support/partnership information
 - Consistent header/footer
 
-### 2.9 Legal & Compliance Pages
+### 2.10 Legal & Compliance Pages
 
 Three legal pages required for regulatory compliance.
 
@@ -155,7 +193,7 @@ Three legal pages required for regulatory compliance.
 - **Terms & Conditions** — Platform terms of use, user responsibilities, and disclaimers
 - **Responsible Gaming** — Educational content about responsible gambling, self-exclusion resources, and age verification policy
 
-### 2.10 SEO & Technical Optimization
+### 2.11 SEO & Technical Optimization
 
 Search engine optimization and technical best practices applied across all pages.
 
@@ -177,7 +215,7 @@ Search engine optimization and technical best practices applied across all pages
 - Font preconnect hints for Google Fonts
 - Favicon configuration
 
-### 2.11 Global Components
+### 2.12 Global Components
 
 Shared components consistent across every page.
 
@@ -249,17 +287,18 @@ Setup and configuration of production infrastructure to launch the website.
 | 2 | Homepage | 1 page, 8 sections |
 | 3 | Tournaments page | 1 page |
 | 4 | Tournament detail page | 1 page, 6 sections |
-| 5 | Rankings page | 1 page |
-| 6 | Country landing pages | 6 pages |
-| 7 | About Us page | 1 page |
-| 8 | Contact page | 1 page |
-| 9 | Privacy Policy | 1 page |
-| 10 | Terms & Conditions | 1 page |
-| 11 | Responsible Gaming | 1 page |
-| 12 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
-| 13 | SEO optimization | All pages + sitemap + robots.txt |
-| 14 | Deployment & go-live | Vercel, DNS, SSL |
-| **Phase 1 Total** | | **19 static pages + deployment** |
+| 5 | Rankings page (live data) | 1 page |
+| 6 | Master ranking & results upload | 1 upload page + 2 DB migrations + RPC function |
+| 7 | Country landing pages | 6 pages |
+| 8 | About Us page | 1 page |
+| 9 | Contact page | 1 page |
+| 10 | Privacy Policy | 1 page |
+| 11 | Terms & Conditions | 1 page |
+| 12 | Responsible Gaming | 1 page |
+| 13 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
+| 14 | SEO optimization | All pages + sitemap + robots.txt |
+| 15 | Deployment & go-live | Vercel, DNS, SSL |
+| **Phase 1 Total** | | **20 static pages + deployment + ranking system** |
 
 ### Phase 2 — CMS & Dynamic Content
 
@@ -317,6 +356,7 @@ Setup and configuration of production infrastructure to launch the website.
 | Tournaments page | Listing, filters, cards, pagination | 10 |
 | Tournament detail page | Hero, schedule, venue, related tournaments, CTA | 8 |
 | Rankings page | Table, filters, sidebar, pagination | 10 |
+| Master ranking system | DB schema & RPC function, data migration (601 players), results upload page (CSV/XLSX, fuzzy matching), live ranking integration | 18 |
 | Country pages (6) | Template + 6 country variants | 14 |
 | About Us page | Mission, founder profiles | 4 |
 | Contact page | Form and layout | 4 |
@@ -325,7 +365,7 @@ Setup and configuration of production infrastructure to launch the website.
 | SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
 | Deployment & go-live | Vercel setup, DNS, SSL, launch | 4 |
-| **Phase 1 Total** | | **118 hours** |
+| **Phase 1 Total** | | **136 hours** |
 
 ### Phase 2 — CMS & Dynamic Content
 
