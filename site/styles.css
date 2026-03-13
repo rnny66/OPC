@@ -2358,6 +2358,31 @@ a {
   margin-bottom: 8px;
 }
 
+.contact-card--full {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  text-align: left;
+  padding: 32px 40px;
+  gap: 24px;
+}
+
+.contact-card--full .contact-card-icon {
+  flex-shrink: 0;
+}
+
+.contact-card--full-content {
+  flex: 1;
+}
+
+.contact-card--full-content h3 {
+  margin-bottom: 4px;
+}
+
+.contact-card--full .btn {
+  flex-shrink: 0;
+  align-self: center;
+}
+
 /* --- Contact Page Responsive --- */
 @media (max-width: 992px) {
   .contact-page {
@@ -2381,6 +2406,11 @@ a {
 
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact-card--full {
+    flex-direction: column;
+    text-align: center;
   }
 }
 
