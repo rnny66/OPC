@@ -164,7 +164,25 @@ A dedicated detail page for individual tournaments, providing full event informa
 - Responsive at all three breakpoints (desktop, tablet, mobile)
 - CSS classes use `.td-*` prefix (tournament detail)
 
-### 2.8 About Us Page
+### 2.8 Partner Pages
+
+Dedicated showcase pages for each OPC partner, providing brand visibility and a professional presence for partner organizations.
+
+**Deliverables:**
+
+- **Partners overview page** (`site/partners/overview.html`) — card grid listing all partners with logo, name, and tagline, linking to individual partner pages
+- **Individual partner pages** (4 total):
+  - Luxon Pay — payment partner (`site/partners/luxon-pay.html`)
+  - International Poker Rules — rules partner (`site/partners/ipr.html`)
+  - Juice Brothers — wellness partner (`site/partners/juice-brothers.html`)
+  - Poker Arend — equipment & events partner (`site/partners/arend-klein.html`)
+- Each partner page includes: breadcrumb navigation, split hero (logo + name + tagline + website link), about section, and partnership CTA
+- CSS classes use `.pp-*` prefix (partner page)
+- Responsive at all three breakpoints (hero stacks vertically on tablet/mobile)
+- Homepage partner logos link directly to partner detail pages
+- "Partners" nav item in the main header links to the overview page
+
+### 2.9 About Us Page
 
 A dedicated page introducing OPC Europe, its mission, and its founders.
 
@@ -175,7 +193,7 @@ A dedicated page introducing OPC Europe, its mission, and its founders.
 - Consistent header/footer
 - Linked from the "About OPC" dropdown and founder "Read full story" buttons on the homepage
 
-### 2.9 Contact Page
+### 2.10 Contact Page
 
 **Deliverables:**
 
@@ -183,7 +201,7 @@ A dedicated page introducing OPC Europe, its mission, and its founders.
 - Support/partnership information
 - Consistent header/footer
 
-### 2.10 Legal & Compliance Pages
+### 2.11 Legal & Compliance Pages
 
 Three legal pages required for regulatory compliance.
 
@@ -193,7 +211,7 @@ Three legal pages required for regulatory compliance.
 - **Terms & Conditions** — Platform terms of use, user responsibilities, and disclaimers
 - **Responsible Gaming** — Educational content about responsible gambling, self-exclusion resources, and age verification policy
 
-### 2.11 SEO & Technical Optimization
+### 2.12 SEO & Technical Optimization
 
 Search engine optimization and technical best practices applied across all pages.
 
@@ -215,13 +233,13 @@ Search engine optimization and technical best practices applied across all pages
 - Font preconnect hints for Google Fonts
 - Favicon configuration
 
-### 2.12 Global Components
+### 2.13 Global Components
 
 Shared components consistent across every page.
 
 **Deliverables:**
 
-- **Header navigation** — logo, 6 nav items (Home, Rankings, Tournaments, News, Countries dropdown, About OPC dropdown), "How to join" CTA button
+- **Header navigation** — logo, 7 nav items (Home, Rankings, Tournaments, News, Partners, Countries dropdown, About OPC dropdown), "How to join" CTA button
 - **Countries dropdown** — 6 country links in mega-menu style
 - **About OPC dropdown** — About, Contact, Responsible Gaming links
 - **Mobile navigation** — hamburger toggle, full-screen overlay menu, auto-close on link tap
@@ -283,14 +301,15 @@ Setup and configuration of production infrastructure to launch the website.
 
 | # | Deliverable | Pages/Items |
 |---|-------------|-------------|
-| 1 | Design system & CSS framework | 1 stylesheet (~2,700 lines) |
+| 1 | Design system & CSS framework | 1 stylesheet (~3,100 lines) |
 | 2 | Homepage | 1 page, 8 sections |
 | 3 | Tournaments page | 1 page |
 | 4 | Tournament detail page | 1 page, 6 sections |
 | 5 | Rankings page (live data) | 1 page |
 | 6 | Master ranking & results upload | 1 upload page + 2 DB migrations + RPC function |
 | 7 | Country landing pages | 6 pages |
-| 8 | About Us page | 1 page |
+| 8 | Partner pages | 1 overview + 4 detail pages |
+| 9 | About Us page | 1 page |
 | 9 | Contact page | 1 page |
 | 10 | Privacy Policy | 1 page |
 | 11 | Terms & Conditions | 1 page |
@@ -298,7 +317,7 @@ Setup and configuration of production infrastructure to launch the website.
 | 13 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
 | 14 | SEO optimization | All pages + sitemap + robots.txt |
 | 15 | Deployment & go-live | Vercel, DNS, SSL |
-| **Phase 1 Total** | | **20 static pages + deployment + ranking system** |
+| **Phase 1 Total** | | **27 static pages + deployment + ranking system** |
 
 ### Phase 2 — CMS & Dynamic Content
 

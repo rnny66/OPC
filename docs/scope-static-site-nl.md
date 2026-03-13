@@ -159,7 +159,25 @@ Een speciale detailpagina voor individuele toernooien, met volledige evenementin
 - Responsief op alle drie breakpoints (desktop, tablet, mobiel)
 - CSS-classes gebruiken `.td-*` prefix (toernooidetail)
 
-### 2.8 Over Ons-pagina
+### 2.8 Partnerpagina's
+
+Speciale showcasepagina's voor elke OPC-partner, die merkzichtbaarheid en een professionele presentie bieden voor partnerorganisaties.
+
+**Deliverables:**
+
+- **Partneroverzichtspagina** (`site/partners/overview.html`) — kaartgrid met alle partners met logo, naam en tagline, linkend naar individuele partnerpagina's
+- **Individuele partnerpagina's** (4 totaal):
+  - Luxon Pay — betalingspartner (`site/partners/luxon-pay.html`)
+  - International Poker Rules — regelpartner (`site/partners/ipr.html`)
+  - Juice Brothers — wellnesspartner (`site/partners/juice-brothers.html`)
+  - Poker Arend — apparatuur- & evenementenpartner (`site/partners/arend-klein.html`)
+- Elke partnerpagina bevat: breadcrumb-navigatie, split hero (logo + naam + tagline + websitelink), over-sectie en partnership-CTA
+- CSS-classes gebruiken `.pp-*` prefix (partnerpagina)
+- Responsief op alle drie breakpoints (hero stapelt verticaal op tablet/mobiel)
+- Homepage partnerlogo's linken direct naar partnerdetailpagina's
+- "Partners" navigatie-item in de hoofdheader linkt naar de overzichtspagina
+
+### 2.9 Over Ons-pagina
 
 Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 
@@ -170,7 +188,7 @@ Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 - Consistente header/footer
 - Gelinkt vanuit de "Over OPC" dropdown en "Lees het volledige verhaal" knoppen op de homepage
 
-### 2.9 Contactpagina
+### 2.10 Contactpagina
 
 **Deliverables:**
 
@@ -178,7 +196,7 @@ Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 - Ondersteunings-/partnerinformatie
 - Consistente header/footer
 
-### 2.10 Juridische & Compliance-pagina's
+### 2.11 Juridische & Compliance-pagina's
 
 Drie juridische pagina's vereist voor wettelijke naleving.
 
@@ -188,7 +206,7 @@ Drie juridische pagina's vereist voor wettelijke naleving.
 - **Algemene Voorwaarden** — Platformvoorwaarden, gebruikersverantwoordelijkheden en disclaimers
 - **Verantwoord Spelen** — Educatieve content over verantwoord gokken, zelfuitsluiting en leeftijdsverificatiebeleid
 
-### 2.11 SEO & Technische Optimalisatie
+### 2.12 SEO & Technische Optimalisatie
 
 Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's.
 
@@ -210,13 +228,13 @@ Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's
 - Font preconnect hints voor Google Fonts
 - Favicon-configuratie
 
-### 2.12 Globale Componenten
+### 2.13 Globale Componenten
 
 Gedeelde componenten die consistent zijn op elke pagina.
 
 **Deliverables:**
 
-- **Headernavigatie** — logo, 6 navigatie-items (Home, Rankings, Toernooien, Nieuws, Landen-dropdown, Over OPC-dropdown), "Hoe mee te doen" CTA-knop
+- **Headernavigatie** — logo, 7 navigatie-items (Home, Rankings, Toernooien, Nieuws, Partners, Landen-dropdown, Over OPC-dropdown), "Hoe mee te doen" CTA-knop
 - **Landen-dropdown** — 6 landenlinks in mega-menustijl
 - **Over OPC-dropdown** — Over ons, Contact, Verantwoord Spelen links
 - **Mobiele navigatie** — hamburgertoggle, volledig scherm overlay-menu, automatisch sluiten bij linktap
@@ -278,14 +296,15 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 
 | # | Deliverable | Pagina's/Items |
 |---|-------------|----------------|
-| 1 | Designsysteem & CSS-framework | 1 stylesheet (~2.700 regels) |
+| 1 | Designsysteem & CSS-framework | 1 stylesheet (~3.100 regels) |
 | 2 | Homepage | 1 pagina, 8 secties |
 | 3 | Toernooienpagina | 1 pagina |
 | 4 | Toernooidetailpagina | 1 pagina, 6 secties |
 | 5 | Rankingspagina (live data) | 1 pagina |
 | 6 | Master ranking & resultaten upload | 1 uploadpagina + 2 DB-migraties + RPC-functie |
 | 7 | Landingspagina's per land | 6 pagina's |
-| 8 | Over Ons-pagina | 1 pagina |
+| 8 | Partnerpagina's | 1 overzicht + 4 detailpagina's |
+| 9 | Over Ons-pagina | 1 pagina |
 | 9 | Contactpagina | 1 pagina |
 | 10 | Privacybeleid | 1 pagina |
 | 11 | Algemene Voorwaarden | 1 pagina |
@@ -293,7 +312,7 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 | 13 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
 | 14 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
 | 15 | Deployment & livegang | Vercel, DNS, SSL |
-| **Fase 1 Totaal** | | **20 statische pagina's + deployment + ranking-systeem** |
+| **Fase 1 Totaal** | | **27 statische pagina's + deployment + ranking-systeem** |
 
 ### Fase 2 — CMS & Dynamische Content
 

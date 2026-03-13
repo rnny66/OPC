@@ -25,6 +25,7 @@ The site includes:
 - **Tournaments** — browsable listing of upcoming tournaments with search and country filters
 - **Rankings** — public leaderboard showing player standings, points, and tournament history
 - **Country Pages** — dedicated landing pages for each country OPC operates in (Netherlands, Germany, England, Poland, Belgium, Austria), highlighting local partners and events
+- **Partner Pages** — individual showcase pages for each OPC partner (Luxon Pay, International Poker Rules, Juice Brothers, Poker Arend) with partner overview listing
 - **Legal & Compliance** — privacy policy, terms & conditions, responsible gaming
 - **Contact** — inquiry form for players, organizers, and partners
 - **Master Ranking** — live leaderboard powered by Supabase, displaying 601+ players with search, country filter, and pagination

@@ -25,6 +25,7 @@ De site bevat:
 - **Toernooien** — doorzoekbare lijst van aankomende toernooien met zoek- en landfilters
 - **Rankings** — publiek klassement met spelersposities, punten en toernooigeschiedenis
 - **Landingspagina's per land** — specifieke pagina's voor elk land waar OPC actief is (Nederland, Duitsland, Engeland, Polen, België, Oostenrijk), met lokale partners en evenementen
+- **Partnerpagina's** — individuele showcasepagina's voor elke OPC-partner (Luxon Pay, International Poker Rules, Juice Brothers, Poker Arend) met partneroverzicht
 - **Juridisch & Compliance** — privacybeleid, algemene voorwaarden, verantwoord spelen
 - **Contact** — contactformulier voor spelers, organisatoren en partners
 - **Master Ranking** — live klassement aangedreven door Supabase, met 601+ spelers, zoekfunctie, landfilter en paginering
