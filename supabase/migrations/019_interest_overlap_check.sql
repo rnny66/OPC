@@ -3,6 +3,7 @@
 CREATE OR REPLACE FUNCTION check_interest_overlap()
 RETURNS trigger
 SECURITY DEFINER
+SET search_path = public
 AS $$
 BEGIN
   -- Signing up as player/organizer when "both" already exists
