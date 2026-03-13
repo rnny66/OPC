@@ -37,19 +37,26 @@ OCP/
 │   ├── privacy.html            # Privacy policy
 │   ├── terms.html              # Terms & conditions
 │   ├── responsible-gaming.html # Responsible gaming
-│   ├── country-netherlands.html # Country page — Netherlands
-│   ├── country-belgium.html    # Country page — Belgium
-│   ├── country-germany.html    # Country page — Germany
-│   ├── country-england.html    # Country page — England
-│   ├── country-poland.html     # Country page — Poland
-│   ├── country-austria.html    # Country page — Austria
+│   ├── countries/              # Country pages
+│   │   ├── netherlands.html    # Netherlands
+│   │   ├── belgium.html        # Belgium
+│   │   ├── germany.html        # Germany
+│   │   ├── england.html        # England
+│   │   ├── poland.html         # Poland
+│   │   └── austria.html        # Austria
+│   ├── partners/               # Partner pages
+│   │   ├── overview.html       # Partner listing page
+│   │   ├── juice-brothers.html # Juice Brothers
+│   │   ├── luxon-pay.html      # Luxon Pay
+│   │   ├── ipr.html            # International Poker Rules
+│   │   └── arend-klein.html    # Poker Arend
 │   ├── tournament-detail.html  # Tournament detail page (single placeholder)
 │   ├── news.html               # News — coming soon placeholder
 │   ├── blog.html               # Blog — coming soon placeholder
 │   ├── events.html             # Events — coming soon placeholder
 │   ├── about.html              # About OPC page
 │   ├── results-upload.html     # Master ranking results upload (password-gated)
-│   ├── styles.css              # Shared stylesheet (~2800 lines)
+│   ├── styles.css              # Shared stylesheet (~3100 lines)
 │   └── assets/                 # Images, logos, flags
 ├── platform/                   # Next.js 15 app
 │   ├── app/
@@ -241,7 +248,10 @@ OCP/
 7. Include the scroll-reveal JS snippet (IntersectionObserver) if the page has reveal elements
 
 ## Navigation (Static Site)
-- All pages share the same header nav: Home, Rankings, Tournaments, News, Countries dropdown, About OPC dropdown
+- All pages share the same header nav: Home, Rankings, Tournaments, News, Partners, Countries dropdown, About OPC dropdown
+- Country pages live in `site/countries/` (e.g., `countries/netherlands.html`)
+- Partner pages live in `site/partners/` (e.g., `partners/juice-brothers.html`)
+- Pages in subdirectories use `../` prefix for all asset/nav paths
 - Tournament cards (`<a class="tournament-card">`) on `tournaments.html` link to `tournament-detail.html`
 - Event cards (`<a class="event-card">`) on homepage and country pages also link to `tournament-detail.html`
 - Currently a single tournament detail page exists as a placeholder (Amsterdam Open)
@@ -258,12 +268,22 @@ OCP/
   - SheetJS CDN for XLSX parsing, native JS for CSV
 
 ## Creating New Country Pages
-1. Copy `site/country-netherlands.html` as template
+1. Copy `site/countries/netherlands.html` as template
 2. Replace country name, flag image, city names, and descriptions
-3. Country pages have 4 sections: hero (with flag), partners grid, upcoming tournaments, country info, and CTA
-4. CSS classes: `.country-hero`, `.country-section`, `.country-partners-grid`, `.country-partner-card`, `.country-cta`
-5. Responsive breakpoints already included in `styles.css` (992px, 640px)
-6. Add the country to the Countries dropdown in ALL page headers
+3. Country pages live in `site/countries/` — use `../` prefix for all asset/nav/footer paths
+4. Country pages have 4 sections: hero (with flag), partners grid, upcoming tournaments, country info, and CTA
+5. CSS classes: `.country-hero`, `.country-section`, `.country-partners-grid`, `.country-partner-card`, `.country-cta`
+6. Responsive breakpoints already included in `styles.css` (992px, 640px)
+7. Add the country to the Countries dropdown in ALL page headers (root pages use `countries/*.html`, partner pages use `../countries/*.html`)
+
+## Creating New Partner Pages
+1. Copy `site/partners/juice-brothers.html` as template
+2. Replace partner name, logo, tagline, website URL, and about content
+3. Partner pages live in `site/partners/` — use `../` prefix for all asset/nav/footer paths
+4. Partner pages have 3 sections: hero (split layout with logo), about, and CTA
+5. CSS classes: `.pp-hero`, `.pp-hero-inner`, `.pp-hero-logo`, `.pp-hero-content`, `.pp-about`, `.pp-cta`, `.pp-breadcrumb`
+6. Add the partner to `site/partners/overview.html` card grid
+7. Wrap the partner logo on the homepage in an `<a>` tag linking to the partner page
 
 ## Testing & Verification
 - **Always use TDD:** Use the `superpowers:test-driven-development` skill for all feature work
