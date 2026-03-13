@@ -9,6 +9,8 @@ Static marketing website for a European poker championship platform, evolving in
 - **HTML5** — semantic markup, no frameworks
 - **CSS3** — custom properties, flexbox, grid, media queries
 - **Vanilla JS** — minimal, for dropdowns, filters, scroll-reveal animations
+- **Supabase JS client** (CDN) — used by ranking.html and results-upload.html for live data
+- **SheetJS** (CDN) — XLSX parsing in results-upload.html
 - **Google Fonts** — Inter (400, 500, 600, 700)
 - **No build tools** — static files served directly
 
@@ -46,7 +48,8 @@ OCP/
 │   ├── blog.html               # Blog — coming soon placeholder
 │   ├── events.html             # Events — coming soon placeholder
 │   ├── about.html              # About OPC page
-│   ├── styles.css              # Shared stylesheet (~2600 lines)
+│   ├── results-upload.html     # Master ranking results upload (password-gated)
+│   ├── styles.css              # Shared stylesheet (~2800 lines)
 │   └── assets/                 # Images, logos, flags
 ├── platform/                   # Next.js 15 app
 │   ├── app/
@@ -197,6 +200,17 @@ OCP/
 - **`feature_flags`** — feature toggle table (key, enabled, label, description, tier, sort_order)
   - CMS flags: `cms_admin`, `cms_news`, `cms_blog`, `cms_events` (tier 8, disabled by default)
 
+### Master Ranking Schema (Static Site)
+- **`master_config`** — key-value config (stores upload_password), RLS: no public access
+- **`master_players`** — standalone player pool (601 seeded), independent of auth/profiles
+  - Columns: name, name_normalized, nationality, total_points, rank, linked_profile_id
+  - RLS: public read, no direct writes
+- **`points_entries`** — audit log of every points addition per player
+  - Columns: player_id, points, event_label, uploaded_at, uploaded_by
+  - RLS: public read, no direct writes
+- **`submit_results`** RPC — SECURITY DEFINER function, password-protected, handles player creation, points insert, total/rank recomputation
+- **Migrations:** `016_master_ranking.sql` (schema + RPC), `017_seed_master_ranking.sql` (601 legacy players)
+
 ### Payload CMS Schema
 - Payload uses a separate `payload` Postgres schema in the same Supabase database
 - Tables are auto-managed by Payload (Posts, EventAnnouncements, Media, Users)
@@ -231,6 +245,17 @@ OCP/
 - Tournament cards (`<a class="tournament-card">`) on `tournaments.html` link to `tournament-detail.html`
 - Event cards (`<a class="event-card">`) on homepage and country pages also link to `tournament-detail.html`
 - Currently a single tournament detail page exists as a placeholder (Amsterdam Open)
+
+## Master Ranking System (Static Site)
+- **`ranking.html`** — live leaderboard fetching from Supabase `master_players` table (replaces hardcoded mock data)
+  - Supabase JS client from CDN, client-side pagination (50/page), search, country filter
+  - Deterministic avatar colors from name hash, inline SVG flags for 5 countries
+- **`results-upload.html`** — password-gated upload page (noindex, nofollow, no nav link)
+  - 4-step flow: password gate → file upload (CSV/XLSX) → review & fuzzy match → submit
+  - Fuzzy matching: Levenshtein distance against 601 existing players, exact/fuzzy/new badges
+  - Calls `submit_results` RPC via Supabase anon key (password validated server-side)
+  - CSS classes: `.upload-*` prefix (gate, dropzone, review-table, badges, submit)
+  - SheetJS CDN for XLSX parsing, native JS for CSV
 
 ## Creating New Country Pages
 1. Copy `site/country-netherlands.html` as template

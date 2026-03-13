@@ -10,6 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Prevent horizontal overflow on mobile */
+    html, body {
+      overflow-x: hidden;
+    }
+
     /* --- Hero V2: Centered logo-centric layout --- */
 
     .hero {
@@ -17,15 +22,31 @@
       overflow: hidden;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+
+    /* Stats bar pinned to bottom of hero */
+    .hero-stats {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 0 80px 120px;
+    }
+    .hero-stats .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .hero-container {
       max-width: 1600px;
       margin: 0 auto;
       padding: 0 78px;
-      margin-top: -40px;
+      margin-top: -80px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -108,7 +129,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.12;
+      opacity: 0.45;
       filter: blur(2px);
     }
 
@@ -178,14 +199,17 @@
       .hero { min-height: auto; }
       .hero-container { padding: 80px 40px 60px; }
       .hero-glow { width: 500px; height: 500px; }
+      .hero-stats { padding: 0 40px 100px; }
     }
 
     @media (max-width: 992px) {
+      .hero { min-height: auto; }
       .hero-container { padding: 60px 40px 48px; flex-direction: column; }
       .hero-content { width: 100%; margin-bottom: 0; }
       .hero-title { font-size: 42px; line-height: 52px; }
       .hero-logo-img { width: 120px; }
       .hero-glow { width: 400px; height: 400px; }
+      .hero-stats { position: relative; padding: 0 40px 60px; }
     }
 
     @media (max-width: 640px) {
@@ -196,6 +220,7 @@
       .hero-logo { margin-bottom: 24px; }
       .hero-logo-img { width: 100px; }
       .hero-glow { width: 300px; height: 300px; }
+      .hero-stats { padding: 0 16px 32px; }
     }
 
     /* --- About V2: Three Pillar Cards --- */
@@ -454,48 +479,47 @@
       </div>
     </div>
 
+    <div class="hero-stats">
+      <div class="stats-container reveal-stagger">
+        <div class="stat-card reveal">
+          <div class="stat-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9 9H2L7.5 13.5L5.5 21L12 16.5L18.5 21L16.5 13.5L22 9H15L12 2Z"/><path d="M12 16.5V21"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="stat-text">
+            <span class="stat-number">250+</span>
+            <span class="stat-label">Verified Players</span>
+          </div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="stat-text">
+            <span class="stat-number">20+</span>
+            <span class="stat-label">Tournaments</span>
+          </div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12H22"/><path d="M12 2C14.5 4.73 15.74 8.24 16 12C15.74 15.76 14.5 19.27 12 22C9.5 19.27 8.26 15.76 8 12C8.26 8.24 9.5 4.73 12 2Z"/></svg>
+          </div>
+          <div class="stat-text">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Countries</span>
+          </div>
+        </div>
+        <div class="stat-card stat-card-avatars reveal">
+          <div class="stat-avatars">
+            <img src="assets/avatar-marcel.jpg" alt="Marcel Luske" class="avatar">
+            <img src="assets/avatar-noah.jpg" alt="Noah Boeken" class="avatar">
+            <img src="assets/flag-eu.svg" alt="EU Flag" class="avatar">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-backdrop">
       <img src="assets/img/hero.png" alt="">
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats">
-    <div class="stats-container reveal-stagger">
-      <div class="stat-card reveal">
-        <div class="stat-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9 9H2L7.5 13.5L5.5 21L12 16.5L18.5 21L16.5 13.5L22 9H15L12 2Z"/><path d="M12 16.5V21"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        <div class="stat-text">
-          <span class="stat-number">250+</span>
-          <span class="stat-label">Verified Players</span>
-        </div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="stat-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div class="stat-text">
-          <span class="stat-number">20+</span>
-          <span class="stat-label">Tournaments</span>
-        </div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="stat-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12H22"/><path d="M12 2C14.5 4.73 15.74 8.24 16 12C15.74 15.76 14.5 19.27 12 22C9.5 19.27 8.26 15.76 8 12C8.26 8.24 9.5 4.73 12 2Z"/></svg>
-        </div>
-        <div class="stat-text">
-          <span class="stat-number">5</span>
-          <span class="stat-label">Countries</span>
-        </div>
-      </div>
-      <div class="stat-card stat-card-avatars reveal">
-        <div class="stat-avatars">
-          <img src="assets/avatar-marcel.jpg" alt="Marcel Luske" class="avatar">
-          <img src="assets/avatar-noah.jpg" alt="Noah Boeken" class="avatar">
-          <img src="assets/flag-eu.svg" alt="EU Flag" class="avatar">
-        </div>
-      </div>
     </div>
   </section>
 

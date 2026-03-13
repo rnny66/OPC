@@ -27,6 +27,8 @@ De site bevat:
 - **Landingspagina's per land** — specifieke pagina's voor elk land waar OPC actief is (Nederland, Duitsland, Engeland, Polen, België, Oostenrijk), met lokale partners en evenementen
 - **Juridisch & Compliance** — privacybeleid, algemene voorwaarden, verantwoord spelen
 - **Contact** — contactformulier voor spelers, organisatoren en partners
+- **Master Ranking** — live klassement aangedreven door Supabase, met 601+ spelers, zoekfunctie, landfilter en paginering
+- **Resultaten Upload** — met wachtwoord beveiligde interne tool voor organisatoren om toernooiresultaten te uploaden (CSV/XLSX) met fuzzy spelersnaamherkenning
 - **SEO** — gestructureerde data, metatags, sitemap en optimalisatie voor social media op alle pagina's
 
 ### Domeinstrategie: Eén Domein met Landenpagina's
@@ -52,15 +54,17 @@ Een zelfgehost beheerpaneel waarmee het OPC-team content kan publiceren en beher
 
 ## Rankings & Toernooien: Statisch vs Dynamisch
 
-De marketingwebsite bevat een **Rankings**-pagina en een **Toernooien**-pagina. In hun huidige vorm tonen deze pagina's hardgecodeerde voorbeelddata — ze zien eruit en werken als echte lijsten, maar de content is handmatig in de HTML geschreven.
+De marketingwebsite bevat een **Rankings**-pagina en een **Toernooien**-pagina. De Rankings-pagina is uitgebreid met een **Master Ranking-systeem** — een lichtgewicht Supabase-oplossing die de oorspronkelijke hardgecodeerde voorbeelddata heeft vervangen door live data van 601+ echte spelers. Organisatoren kunnen toernooiresultaten uploaden via een met wachtwoord beveiligde uploadpagina (CSV- of XLSX-bestanden) met fuzzy naamherkenning, en de rankings worden automatisch bijgewerkt.
+
+De Toernooien-pagina toont nog steeds hardgecodeerde voorbeelddata — deze ziet eruit en werkt als een echte lijst, maar de content is handmatig in de HTML geschreven.
 
 **Dit betekent:**
 
-- Een nieuw toernooi toevoegen vereist dat een ontwikkelaar de HTML aanpast
-- Rankings bijwerken na elk evenement is een handmatig proces
-- Er is geen mogelijkheid voor spelers of organisatoren om met de site te interacteren
+- De Rankings-pagina is nu **volledig live** — data wordt opgeslagen in Supabase en bijgewerkt via resultaten-upload
+- Een nieuw toernooi toevoegen vereist nog steeds dat een ontwikkelaar de HTML aanpast
+- Er is geen mogelijkheid voor spelers of organisatoren om met toernooien op de site te interacteren
 
-**Om Rankings en Toernooien volledig functioneel te maken, is een webapplicatielaag nodig.** Dit is een apart werkpakket dat het volgende omvat:
+**Om Toernooien volledig functioneel te maken en spelersaccounts toe te voegen, is een webapplicatielaag nodig.** Dit is een apart werkpakket dat het volgende omvat:
 
 | Functionaliteit | Wat het vereist |
 |-----------------|-----------------|
@@ -114,6 +118,7 @@ Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, g
 | Homepage | Volledige landingspagina met 8 secties | 16 |
 | Toernooienpagina | Overzicht, filters, kaarten, paginering | 10 |
 | Rankingspagina | Tabel, filters, zijbalk, paginering | 10 |
+| Master ranking-systeem | Databaseschema, datamigratie (601 spelers), live rankingpagina, resultaten-uploadpagina met fuzzy matching | 18 |
 | Landenpagina's (6) | Template + 6 landvarianten | 14 |
 | Contactpagina | Formulier en layout | 4 |
 | Juridische pagina's (3) | Privacy, voorwaarden, verantwoord spelen | 6 |
@@ -121,7 +126,7 @@ Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, g
 | CMS-integratie (Payload) | Setup, 3 contenttypes, 3 publieke pagina's, beheerpaneel | 20 |
 | QA & cross-browser testen | Desktop, tablet, mobiel in alle browsers | 8 |
 | Deployment & livegang | Vercel-setup, DNS-configuratie, Supabase-provisioning, Brevo-integratie, SSL, productielancering | 6 |
-| **Totaal** | | **126 uur** |
+| **Totaal** | | **144 uur** |
 
 > Ontwikkeling van de webapplicatie (live rankings, toernooien, gebruikersaccounts) wordt apart begroot.
 
@@ -156,7 +161,7 @@ Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, g
 
 | Categorie | Kosten |
 |-----------|--------|
-| Ontwikkeling (eenmalig) | 126 uur |
+| Ontwikkeling (eenmalig) | 144 uur |
 | Hosting & infrastructuur (maandelijks) | ~$45/mnd |
 | Transactionele e-mail (Brevo) | $0 (gratis tier) |
 | Domein (jaarlijks) | ~€10–15/jr (eigendom opdrachtgever) |

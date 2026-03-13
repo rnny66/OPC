@@ -27,6 +27,8 @@ The site includes:
 - **Country Pages** — dedicated landing pages for each country OPC operates in (Netherlands, Germany, England, Poland, Belgium, Austria), highlighting local partners and events
 - **Legal & Compliance** — privacy policy, terms & conditions, responsible gaming
 - **Contact** — inquiry form for players, organizers, and partners
+- **Master Ranking** — live leaderboard powered by Supabase, displaying 601+ players with search, country filter, and pagination
+- **Results Upload** — password-protected internal tool for organizers to upload tournament results (CSV/XLSX) with fuzzy player name matching
 - **SEO** — structured data, meta tags, sitemap, and social sharing optimization across all pages
 
 ### Domain Strategy: Single Domain with Country Pages
@@ -52,15 +54,17 @@ A self-hosted admin panel for the OPC team to publish and manage content without
 
 ## Rankings & Tournaments: Static vs Dynamic
 
-The marketing website includes a **Rankings** page and a **Tournaments** page. In their current form, these pages display hardcoded sample data — they look and function like real listings, but the content is manually written into the HTML.
+The marketing website includes a **Rankings** page and a **Tournaments** page. The Rankings page has been upgraded with a **Master Ranking system** — a lightweight Supabase-backed solution that replaced the original hardcoded mock data with live data from 601+ real players. Organizers can upload tournament results via a password-protected upload page (CSV or XLSX files) with fuzzy name matching, and rankings update automatically.
+
+The Tournaments page still displays hardcoded sample data — it looks and functions like a real listing, but the content is manually written into the HTML.
 
 **This means:**
 
-- Adding a new tournament requires a developer to edit the HTML
-- Updating rankings after each event is a manual process
-- There is no way for players or organizers to interact with the site
+- The Rankings page is now **fully live** — data is stored in Supabase and updated via results upload
+- Adding a new tournament still requires a developer to edit the HTML
+- There is no way for players or organizers to interact with tournaments on the site
 
-**To make Rankings and Tournaments fully functional, a web application layer is needed.** This is a separate workstream that includes:
+**To make Tournaments fully functional and to add player accounts, a web application layer is needed.** This is a separate workstream that includes:
 
 | Capability | What It Requires |
 |------------|-----------------|
@@ -114,6 +118,7 @@ The project uses three core services. All are industry-standard, well-supported,
 | Homepage | Full landing page with 8 sections | 16 |
 | Tournaments page | Listing, filters, cards, pagination | 10 |
 | Rankings page | Table, filters, sidebar, pagination | 10 |
+| Master ranking system | Database schema, data migration (601 players), live ranking page, results upload page with fuzzy matching | 18 |
 | Country pages (6) | Template + 6 country variants | 14 |
 | Contact page | Form and layout | 4 |
 | Legal pages (3) | Privacy, terms, responsible gaming | 6 |
@@ -121,7 +126,7 @@ The project uses three core services. All are industry-standard, well-supported,
 | CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
 | Deployment & go-live | Vercel setup, DNS configuration, Supabase provisioning, Brevo integration, SSL, production launch | 6 |
-| **Total** | | **126 hours** |
+| **Total** | | **144 hours** |
 
 > Web application development (live rankings, tournaments, user accounts) is scoped separately.
 
@@ -156,7 +161,7 @@ The project uses three core services. All are industry-standard, well-supported,
 
 | Category | Cost |
 |----------|------|
-| Development (one-time) | 126 hours |
+| Development (one-time) | 144 hours |
 | Hosting & infrastructure (monthly) | ~$45/mo |
 | Transactional email (Brevo) | $0 (free tier) |
 | Domain (annual) | ~€10–15/yr (client-owned) |
