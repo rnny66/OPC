@@ -309,7 +309,7 @@ a {
 }
 
 .stat-card-avatars {
-  flex: 0 0 228px;
+  flex: 0 0 296px;
 }
 
 .stat-icon {
@@ -356,6 +356,10 @@ a {
   border-radius: var(--radius-md);
   object-fit: cover;
   background: #fff;
+}
+
+.avatar--contain {
+  object-fit: contain;
 }
 
 /* --- About / What is OPC --- */
