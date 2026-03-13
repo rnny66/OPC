@@ -81,17 +81,47 @@ Without the web application, the Rankings and Tournaments pages remain static �
 
 ---
 
-## Delivery Approach
+## Phased Roadmap
 
-The project is structured so that the static marketing site can launch independently. The CMS and web application are additive — each layer builds on the previous without requiring a rebuild.
+The project is structured so that each phase can launch independently. Every layer builds on the previous without requiring a rebuild.
 
-| Layer | Purpose | Can launch independently? |
+| Phase | Purpose | Can launch independently? |
 |-------|---------|--------------------------|
-| **Static site** | Brand presence, SEO, partner visibility | Yes |
-| **CMS** | Team-managed news, blog, events | Yes (adds to static site) |
-| **Web application** | Live rankings, tournaments, user accounts | Yes (replaces static data) |
+| **Phase 1 — Marketing Website** | Brand presence, SEO, partner visibility, live rankings | Yes |
+| **Phase 2 — Tournament Platform** | Organizer tools, player accounts, live tournaments | Yes (replaces static data) |
+| **Phase 3 — Marketing & Gamification** | Email campaigns, engagement mechanics, partner value | Yes (adds to platform) |
 
-This means OPC Europe can go live quickly with the static site while the more complex functionality is developed in parallel.
+### Phase 1 — Marketing Website *(being delivered)*
+
+A fully custom-designed, mobile-responsive website covering all pages described above — homepage, tournaments, rankings, country pages, partner pages, legal, contact, and CMS.
+
+The site includes a **dynamic ranking system** connected to a Supabase database with 601+ real players. Tournament organizers (such as Poker Arend) can upload results via a password-protected tool that accepts CSV and XLSX files. The system automatically matches player names, calculates points, and updates the live leaderboard — no developer involvement needed.
+
+**Demo:** [Ranking system walkthrough](https://www.loom.com/share/38445dc55b7a4cfdaf57acf2f0caee82)
+
+The Tournaments page is currently populated with sample data. It looks and functions like a real listing, but tournament content is static — this becomes fully dynamic in Phase 2 once the tournament database and organizer tools are in place.
+
+**Remaining to complete:** deployment to Vercel, DNS configuration, and SEO optimization.
+
+### Phase 2 — Tournament Organization Platform
+
+This phase turns the static site into a self-service platform for organizers and players.
+
+- **Organizer accounts** — tournament organizers can create and manage their own tournaments
+- **Tournament publishing** — tournaments can be published on the organizer's own website or automatically listed on the OPC tournaments page, so players can discover and register for events through either channel
+- **Player accounts** — players create an account to track their stats, view the leaderboard, and register for tournaments
+- **Registration** — players register online through the OPC site or the organizer's site; organizers manage attendee lists and can manually add walk-in participants who don't have an account
+- **Results management** — after a tournament, organizers upload results directly from the platform by selecting registered players, with support for manually added participants. Points and rankings update automatically
+
+This phase replaces the static tournaments page with a fully live, self-service system.
+
+### Phase 3 — Marketing, Gamification & Partner Value
+
+- **Marketing emails & reminders** — automated communications around upcoming tournaments, registration confirmations, results notifications, and re-engagement campaigns
+- **Gamified experience** — achievements, streaks, and engagement mechanics that keep players active on the platform and coming back for more
+- **Partner value** — with a growing database of players and organizers, OPC can offer measurable reach and engagement to current and prospective partners. The sooner this database is built (Phase 2), the sooner partner relationships deliver concrete commercial value
+
+This means OPC Europe can go live quickly with the marketing website (Phase 1) while the tournament platform and engagement features are developed in parallel.
 
 ---
 

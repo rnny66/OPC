@@ -81,17 +81,47 @@ Zonder de webapplicatie blijven de Rankings- en Toernooienpagina's statisch — 
 
 ---
 
-## Aanpak
+## Gefaseerde Roadmap
 
-Het project is zo opgezet dat de statische marketingsite onafhankelijk kan worden gelanceerd. Het CMS en de webapplicatie zijn aanvullend — elke laag bouwt voort op de vorige zonder dat een herbouw nodig is.
+Het project is zo opgezet dat elke fase onafhankelijk kan worden gelanceerd. Elke laag bouwt voort op de vorige zonder dat een herbouw nodig is.
 
-| Laag | Doel | Onafhankelijk te lanceren? |
+| Fase | Doel | Onafhankelijk te lanceren? |
 |------|------|---------------------------|
-| **Statische site** | Merkpresentie, SEO, partnerzichtbaarheid | Ja |
-| **CMS** | Teambeheerd nieuws, blog, evenementen | Ja (voegt toe aan statische site) |
-| **Webapplicatie** | Live rankings, toernooien, gebruikersaccounts | Ja (vervangt statische data) |
+| **Fase 1 — Marketingwebsite** | Merkpresentie, SEO, partnerzichtbaarheid, live rankings | Ja |
+| **Fase 2 — Toernooiplatform** | Organisatortools, spelersaccounts, live toernooien | Ja (vervangt statische data) |
+| **Fase 3 — Marketing & Gamificatie** | E-mailcampagnes, engagementmechanismen, partnerwaarde | Ja (voegt toe aan platform) |
 
-Dit betekent dat OPC Europe snel live kan gaan met de statische site terwijl de complexere functionaliteit parallel wordt ontwikkeld.
+### Fase 1 — Marketingwebsite *(wordt opgeleverd)*
+
+Een volledig op maat ontworpen, mobiel-responsieve website met alle hierboven beschreven pagina's — homepage, toernooien, rankings, landenpagina's, partnerpagina's, juridisch, contact en CMS.
+
+De site bevat een **dynamisch rankingsysteem** verbonden met een Supabase-database met 601+ echte spelers. Toernooiorganisatoren (zoals Poker Arend) kunnen resultaten uploaden via een met wachtwoord beveiligde tool die CSV- en XLSX-bestanden accepteert. Het systeem koppelt automatisch spelernamen, berekent punten en werkt het live klassement bij — zonder tussenkomst van een ontwikkelaar.
+
+**Demo:** [Walkthrough rankingsysteem](https://www.loom.com/share/38445dc55b7a4cfdaf57acf2f0caee82)
+
+De Toernooienpagina is momenteel gevuld met voorbeelddata. Deze ziet eruit en werkt als een echte lijst, maar de toernooicontent is statisch — dit wordt volledig dynamisch in Fase 2 zodra de toernooidatabase en organisatortools beschikbaar zijn.
+
+**Nog af te ronden:** deployment naar Vercel, DNS-configuratie en SEO-optimalisatie.
+
+### Fase 2 — Toernooiorganisatieplatform
+
+Deze fase maakt van de statische site een selfserviceplatform voor organisatoren en spelers.
+
+- **Organisatoraccounts** — toernooiorganisatoren kunnen hun eigen toernooien aanmaken en beheren
+- **Toernooi publiceren** — toernooien kunnen worden gepubliceerd op de website van de organisator of automatisch worden getoond op de OPC-toernooienpagina, zodat spelers evenementen kunnen ontdekken en zich kunnen inschrijven via beide kanalen
+- **Spelersaccounts** — spelers maken een account aan om hun statistieken bij te houden, het klassement te bekijken en zich in te schrijven voor toernooien
+- **Registratie** — spelers schrijven zich online in via de OPC-site of de site van de organisator; organisatoren beheren deelnemerslijsten en kunnen handmatig walk-in deelnemers toevoegen die geen account hebben
+- **Resultaatbeheer** — na een toernooi uploaden organisatoren resultaten direct vanuit het platform door geregistreerde spelers te selecteren, met ondersteuning voor handmatig toegevoegde deelnemers. Punten en rankings worden automatisch bijgewerkt
+
+Deze fase vervangt de statische toernooienpagina door een volledig live, selfservice systeem.
+
+### Fase 3 — Marketing, Gamificatie & Partnerwaarde
+
+- **Marketing-e-mails & herinneringen** — geautomatiseerde communicatie rond aankomende toernooien, registratiebevestigingen, resultaatnotificaties en re-engagementcampagnes
+- **Gegamificeerde ervaring** — achievements, streaks en engagementmechanismen die spelers actief houden op het platform en terug laten komen
+- **Partnerwaarde** — met een groeiende database van spelers en organisatoren kan OPC meetbaar bereik en engagement bieden aan huidige en potentiële partners. Hoe sneller deze database wordt opgebouwd (Fase 2), hoe sneller partnerrelaties concrete commerciële waarde opleveren
+
+Dit betekent dat OPC Europe snel live kan gaan met de marketingwebsite (Fase 1) terwijl het toernooiplatform en de engagementfuncties parallel worden ontwikkeld.
 
 ---
 
