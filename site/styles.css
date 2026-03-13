@@ -870,11 +870,12 @@ a {
 }
 
 .partner-logo {
-  height: 80px;
-  width: auto;
+  height: 120px;
+  width: 120px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.6;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
 }
 
 .partners-text {
@@ -3818,6 +3819,273 @@ a.event-card {
   .upload-badge {
     font-size: 0.75rem;
     padding: 3px 8px;
+  }
+}
+
+/* --- Partner Page --- */
+
+.pp-list-hero {
+  padding: 96px 80px 48px;
+  text-align: center;
+}
+
+.pp-list-hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pp-list-hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+}
+
+.pp-list-hero p {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+}
+
+.pp-list {
+  padding: 0 80px 80px;
+}
+
+.pp-list-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.pp-list-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.pp-list-card:hover {
+  border-color: var(--color-brand);
+  transform: translateY(-4px);
+}
+
+.pp-list-card-logo {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pp-list-card-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pp-list-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.pp-list-card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.pp-hero {
+  padding: 96px 80px 64px;
+}
+
+.pp-breadcrumb {
+  max-width: 1280px;
+  margin: 0 auto 32px;
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+}
+
+.pp-breadcrumb a:hover {
+  color: var(--color-brand);
+}
+
+.pp-hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.pp-hero-logo {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pp-hero-content h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+}
+
+.pp-hero-content p {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.pp-about {
+  padding: 80px 80px;
+}
+
+.pp-about-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pp-about-container .section-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-brand);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.pp-about-container h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+.pp-about-container p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.pp-cta {
+  padding: 80px;
+  background: var(--color-bg-secondary);
+  text-align: center;
+}
+
+.pp-cta h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+}
+
+.pp-cta p {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+/* --- Partner Page Responsive --- */
+
+@media (max-width: 992px) {
+  .pp-list-hero {
+    padding: 88px 40px 40px;
+  }
+
+  .pp-list-hero h1 {
+    font-size: 36px;
+  }
+
+  .pp-list {
+    padding: 0 40px 60px;
+  }
+
+  .pp-list-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pp-hero {
+    padding: 88px 40px 48px;
+  }
+
+  .pp-hero-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .pp-hero-logo {
+    width: 160px;
+    height: 160px;
+  }
+
+  .pp-hero-content h1 {
+    font-size: 36px;
+  }
+
+  .pp-about {
+    padding: 60px 40px;
+  }
+
+  .pp-cta {
+    padding: 60px 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pp-list-hero {
+    padding: 80px 20px 32px;
+  }
+
+  .pp-list-hero h1 {
+    font-size: 28px;
+  }
+
+  .pp-list {
+    padding: 0 20px 40px;
+  }
+
+  .pp-list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pp-hero {
+    padding: 80px 20px 40px;
+  }
+
+  .pp-hero-logo {
+    width: 120px;
+    height: 120px;
+    padding: 16px;
+  }
+
+  .pp-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .pp-about {
+    padding: 40px 20px;
+  }
+
+  .pp-cta {
+    padding: 40px 20px;
   }
 }
 
