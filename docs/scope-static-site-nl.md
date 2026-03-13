@@ -192,11 +192,33 @@ Een speciale pagina die OPC Europe, haar missie en oprichters presenteert.
 
 **Deliverables:**
 
-- Contactformulier met invoervelden
-- Ondersteunings-/partnerinformatie
+- Drie-kaarten layout: Voor Spelers, Voor Organisatoren, Voor Partners
+- Spelerskaart linkt naar Interesseregistratiepagina (`interest.html?type=player`)
+- Organisatorenkaart linkt naar Interesseregistratiepagina (`interest.html?type=organizer`)
+- Partnerskaart linkt naar `mailto:info@european-opc.com` met partnership-onderwerpregel
+- Brede Algemene Vragen-kaart onder de drie kaarten, met mailto-link naar `info@european-opc.com`
+- Brede kaart gebruikt horizontale layout op desktop (icoon + tekst links, knop rechts), stapelt op mobiel
 - Consistente header/footer
 
-### 2.11 Juridische & Compliance-pagina's
+### 2.11 Interesseregistratiepagina
+
+Een aparte pagina voor het verzamelen van e-mailadressen van potentiële spelers en organisatoren om interesse te peilen voordat registratie opent.
+
+**Deliverables:**
+
+- Interessetype-toggle: Speler, Organisator, Beide (voorgeselecteerd via `?type=` URL-parameter)
+- E-mailveld (verplicht) met hoofdletter-normalisatie
+- Naamveld (optioneel)
+- Honeypot-spambescherming (verborgen veld, wijst bot-inzendingen stilzwijgend af)
+- Supabase-integratie via CDN-client (zelfde patroon als ranking-/uploadpagina's)
+- Succesbevestiging (vervangt formulier na verzending)
+- Duplicaatdetectie met vriendelijke melding
+- Toegankelijke toggle-knoppen (`role="radiogroup"`, `role="radio"`, `aria-checked`, toetsenbordnavigatie)
+- Databasetabel: `interest_signups` met email, name, interest_type, created_at
+- RLS: anoniem invoegen, admin lezen/verwijderen
+- CSS-classes gebruiken `.interest-*` prefix
+
+### 2.12 Juridische & Compliance-pagina's
 
 Drie juridische pagina's vereist voor wettelijke naleving.
 
@@ -206,7 +228,7 @@ Drie juridische pagina's vereist voor wettelijke naleving.
 - **Algemene Voorwaarden** — Platformvoorwaarden, gebruikersverantwoordelijkheden en disclaimers
 - **Verantwoord Spelen** — Educatieve content over verantwoord gokken, zelfuitsluiting en leeftijdsverificatiebeleid
 
-### 2.12 SEO & Technische Optimalisatie
+### 2.13 SEO & Technische Optimalisatie
 
 Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's.
 
@@ -228,7 +250,7 @@ Zoekmachineoptimalisatie en technische best practices toegepast op alle pagina's
 - Font preconnect hints voor Google Fonts
 - Favicon-configuratie
 
-### 2.13 Globale Componenten
+### 2.14 Globale Componenten
 
 Gedeelde componenten die consistent zijn op elke pagina.
 
@@ -305,14 +327,15 @@ Setup en configuratie van productie-infrastructuur om de website te lanceren.
 | 7 | Landingspagina's per land | 6 pagina's |
 | 8 | Partnerpagina's | 1 overzicht + 4 detailpagina's |
 | 9 | Over Ons-pagina | 1 pagina |
-| 9 | Contactpagina | 1 pagina |
-| 10 | Privacybeleid | 1 pagina |
-| 11 | Algemene Voorwaarden | 1 pagina |
-| 12 | Verantwoord Spelen | 1 pagina |
-| 13 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
-| 14 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
-| 15 | Deployment & livegang | Vercel, DNS, SSL |
-| **Fase 1 Totaal** | | **27 statische pagina's + deployment + ranking-systeem** |
+| 9 | Contactpagina | 1 pagina (4 kaarten) |
+| 10 | Interesseregistratiepagina | 1 pagina + 1 DB-migratie |
+| 11 | Privacybeleid | 1 pagina |
+| 12 | Algemene Voorwaarden | 1 pagina |
+| 13 | Verantwoord Spelen | 1 pagina |
+| 14 | Coming-soon placeholders (Nieuws, Blog, Evenementen) | 3 pagina's |
+| 15 | SEO-optimalisatie | Alle pagina's + sitemap + robots.txt |
+| 16 | Deployment & livegang | Vercel, DNS, SSL |
+| **Fase 1 Totaal** | | **28 statische pagina's + deployment + ranking-systeem + interesseregistratie** |
 
 ### Fase 2 — CMS & Dynamische Content
 

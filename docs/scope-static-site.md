@@ -197,11 +197,33 @@ A dedicated page introducing OPC Europe, its mission, and its founders.
 
 **Deliverables:**
 
-- Contact form with input fields
-- Support/partnership information
+- Three-card layout: For Players, For Organizers, For Partners
+- Players card links to Interest Signup page (`interest.html?type=player`)
+- Organizers card links to Interest Signup page (`interest.html?type=organizer`)
+- Partners card links to `mailto:info@european-opc.com` with partnership subject line
+- Full-width General Inquiries card below the three cards, with mailto link to `info@european-opc.com`
+- Full-width card uses horizontal layout on desktop (icon + text left, button right), stacks on mobile
 - Consistent header/footer
 
-### 2.11 Legal & Compliance Pages
+### 2.11 Interest Signup Page
+
+A standalone page for collecting email addresses from prospective players and organizers to gauge interest before registration opens.
+
+**Deliverables:**
+
+- Interest type toggle: Player, Organizer, Both (pre-selected via `?type=` URL parameter)
+- Email field (required) with case normalization
+- Name field (optional)
+- Honeypot spam protection (hidden field, silently rejects bot submissions)
+- Supabase integration via CDN client (same pattern as ranking/upload pages)
+- Success confirmation message (replaces form on submit)
+- Duplicate detection with friendly message
+- Accessible toggle buttons (`role="radiogroup"`, `role="radio"`, `aria-checked`, keyboard navigation)
+- Database table: `interest_signups` with email, name, interest_type, created_at
+- RLS: anonymous insert, admin read/delete
+- CSS classes use `.interest-*` prefix
+
+### 2.12 Legal & Compliance Pages
 
 Three legal pages required for regulatory compliance.
 
@@ -211,7 +233,7 @@ Three legal pages required for regulatory compliance.
 - **Terms & Conditions** — Platform terms of use, user responsibilities, and disclaimers
 - **Responsible Gaming** — Educational content about responsible gambling, self-exclusion resources, and age verification policy
 
-### 2.12 SEO & Technical Optimization
+### 2.13 SEO & Technical Optimization
 
 Search engine optimization and technical best practices applied across all pages.
 
@@ -233,7 +255,7 @@ Search engine optimization and technical best practices applied across all pages
 - Font preconnect hints for Google Fonts
 - Favicon configuration
 
-### 2.13 Global Components
+### 2.14 Global Components
 
 Shared components consistent across every page.
 
@@ -310,14 +332,15 @@ Setup and configuration of production infrastructure to launch the website.
 | 7 | Country landing pages | 6 pages |
 | 8 | Partner pages | 1 overview + 4 detail pages |
 | 9 | About Us page | 1 page |
-| 9 | Contact page | 1 page |
-| 10 | Privacy Policy | 1 page |
-| 11 | Terms & Conditions | 1 page |
-| 12 | Responsible Gaming | 1 page |
-| 13 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
-| 14 | SEO optimization | All pages + sitemap + robots.txt |
-| 15 | Deployment & go-live | Vercel, DNS, SSL |
-| **Phase 1 Total** | | **27 static pages + deployment + ranking system** |
+| 9 | Contact page | 1 page (4 cards) |
+| 10 | Interest signup page | 1 page + 1 DB migration |
+| 11 | Privacy Policy | 1 page |
+| 12 | Terms & Conditions | 1 page |
+| 13 | Responsible Gaming | 1 page |
+| 14 | Coming-soon placeholders (News, Blog, Events) | 3 pages |
+| 15 | SEO optimization | All pages + sitemap + robots.txt |
+| 16 | Deployment & go-live | Vercel, DNS, SSL |
+| **Phase 1 Total** | | **28 static pages + deployment + ranking system + interest signup** |
 
 ### Phase 2 — CMS & Dynamic Content
 

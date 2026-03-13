@@ -27,7 +27,8 @@ De site bevat:
 - **Landingspagina's per land** — specifieke pagina's voor elk land waar OPC actief is (Nederland, Duitsland, Engeland, Polen, België, Oostenrijk), met lokale partners en evenementen
 - **Partnerpagina's** — individuele showcasepagina's voor elke OPC-partner (Luxon Pay, International Poker Rules, Juice Brothers, Poker Arend) met partneroverzicht
 - **Juridisch & Compliance** — privacybeleid, algemene voorwaarden, verantwoord spelen
-- **Contact** — contactformulier voor spelers, organisatoren en partners
+- **Contact** — speciale kaarten voor spelers, organisatoren, partners en algemene vragen, met mailto-links voor partner-/algemeen contact
+- **Interesseregistratie** — e-mailverzamelpagina voor spelers en organisatoren om interesse te tonen, met type-voorselectie via URL-parameters, honeypot-spambescherming en data opgeslagen in Supabase
 - **Master Ranking** — live klassement aangedreven door Supabase, met 601+ spelers, zoekfunctie, landfilter en paginering
 - **Resultaten Upload** — met wachtwoord beveiligde interne tool voor organisatoren om toernooiresultaten te uploaden (CSV/XLSX) met fuzzy spelersnaamherkenning
 - **SEO** — gestructureerde data, metatags, sitemap en optimalisatie voor social media op alle pagina's
@@ -101,7 +102,7 @@ De site bevat een **dynamisch rankingsysteem** verbonden met een Supabase-databa
 
 De Toernooienpagina is momenteel gevuld met voorbeelddata. Deze ziet eruit en werkt als een echte lijst, maar de toernooicontent is statisch — dit wordt volledig dynamisch in Fase 2 zodra de toernooidatabase en organisatortools beschikbaar zijn.
 
-**Nog af te ronden:** deployment naar Vercel, DNS-configuratie en SEO-optimalisatie.
+**Nog af te ronden:** deployment naar Cloudflare Pages, DNS-configuratie en SEO-optimalisatie.
 
 ### Fase 2 — Toernooiorganisatieplatform
 
@@ -127,11 +128,13 @@ Dit betekent dat OPC Europe snel live kan gaan met de marketingwebsite (Fase 1) 
 
 ## Technologie
 
-Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, goed ondersteund en worden wereldwijd door duizenden bedrijven gebruikt.
+Het project maakt gebruik van een klein aantal kerndiensten. Alle zijn industriestandaard, goed ondersteund en worden wereldwijd door duizenden bedrijven gebruikt.
 
-**Vercel** — Webhostingplatform. Vercel serveert de website aan bezoekers wereldwijd via een globaal netwerk van servers (CDN), wat zorgt voor snelle laadtijden ongeacht locatie. Het regelt SSL-certificaten, deployments en schaalbaarheid automatisch. Wanneer code wordt bijgewerkt, bouwt en publiceert Vercel de nieuwe versie binnen enkele minuten. Het is speciaal gebouwd voor moderne websites en webapplicaties.
+**Cloudflare Pages** *(Fase 1)* — Hosting voor de statische site. Cloudflare Pages serveert de marketingwebsite via een van de grootste CDN-netwerken ter wereld (275+ edge-locaties), met bijzonder sterke dekking in Europa. SSL-certificaten, deployments en caching worden automatisch afgehandeld. Wanneer code naar GitHub wordt gepusht, wordt de nieuwe versie binnen seconden gepubliceerd. De gratis tier bevat onbeperkte bandbreedte, onbeperkte requests en 500 builds per maand — ruim voldoende voor de marketingsite. Er zijn geen kosten.
 
-**Supabase** — Backend-as-a-service. Supabase biedt de database (PostgreSQL), gebruikersauthenticatie (inloggen/registreren) en bestandsopslag in één beheerd platform. In plaats van eigen servers en databases op te zetten en te onderhouden, regelt Supabase dit alles met automatische back-ups, beveiliging en uptimemonitoring. Het wordt ook gebruikt door Payload CMS om content op te slaan.
+**Vercel** *(Fase 2+)* — Applicatiehostingplatform. Wanneer het toernooiplatform en het CMS worden gelanceerd, host Vercel de Next.js-applicatie inclusief server-side rendering, API-routes en het Payload CMS-beheerpaneel. Het is speciaal gebouwd voor Next.js en schaalt automatisch.
+
+**Supabase** — Backend-as-a-service. Supabase biedt de database (PostgreSQL), gebruikersauthenticatie (inloggen/registreren) en bestandsopslag in één beheerd platform. In plaats van eigen servers en databases op te zetten en te onderhouden, regelt Supabase dit alles met automatische back-ups, beveiliging en uptimemonitoring. Het wordt ook gebruikt door Payload CMS om content op te slaan. De gratis tier dekt Fase 1 (rankingdata, resultaten-upload); Pro is nodig vanaf Fase 2.
 
 **Payload CMS** — Contentmanagementsysteem. Payload biedt een beheerpaneel (vergelijkbaar in concept met WordPress) waar het OPC-team nieuwsartikelen, blogposts en evenementen kan aanmaken en beheren zonder ontwikkelaar. Het is open source en gratis — er zijn geen licentiekosten. Het draait als onderdeel van de website op Vercel en slaat data op in Supabase.
 
@@ -156,36 +159,50 @@ Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, g
 | SEO & technisch | Metatags, gestructureerde data, sitemap, robots.txt | 8 |
 | CMS-integratie (Payload) | Setup, 3 contenttypes, 3 publieke pagina's, beheerpaneel | 20 |
 | QA & cross-browser testen | Desktop, tablet, mobiel in alle browsers | 8 |
-| Deployment & livegang | Vercel-setup, DNS-configuratie, Supabase-provisioning, Brevo-integratie, SSL, productielancering | 6 |
+| Deployment & livegang | Cloudflare Pages-setup, DNS-configuratie, Supabase-provisioning, SSL, productielancering | 6 |
 | **Totaal** | | **144 uur** |
 
 > Ontwikkeling van de webapplicatie (live rankings, toernooien, gebruikersaccounts) wordt apart begroot.
 
 ### Doorlopend: Hosting & Infrastructuur
 
+Hostingkosten zijn opgesplitst per fase. Fase 1 (marketingwebsite) draait volledig op gratis tiers — **er zijn geen hostingkosten totdat het toernooiplatform wordt gelanceerd**.
+
+#### Fase 1 — Marketingwebsite: $0/mnd
+
 | Dienst | Wat het dekt | Abonnement | Maandelijkse kosten |
 |--------|-------------|------------|---------------------|
-| **Vercel** | Websitehosting, Next.js server-side rendering, CMS-deployment | Pro (1 seat) | $20/mnd |
+| **Cloudflare Pages** | Hosting statische site, wereldwijd CDN, SSL | Gratis | $0 |
+| **Supabase** | PostgreSQL-database (rankingdata, resultaten-upload) | Gratis | $0 |
+| **Totaal** | | | **$0/mnd** |
+
+- **Cloudflare Pages Gratis** bevat onbeperkte bandbreedte, onbeperkte requests en 500 builds/maand. De site wordt geserveerd vanaf 275+ edge-locaties wereldwijd met automatisch SSL. Er zijn geen beperkingen voor commercieel gebruik op de gratis tier.
+- **Supabase Gratis** bevat 500 MB database, 50K maandelijks actieve gebruikers en 1 GB bestandsopslag. Ruim voldoende voor het rankingsysteem (601 spelers, resultaten-upload).
+
+#### Fase 2+ — Toernooiplatform: ~$45/mnd
+
+| Dienst | Wat het dekt | Abonnement | Maandelijkse kosten |
+|--------|-------------|------------|---------------------|
+| **Vercel** | Next.js-hosting, server-side rendering, CMS-deployment | Pro (1 seat) | $20/mnd |
 | **Supabase** | PostgreSQL-database, gebruikersauthenticatie, bestandsopslag | Pro (met uitgavenlimiet) | $25/mnd |
 | **Payload CMS** | Beheerpaneel voor content | Open source (gratis) | $0 |
+| **Cloudflare Pages** | Statische marketingsite (blijft draaien) | Gratis | $0 |
 | **Totaal** | | | **$45/mnd** |
 
-**Toelichting op hostingkosten:**
-
-- **Vercel Pro** bevat 1 TB bandbreedte en 10M edge requests/maand — ruim voldoende voor een site met enkele duizenden maandelijkse bezoekers. Aangezien OPC een commercieel project is, is de gratis tier niet toegestaan.
-- **Supabase Pro** bevat 8 GB database, 100K maandelijks actieve gebruikers voor authenticatie, 100 GB bestandsopslag en dagelijkse back-ups. De uitgavenlimiet-optie beperkt de rekening tot exact $25/mnd (gebruik wordt beperkt in plaats van extra gefactureerd).
+- **Vercel Pro** is nodig voor de Next.js-applicatie (server-side rendering, API-routes, CMS). Bevat 1 TB bandbreedte en 10M edge requests/maand.
+- **Supabase Pro** is nodig voor gebruikersauthenticatie, meer opslagruimte en dagelijkse back-ups. De uitgavenlimiet beperkt de rekening tot exact $25/mnd.
 - **Payload CMS** is open source (MIT-licentie) en draait als onderdeel van de Next.js-app op Vercel — geen extra hosting- of licentiekosten.
-- Deze kosten dekken zowel de statische site/CMS **als** de toekomstige webapplicatie. Er is geen extra infrastructuur nodig wanneer de webapp wordt gelanceerd.
+- De statische marketingsite blijft kosteloos draaien op Cloudflare Pages.
 
 ### Overige Kosten
 
 | Item | Kosten | Toelichting |
 |------|--------|-------------|
 | **Domeinnaam** | ~€10–15/jr | Reeds in bezit van de opdrachtgever. Alleen jaarlijkse verlenging. |
-| **Transactionele e-mail (Brevo)** | $0 | Gratis tier bevat 300 e-mails/dag (9.000/mnd). Dekt accountverificatie, wachtwoordresets en notificaties. Ruim voldoende bij lancering. Starter-abonnement vanaf $9/mnd bij groei boven 300/dag. |
-| **Analytics** | $0 | Vercel Analytics is inbegrepen bij Pro. Alternatief: gratis opties zoals Plausible Cloud ($9/mnd) of zelfgehost Umami ($0). |
-| **SSL-certificaat** | $0 | Inbegrepen bij Vercel. |
-| **CDN** | $0 | Inbegrepen bij Vercel (wereldwijd edge-netwerk). |
+| **Transactionele e-mail (Brevo)** | $0 | Gratis tier bevat 300 e-mails/dag (9.000/mnd). Dekt accountverificatie, wachtwoordresets en notificaties. Ruim voldoende bij lancering. Alleen nodig vanaf Fase 2. Starter-abonnement vanaf $9/mnd bij groei boven 300/dag. |
+| **Analytics** | $0 | Cloudflare Web Analytics (gratis, privacyvriendelijk) voor Fase 1. Vercel Analytics inbegrepen bij Pro vanaf Fase 2. |
+| **SSL-certificaat** | $0 | Inbegrepen bij Cloudflare (Fase 1) en Vercel (Fase 2+). |
+| **CDN** | $0 | Inbegrepen bij Cloudflare Pages (275+ wereldwijde edge-locaties). |
 | **Identiteitsverificatie** | Op basis van gebruik | Alleen nodig voor de webapplicatiefase. Kosten van providers (bijv. Didit, Onfido) variëren per volume — doorgaans €0,50–2,00 per verificatie. |
 
 ### Kostenoverzicht
@@ -193,6 +210,7 @@ Het project maakt gebruik van drie kerndiensten. Alle zijn industriestandaard, g
 | Categorie | Kosten |
 |-----------|--------|
 | Ontwikkeling (eenmalig) | 144 uur |
-| Hosting & infrastructuur (maandelijks) | ~$45/mnd |
+| Fase 1 hosting (maandelijks) | **$0/mnd** |
+| Fase 2+ hosting (maandelijks) | ~$45/mnd |
 | Transactionele e-mail (Brevo) | $0 (gratis tier) |
 | Domein (jaarlijks) | ~€10–15/jr (eigendom opdrachtgever) |

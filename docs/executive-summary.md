@@ -27,7 +27,8 @@ The site includes:
 - **Country Pages** — dedicated landing pages for each country OPC operates in (Netherlands, Germany, England, Poland, Belgium, Austria), highlighting local partners and events
 - **Partner Pages** — individual showcase pages for each OPC partner (Luxon Pay, International Poker Rules, Juice Brothers, Poker Arend) with partner overview listing
 - **Legal & Compliance** — privacy policy, terms & conditions, responsible gaming
-- **Contact** — inquiry form for players, organizers, and partners
+- **Contact** — dedicated cards for players, organizers, partners, and general inquiries, with mailto links for partner/general contact
+- **Interest Signup** — email collection page for players and organizers to express interest, with type pre-selection via URL parameters, honeypot spam protection, and data stored in Supabase
 - **Master Ranking** — live leaderboard powered by Supabase, displaying 601+ players with search, country filter, and pagination
 - **Results Upload** — password-protected internal tool for organizers to upload tournament results (CSV/XLSX) with fuzzy player name matching
 - **SEO** — structured data, meta tags, sitemap, and social sharing optimization across all pages
@@ -101,7 +102,7 @@ The site includes a **dynamic ranking system** connected to a Supabase database 
 
 The Tournaments page is currently populated with sample data. It looks and functions like a real listing, but tournament content is static — this becomes fully dynamic in Phase 2 once the tournament database and organizer tools are in place.
 
-**Remaining to complete:** deployment to Vercel, DNS configuration, and SEO optimization.
+**Remaining to complete:** deployment to Cloudflare Pages, DNS configuration, and SEO optimization.
 
 ### Phase 2 — Tournament Organization Platform
 
@@ -127,11 +128,13 @@ This means OPC Europe can go live quickly with the marketing website (Phase 1) w
 
 ## Technology Stack
 
-The project uses three core services. All are industry-standard, well-supported, and used by thousands of companies worldwide.
+The project uses a small set of core services. All are industry-standard, well-supported, and used by thousands of companies worldwide.
 
-**Vercel** — Website hosting platform. Vercel serves the website to visitors worldwide via a global network of servers (CDN), ensuring fast load times regardless of location. It handles SSL certificates, deployments, and scaling automatically. When code is updated, Vercel builds and publishes the new version within minutes. It is purpose-built for modern websites and web applications.
+**Cloudflare Pages** *(Phase 1)* — Static site hosting. Cloudflare Pages serves the marketing website via one of the world's largest CDN networks (275+ edge locations), with particularly strong coverage across Europe. It handles SSL certificates, deployments, and caching automatically. When code is pushed to GitHub, the new version is published within seconds. The free tier includes unlimited bandwidth, unlimited requests, and 500 builds per month — more than sufficient for the marketing site. There is no cost.
 
-**Supabase** — Backend-as-a-service. Supabase provides the database (PostgreSQL), user authentication (login/signup), and file storage in a single managed platform. Instead of setting up and maintaining our own servers and database, Supabase handles all of this with automatic backups, security, and uptime monitoring. It is also used by Payload CMS to store content.
+**Vercel** *(Phase 2+)* — Application hosting platform. When the tournament platform and CMS launch, Vercel will host the Next.js application including server-side rendering, API routes, and the Payload CMS admin panel. It is purpose-built for Next.js and handles scaling automatically.
+
+**Supabase** — Backend-as-a-service. Supabase provides the database (PostgreSQL), user authentication (login/signup), and file storage in a single managed platform. Instead of setting up and maintaining our own servers and database, Supabase handles all of this with automatic backups, security, and uptime monitoring. It is also used by Payload CMS to store content. The free tier covers Phase 1 (ranking data, results upload); Pro is needed from Phase 2 onward.
 
 **Payload CMS** — Content management system. Payload provides an admin panel (similar in concept to WordPress) where the OPC team can create and manage news articles, blog posts, and events without needing a developer. It is open source and free — there is no license fee. It runs as part of the website on Vercel and stores its data in Supabase.
 
@@ -156,36 +159,50 @@ The project uses three core services. All are industry-standard, well-supported,
 | SEO & technical | Meta tags, structured data, sitemap, robots.txt | 8 |
 | CMS integration (Payload) | Setup, 3 content types, 3 public pages, admin panel | 20 |
 | QA & cross-browser testing | Desktop, tablet, mobile across browsers | 8 |
-| Deployment & go-live | Vercel setup, DNS configuration, Supabase provisioning, Brevo integration, SSL, production launch | 6 |
+| Deployment & go-live | Cloudflare Pages setup, DNS configuration, Supabase provisioning, SSL, production launch | 6 |
 | **Total** | | **144 hours** |
 
 > Web application development (live rankings, tournaments, user accounts) is scoped separately.
 
 ### Recurring: Hosting & Infrastructure
 
+Hosting costs are structured by phase. Phase 1 (marketing website) runs entirely on free tiers — **there are no hosting costs until the tournament platform launches**.
+
+#### Phase 1 — Marketing Website: $0/mo
+
 | Service | What It Covers | Plan | Monthly Cost |
 |---------|---------------|------|-------------|
-| **Vercel** | Website hosting, Next.js server-side rendering, CMS deployment | Pro (1 seat) | $20/mo |
+| **Cloudflare Pages** | Static site hosting, global CDN, SSL | Free | $0 |
+| **Supabase** | PostgreSQL database (ranking data, results upload) | Free | $0 |
+| **Total** | | | **$0/mo** |
+
+- **Cloudflare Pages Free** includes unlimited bandwidth, unlimited requests, and 500 builds/month. The site is served from 275+ edge locations worldwide with automatic SSL. There are no commercial-use restrictions on the free tier.
+- **Supabase Free** includes 500 MB database, 50K monthly active users, and 1 GB file storage. More than sufficient for the ranking system (601 players, results upload).
+
+#### Phase 2+ — Tournament Platform: ~$45/mo
+
+| Service | What It Covers | Plan | Monthly Cost |
+|---------|---------------|------|-------------|
+| **Vercel** | Next.js hosting, server-side rendering, CMS deployment | Pro (1 seat) | $20/mo |
 | **Supabase** | PostgreSQL database, user authentication, file storage | Pro (with spend cap) | $25/mo |
 | **Payload CMS** | Content management admin panel | Open source (free) | $0 |
+| **Cloudflare Pages** | Static marketing site (continues) | Free | $0 |
 | **Total** | | | **$45/mo** |
 
-**Notes on hosting costs:**
-
-- **Vercel Pro** includes 1 TB bandwidth and 10M edge requests/month — more than sufficient for a site with a few thousand monthly visitors. Since OPC is a commercial project, the free tier is not permitted.
-- **Supabase Pro** includes 8 GB database, 100K monthly active users for auth, 100 GB file storage, and daily backups. The spend cap option locks the bill at exactly $25/mo (usage is throttled instead of billed for overages).
+- **Vercel Pro** is needed for the Next.js application (server-side rendering, API routes, CMS). Includes 1 TB bandwidth and 10M edge requests/month.
+- **Supabase Pro** is needed for user authentication, increased storage, and daily backups. The spend cap locks the bill at exactly $25/mo.
 - **Payload CMS** is open source (MIT license) and runs as part of the Next.js app on Vercel — no additional hosting or license cost.
-- These costs cover both the static site/CMS **and** the future web application. No additional infrastructure is needed when the web app launches.
+- The static marketing site continues to run on Cloudflare Pages at no cost.
 
 ### Other Costs
 
 | Item | Cost | Notes |
 |------|------|-------|
 | **Domain name** | ~€10–15/yr | Already owned by client. Annual renewal only. |
-| **Transactional email (Brevo)** | $0 | Free tier includes 300 emails/day (9,000/mo). Covers account verification, password resets, and notifications. More than sufficient at launch. Starter plan at $9/mo if volume grows beyond 300/day. |
-| **Analytics** | $0 | Vercel Analytics is included on Pro. Alternatively, free options like Plausible Cloud ($9/mo) or self-hosted Umami ($0). |
-| **SSL certificate** | $0 | Included with Vercel. |
-| **CDN** | $0 | Included with Vercel (global edge network). |
+| **Transactional email (Brevo)** | $0 | Free tier includes 300 emails/day (9,000/mo). Covers account verification, password resets, and notifications. More than sufficient at launch. Starter plan at $9/mo if volume grows beyond 300/day. Only needed from Phase 2. |
+| **Analytics** | $0 | Cloudflare Web Analytics (free, privacy-friendly) for Phase 1. Vercel Analytics included on Pro from Phase 2. |
+| **SSL certificate** | $0 | Included with Cloudflare (Phase 1) and Vercel (Phase 2+). |
+| **CDN** | $0 | Included with Cloudflare Pages (275+ global edge locations). |
 | **Identity verification** | Usage-based | Required only for the web application phase. Provider costs (e.g., Didit, Onfido) vary by volume — typically €0.50–2.00 per verification. |
 
 ### Cost Summary
@@ -193,6 +210,7 @@ The project uses three core services. All are industry-standard, well-supported,
 | Category | Cost |
 |----------|------|
 | Development (one-time) | 144 hours |
-| Hosting & infrastructure (monthly) | ~$45/mo |
+| Phase 1 hosting (monthly) | **$0/mo** |
+| Phase 2+ hosting (monthly) | ~$45/mo |
 | Transactional email (Brevo) | $0 (free tier) |
 | Domain (annual) | ~€10–15/yr (client-owned) |
