@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express Interest — OPC Europe</title>
+  <meta name="description" content="Sign up to express your interest in OPC Europe tournaments. Register as a player, organizer, or both.">
+  <meta name="theme-color" content="#0c0e12">
+  <link rel="canonical" href="https://opc-europe.com/interest.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Express Interest — OPC Europe">
+  <meta property="og:description" content="Sign up to express your interest in OPC Europe tournaments. Register as a player, organizer, or both.">
+  <meta property="og:image" content="https://opc-europe.com/assets/img/og-image.jpg">
+  <meta property="og:url" content="https://opc-europe.com/interest.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OPC Europe">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Express Interest — OPC Europe">
+  <meta name="twitter:description" content="Sign up to express your interest in OPC Europe tournaments. Register as a player, organizer, or both.">
+  <meta name="twitter:image" content="https://opc-europe.com/assets/img/og-image.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="assets/img/opc_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-left">
+        <a href="index.html" class="logo">
+          <img src="assets/img/opc_logo.png" alt="OPC Europe" width="76" height="56">
+        </a>
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="ranking.html" class="nav-link">Rankings</a>
+          <a href="tournaments.html" class="nav-link">Tournaments</a>
+          <a href="news.html" class="nav-link">News</a>
+          <a href="partners/overview.html" class="nav-link">Partners</a>
+          <div class="nav-dropdown">
+            <a href="#" class="nav-link">Countries
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="countries/netherlands.html">Netherlands</a>
+              <a href="countries/belgium.html">Belgium</a>
+              <a href="countries/germany.html">Germany</a>
+              <a href="countries/england.html">England</a>
+              <a href="countries/poland.html">Poland</a>
+              <a href="countries/austria.html">Austria</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <a href="about.html" class="nav-link">About OPC
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="about.html">About OPC</a>
+              <a href="contact.html">Contact</a>
+              <a href="responsible-gaming.html">Responsible Gaming</a>
+            </div>
+          </div>
+          <a href="index.html#join" class="btn btn-primary nav-mobile-cta">How to join</a>
+        </nav>
+      </div>
+      <a href="index.html#join" class="btn btn-primary">How to join</a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Interest Signup -->
+  <section class="interest-page">
+    <div class="interest-container">
+      <div class="interest-header">
+        <h1>Express Your Interest</h1>
+        <p>Sign up to be notified when OPC Europe opens for registration.</p>
+      </div>
+
+      <form class="interest-form" id="interest-form" novalidate>
+        <div class="interest-toggles" role="radiogroup" aria-label="Interest type">
+          <button type="button" class="interest-toggle interest-toggle--active" role="radio" aria-checked="true" data-type="player">Player</button>
+          <button type="button" class="interest-toggle" role="radio" aria-checked="false" data-type="organizer">Organizer</button>
+          <button type="button" class="interest-toggle" role="radio" aria-checked="false" data-type="both">Both</button>
+        </div>
+
+        <div class="interest-field">
+          <label for="interest-email">Email address <span class="interest-required">*</span></label>
+          <input type="email" id="interest-email" name="email" class="interest-input" placeholder="you@example.com" required>
+        </div>
+
+        <div class="interest-field">
+          <label for="interest-name">Name</label>
+          <input type="text" id="interest-name" name="name" class="interest-input" placeholder="Your name (optional)">
+        </div>
+
+        <!-- Honeypot — hidden from real users -->
+        <div class="interest-hp" aria-hidden="true">
+          <label for="interest-website">Website</label>
+          <input type="text" id="interest-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn-primary interest-submit" id="interest-submit">Sign Up</button>
+
+        <p class="interest-error" id="interest-error" role="alert"></p>
+      </form>
+
+      <div class="interest-success" id="interest-success">
+        <div class="interest-success-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2e90fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2>Thanks for your interest!</h2>
+        <p>We'll be in touch when registration opens.</p>
+        <a href="index.html" class="btn btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/img/opc_logo.png" alt="OPC Europe" width="76" height="56">
+          <p>Open Poker Championship</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>About</h4>
+            <a href="about.html">What is OPC</a>
+            <a href="index.html#join">How it works</a>
+            <a href="about.html">Our mission</a>
+          </div>
+          <div class="footer-col">
+            <h4>For Players</h4>
+            <a href="ranking.html">Rankings</a>
+            <a href="tournaments.html">Tournaments</a>
+            <a href="contact.html">Get verified</a>
+          </div>
+          <div class="footer-col">
+            <h4>For organizers</h4>
+            <a href="contact.html">Partner with us</a>
+            <a href="index.html#join">Partnership benefits</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="responsible-gaming.html">Responsible Gaming</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 OPC Europe. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-reveal observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('reveal--visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.querySelector('.header').classList.toggle('header--scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Mobile nav toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    if (navToggle && nav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('nav--open');
+        navToggle.classList.toggle('nav-toggle--active', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('nav--open');
+          navToggle.classList.remove('nav-toggle--active');
+          navToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    // --- Interest Signup Form ---
+    const SUPABASE_URL = 'https://uxlnhyeijfeiurwleecy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4bG5oeWVpamZlaXVyd2xlZWN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDEzNzMsImV4cCI6MjA4ODU3NzM3M30.eTN24hvQjitsLvOXo7hAs92YIQprgjks6rfhzkmdbgY';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form = document.getElementById('interest-form');
+    const submitBtn = document.getElementById('interest-submit');
+    const errorEl = document.getElementById('interest-error');
+    const successEl = document.getElementById('interest-success');
+    const toggles = document.querySelectorAll('.interest-toggle');
+    let selectedType = 'player';
+
+    // Pre-select from URL param
+    const params = new URLSearchParams(window.location.search);
+    const typeParam = params.get('type');
+    if (['player', 'organizer', 'both'].includes(typeParam)) {
+      selectedType = typeParam;
+      toggles.forEach(t => {
+        const isActive = t.dataset.type === selectedType;
+        t.classList.toggle('interest-toggle--active', isActive);
+        t.setAttribute('aria-checked', isActive);
+      });
+    }
+
+    // Toggle button click
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        selectedType = toggle.dataset.type;
+        toggles.forEach(t => {
+          const isActive = t === toggle;
+          t.classList.toggle('interest-toggle--active', isActive);
+          t.setAttribute('aria-checked', isActive);
+        });
+      });
+    });
+
+    // Keyboard navigation for radio group
+    document.querySelector('.interest-toggles').addEventListener('keydown', (e) => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+      if (!keys.includes(e.key)) return;
+      e.preventDefault();
+      const arr = Array.from(toggles);
+      const idx = arr.findIndex(t => t.classList.contains('interest-toggle--active'));
+      let next;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        next = (idx + 1) % arr.length;
+      } else {
+        next = (idx - 1 + arr.length) % arr.length;
+      }
+      arr[next].click();
+      arr[next].focus();
+    });
+
+    // Form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+
+      const email = document.getElementById('interest-email').value.trim().toLowerCase();
+      const name = document.getElementById('interest-name').value.trim() || null;
+      const honeypot = document.getElementById('interest-website').value;
+
+      // Validation
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errorEl.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing up...';
+
+      // Honeypot check — fake success
+      if (honeypot) {
+        form.style.display = 'none';
+        successEl.style.display = 'flex';
+        return;
+      }
+
+      // Insert into Supabase
+      const { error } = await sb
+        .from('interest_signups')
+        .insert({ email, name, interest_type: selectedType });
+
+      if (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign Up';
+
+        if (error.code === '23505') {
+          // Duplicate — still a success from user perspective
+          form.style.display = 'none';
+          successEl.style.display = 'flex';
+          successEl.querySelector('h2').textContent = "You're already signed up for this.";
+          successEl.querySelector('p').textContent = "We'll be in touch!";
+          return;
+        }
+
+        errorEl.textContent = 'Something went wrong. Please try again or email us at info@european-opc.com.';
+        return;
+      }
+
+      // Success
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
+    });
+  </script>
+
+</body>
+</html>

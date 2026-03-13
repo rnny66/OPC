@@ -2414,6 +2414,178 @@ a {
   }
 }
 
+/* --- Interest Signup Page --- */
+.interest-page {
+  padding: 96px 80px;
+}
+
+.interest-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.interest-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.interest-header h1 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  margin-bottom: 12px;
+}
+
+.interest-header p {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-text-secondary);
+}
+
+.interest-form {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.interest-toggles {
+  display: flex;
+  gap: 8px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 4px;
+}
+
+.interest-toggle {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interest-toggle:hover {
+  color: var(--color-text-primary);
+}
+
+.interest-toggle--active {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
+.interest-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--color-text-secondary);
+}
+
+.interest-required {
+  color: var(--color-brand-light);
+}
+
+.interest-input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.interest-input::placeholder {
+  color: #555;
+}
+
+.interest-input:focus {
+  border-color: var(--color-brand);
+}
+
+.interest-hp {
+  display: none;
+}
+
+.interest-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.interest-error {
+  color: #f04438;
+  font-size: 14px;
+  text-align: center;
+  min-height: 20px;
+}
+
+.interest-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.interest-success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--color-brand-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.interest-success h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.interest-success p {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+/* --- Interest Signup Page Responsive --- */
+@media (max-width: 992px) {
+  .interest-page {
+    padding: 64px 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .interest-page {
+    padding: 48px 16px;
+  }
+
+  .interest-header h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .interest-toggles {
+    flex-direction: column;
+  }
+}
+
 /* --- Legal / Text Pages --- */
 .legal-page {
   padding: 96px 80px;
