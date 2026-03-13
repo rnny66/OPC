@@ -1,7 +1,9 @@
 -- Prevent overlapping interest signups:
 --   "both" covers "player" and "organizer", so block redundant rows.
 CREATE OR REPLACE FUNCTION check_interest_overlap()
-RETURNS trigger AS $$
+RETURNS trigger
+SECURITY DEFINER
+AS $$
 BEGIN
   -- Signing up as player/organizer when "both" already exists
   IF NEW.interest_type IN ('player', 'organizer') THEN
