@@ -132,9 +132,9 @@ CREATE TABLE interest_signups (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
--- Prevent duplicate signups for same email+type (case-insensitive)
-ALTER TABLE interest_signups
-  ADD CONSTRAINT interest_signups_email_type_unique UNIQUE (email, interest_type);
+-- Prevent duplicate signups for same email+type (case-insensitive on email)
+CREATE UNIQUE INDEX interest_signups_email_type_unique
+  ON interest_signups (lower(email), interest_type);
 
 -- RLS
 ALTER TABLE interest_signups ENABLE ROW LEVEL SECURITY;
